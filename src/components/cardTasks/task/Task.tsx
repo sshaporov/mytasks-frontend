@@ -1,8 +1,8 @@
 import { Checkbox } from 'antd'
 import React from 'react'
-import {TaskType} from '../../App'
-import {DEV_VERSION} from '../../config'
-import {EditableSpan} from '../editableSpan/EditableSpan'
+import {TaskType} from '../../../App'
+import {DEV_VERSION} from '../../../config'
+import {EditableSpan} from '../../editableSpan/EditableSpan'
 
 export type TaskPropsType = {
   task: TaskType

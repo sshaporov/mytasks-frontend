@@ -39,12 +39,16 @@ const App = () => {
     }
   }
 
-  return <CardTasks
-           tasks={tasks}
-           cardName={'Travel Tasks'}
-           changeTaskTitle={changeTaskTitle}
-           markTask={markTask}
-         />
+  return (
+    <div className='app-body'>
+      <CardTasks
+        tasks={tasks}
+        cardName={'Travel Tasks'}
+        changeTaskTitle={changeTaskTitle}
+        markTask={markTask}
+      />
+    </div>
+  )
 }
 
 export default App;

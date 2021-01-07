@@ -1,8 +1,9 @@
 import React from 'react'
-import {Card} from 'antd'
 import {TaskType} from '../../App'
-import {Task} from '../task/Task'
-import {DEV_VERSION} from '../../config';
+import {Task} from './task/Task'
+import {DEV_VERSION} from '../../config'
+import {CardHeader} from './cardHeader/CardHeader'
+import {CardFooter} from './cardFooter/CardFooter'
 
 export type CardTasksPropsType = {
   cardName: string
@@ -22,17 +23,17 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
 
   return (
     <div>
-      <Card title={cardName} bordered={true} style={{width: 300}}>
+      <CardHeader/>
 
-        {tasks.map(t => <Task
-                          key={t.id}
-                          task={t}
-                          changeTaskTitle={changeTaskTitle}
-                          markTask={markTask}
-                        />
-        )}
+      {tasks.map(t =>
+        <Task
+          key={t.id}
+          task={t}
+          changeTaskTitle={changeTaskTitle}
+          markTask={markTask}
+        />)}
 
-      </Card>
+      <CardFooter/>
     </div>
   )
 })
