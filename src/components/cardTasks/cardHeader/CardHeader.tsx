@@ -13,7 +13,7 @@ export const CardHeader: React.FC<CardHeaderPropsType> = React.memo((
     taskCount
   }
 ) => {
-  DEV_VERSION && console.log('CardFooter')
+  DEV_VERSION && console.log('CardHeader')
 
   return (
    <div>
