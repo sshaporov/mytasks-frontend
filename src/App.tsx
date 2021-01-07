@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import './App.css'
 import {DEV_VERSION} from './config'
-import {v1} from 'uuid';
+import {v1} from 'uuid'
 import { CardTasks } from './components/cardTasks/CardTasks'
 
 export type TaskType = {
@@ -41,7 +41,7 @@ const App = () => {
 
   return <CardTasks
            tasks={tasks}
-           cardTitle={'Travel Tasks'}
+           cardName={'Travel Tasks'}
            changeTaskTitle={changeTaskTitle}
            markTask={markTask}
          />
