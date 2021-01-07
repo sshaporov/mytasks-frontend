@@ -10,7 +10,7 @@ export type TaskType = {
   isDone: boolean,
 }
 
-function App() {
+const App = () => {
   DEV_VERSION && console.log('App');
 
   const [tasks, setTasks] = useState<Array<TaskType>>([
@@ -23,7 +23,28 @@ function App() {
     {id: v1(), title: 'Unit', isDone: true},
   ])
 
-  return <CardTasks tasks={tasks} cardTitle={'Travel Tasks'}/>
+  const changeTaskTitle = (id: string, title: string) => {
+    const task = tasks.find(t => t.id === id)
+    if (task) {
+      task.title = title
+      setTasks([...tasks])
+    }
+  }
+
+  const markTask = (id: string) => {
+    const task = tasks.find(t => t.id === id)
+    if (task) {
+      task.isDone = !task.isDone
+      setTasks([...tasks])
+    }
+  }
+
+  return <CardTasks
+           tasks={tasks}
+           cardTitle={'Travel Tasks'}
+           changeTaskTitle={changeTaskTitle}
+           markTask={markTask}
+         />
 }
 
 export default App;
