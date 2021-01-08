@@ -5,13 +5,14 @@ import {DEV_VERSION} from '../../config'
 import {CardHeader} from './cardHeader/CardHeader'
 import {CardFooter} from './cardFooter/CardFooter'
 import { CardProgressBar } from './cardProgressBar/CardProgressBar'
-import { AddTask } from './task/addTask/AddTask'
 
 export type CardTasksPropsType = {
   cardName: string
   tasks: Array<TaskType>
   changeTaskTitle: (id: string, title: string) => void
   markTask: (id: string) => void
+  removeTask: (id: string) => void
+
 }
 export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   {
@@ -19,6 +20,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
     tasks,
     changeTaskTitle,
     markTask,
+    removeTask,
   }
 ) => {
   DEV_VERSION && console.log('CardTasks ', cardName)
@@ -40,9 +42,8 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
           task={t}
           changeTaskTitle={changeTaskTitle}
           markTask={markTask}
+          removeTask={removeTask}
         />)}
-
-      <AddTask/>
 
       <CardFooter/>
     </div>

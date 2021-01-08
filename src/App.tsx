@@ -39,6 +39,10 @@ const App = () => {
     }
   }
 
+  const removeTask = (id: string) => {
+    setTasks(tasks.filter(t => t.id !== id))
+  }
+
   return (
     <div className='app-body'>
       <CardTasks
@@ -46,6 +50,7 @@ const App = () => {
         cardName={'Travel Tasks'}
         changeTaskTitle={changeTaskTitle}
         markTask={markTask}
+        removeTask={removeTask}
       />
     </div>
   )
