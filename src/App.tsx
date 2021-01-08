@@ -43,6 +43,14 @@ const App = () => {
     setTasks(tasks.filter(t => t.id !== id))
   }
 
+  const addTask = (title: string) => {
+    const task: TaskType = {id: v1(), title, isDone: false}
+    const newArr = [...tasks]
+    newArr.push(task)
+    setTasks(newArr)
+    // console.log('isDone', isDone)
+  }
+
   return (
     <div className='app-body'>
       <CardTasks
@@ -51,6 +59,7 @@ const App = () => {
         changeTaskTitle={changeTaskTitle}
         markTask={markTask}
         removeTask={removeTask}
+        addTask={addTask}
       />
     </div>
   )

@@ -14,7 +14,7 @@ export type CardTasksPropsType = {
   changeTaskTitle: (id: string, title: string) => void
   markTask: (id: string) => void
   removeTask: (id: string) => void
-
+  addTask: (title: string) => void
 }
 export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   {
@@ -23,6 +23,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
     changeTaskTitle,
     markTask,
     removeTask,
+    addTask
   }
 ) => {
   DEV_VERSION && console.log('CardTasks ', cardName)
@@ -47,9 +48,9 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
           changeTaskTitle={changeTaskTitle}
           markTask={markTask}
           removeTask={removeTask}
-
         />)}
-      <AddTask/>
+
+      <AddTask addTask={addTask} />
 
       <Divider />
 

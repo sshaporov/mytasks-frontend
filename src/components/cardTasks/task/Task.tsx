@@ -51,19 +51,13 @@ export const Task: React.FC<TaskPropsType> = React.memo((
 
       <Space>
 
-        <div className={s.checkboxWrapper}>
           <Checkbox checked={task.isDone} onClick={onMarkTask}/>
-        </div>
 
-        <div className={s.editableSpanWrapper}>
           <EditableTask value={task.title} changeValue={onChangeTaskTitle}/>
-        </div>
 
-        <div className={s.dropdownWrapper}>
           <Dropdown overlay={menu} trigger={['click']}>
             <Button icon={<EllipsisOutlined/>} type={'text'} shape={'circle'}/>
           </Dropdown>
-        </div>
 
       </Space>
 
