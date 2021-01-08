@@ -3,8 +3,7 @@ import React from 'react'
 import { Badge, Button, Dropdown, Menu } from 'antd'
 import s from './CardHeader.module.css'
 import { PlusOutlined, EditOutlined, InboxOutlined, DeleteOutlined, EllipsisOutlined } from '@ant-design/icons'
-
-import './index.css'
+import './imp-ant-badge.css'
 
 export type CardHeaderPropsType = {
   cardName: string
@@ -39,7 +38,7 @@ export const CardHeader: React.FC<CardHeaderPropsType> = React.memo((
   return (
    <div>
 
-     <Badge count={taskCount} offset={[7, -7]} className="site-badge-count-4">
+     <Badge count={taskCount} offset={[7, -7]} className="badge-card-count">
        <div className={s.cardText}>{cardName}</div>
      </Badge>
 

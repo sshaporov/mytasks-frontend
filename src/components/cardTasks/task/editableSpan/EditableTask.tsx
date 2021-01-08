@@ -5,7 +5,7 @@ type EditableSpanPropsType = {
   changeValue: (value: string) => void
 }
 
-export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo((
+export const EditableTask: React.FC<EditableSpanPropsType> = React.memo((
   {
     value,
     changeValue

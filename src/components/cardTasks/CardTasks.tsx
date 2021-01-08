@@ -5,6 +5,7 @@ import {DEV_VERSION} from '../../config'
 import {CardHeader} from './cardHeader/CardHeader'
 import {CardFooter} from './cardFooter/CardFooter'
 import { CardProgressBar } from './cardProgressBar/CardProgressBar'
+import { AddTask } from './task/addTask/AddTask'
 
 export type CardTasksPropsType = {
   cardName: string
@@ -31,7 +32,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   return (
     <div>
       <CardHeader cardName={'Travel list'} taskCount={tasks.length}/>
-      <CardProgressBar progress={ countTaskProgress() }/>
+      <CardProgressBar progress={countTaskProgress()}/>
 
       {tasks.map(t =>
         <Task
@@ -40,6 +41,8 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
           changeTaskTitle={changeTaskTitle}
           markTask={markTask}
         />)}
+
+      <AddTask/>
 
       <CardFooter/>
     </div>

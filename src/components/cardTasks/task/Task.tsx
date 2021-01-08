@@ -2,8 +2,9 @@ import {Button, Checkbox, Dropdown, Menu} from 'antd'
 import React from 'react'
 import {TaskType} from '../../../App'
 import {DEV_VERSION} from '../../../config'
-import {EditableSpan} from '../../editableSpan/EditableSpan'
-import {DeleteOutlined, EditOutlined, EllipsisOutlined, InboxOutlined, CheckOutlined} from '@ant-design/icons';
+import {EditableTask} from './editableSpan/EditableTask'
+import {DeleteOutlined, EditOutlined, EllipsisOutlined, InboxOutlined, CheckOutlined} from '@ant-design/icons'
+import s from './Task.module.css'
 
 export type TaskPropsType = {
   task: TaskType
@@ -44,13 +45,21 @@ export const Task: React.FC<TaskPropsType> = React.memo((
   )
 
   return (
-    <div>
-      <Checkbox checked={task.isDone} onClick={onMarkTask}/>
-      <EditableSpan value={task.title} changeValue={onChangeTaskTitle}/>
+    <div className={s.cardWrapper}>
 
-      <Dropdown overlay={menu} trigger={['click']}>
-        <Button icon={<EllipsisOutlined />} type={'text'} shape={'circle'}/>
-      </Dropdown>
+      <div className={s.checkboxWrapper}>
+        <Checkbox checked={task.isDone} onClick={onMarkTask}/>
+      </div>
+
+      <div className={s.editableSpanWrapper}>
+        <EditableTask value={task.title} changeValue={onChangeTaskTitle}/>
+      </div>
+
+      <div className={s.dropdownWrapper}>
+        <Dropdown overlay={menu} trigger={['click']}>
+          <Button icon={<EllipsisOutlined/>} type={'text'} shape={'circle'}/>
+        </Dropdown>
+      </div>
 
     </div>
   )
