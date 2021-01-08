@@ -1,7 +1,8 @@
 import {DEV_VERSION} from '../../../config'
 import React from 'react'
-import { Badge } from 'antd'
+import { Badge, Button, Dropdown, Menu } from 'antd'
 import s from './CardHeader.module.css'
+import { PlusOutlined, EditOutlined, InboxOutlined, DeleteOutlined, EllipsisOutlined } from '@ant-design/icons'
 
 export type CardHeaderPropsType = {
   cardName: string
@@ -15,11 +16,37 @@ export const CardHeader: React.FC<CardHeaderPropsType> = React.memo((
 ) => {
   DEV_VERSION && console.log('CardHeader')
 
+  const menu = (
+    <Menu onClick={() => {}}>
+      <Menu.Item key="1" icon={<PlusOutlined />}>
+        Add
+      </Menu.Item>
+      <Menu.Item key="2" icon={<EditOutlined />}>
+        Edit
+      </Menu.Item>
+      <Menu.Item key="3" icon={<InboxOutlined />}>
+        Archive
+      </Menu.Item>
+
+      <Menu.Divider/>
+
+      <Menu.Item key="4" danger icon={<DeleteOutlined />}>
+        Remove
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
    <div>
+
      <Badge count={taskCount} offset={[7, -7]}>
        <div className={s.cardText}>{cardName}</div>
      </Badge>
+
+     <Dropdown overlay={menu} >
+       <Button icon={<EllipsisOutlined rotate={90}/>} type={'text'} shape={'circle'}/>
+     </Dropdown>
+
    </div>
   )
 })

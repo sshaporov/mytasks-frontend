@@ -31,7 +31,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   return (
     <div>
       <CardHeader cardName={'Travel list'} taskCount={tasks.length}/>
-      <CardProgressBar progress={countTaskProgress()} taskCount={tasks.length}/>
+      <CardProgressBar progress={ countTaskProgress() }/>
 
       {tasks.map(t =>
         <Task
