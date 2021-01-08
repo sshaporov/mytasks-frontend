@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {TaskType} from '../../App'
 import {Task} from './task/Task'
 import {DEV_VERSION} from '../../config'
 import {CardHeader} from './cardHeader/CardHeader'
-import {CardFooter} from './cardFooter/CardFooter'
 import { CardProgressBar } from './cardProgressBar/CardProgressBar'
+import { Divider } from 'antd'
+import {AddTask} from './addTask/AddTask';
+import {FilterTasks} from './filterTasks/FilterTasks';
 
 export type CardTasksPropsType = {
   cardName: string
@@ -36,6 +38,8 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
       <CardHeader cardName={'Travel list'} taskCount={tasks.length}/>
       <CardProgressBar progress={countTaskProgress()}/>
 
+      <Divider />
+
       {tasks.map(t =>
         <Task
           key={t.id}
@@ -43,9 +47,14 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
           changeTaskTitle={changeTaskTitle}
           markTask={markTask}
           removeTask={removeTask}
-        />)}
 
-      <CardFooter/>
+        />)}
+      <AddTask/>
+
+      <Divider />
+
+      <FilterTasks/>
+
     </div>
   )
 })
