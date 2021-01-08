@@ -9,10 +9,12 @@ export type TaskType = {
   title: string,
   isDone: boolean,
 }
+export type FilterValueType = 'ALL' | 'DONE' | 'ACTIVE'
 
 const App = () => {
   DEV_VERSION && console.log('App');
 
+  const [filterValue, setFilterValue] = useState<FilterValueType>('ALL')
   const [tasks, setTasks] = useState<Array<TaskType>>([
     {id: v1(), title: 'FrontEnd', isDone: true},
     {id: v1(), title: 'BackEnd', isDone: false},
@@ -22,6 +24,7 @@ const App = () => {
     {id: v1(), title: 'WebSocket', isDone: false},
     {id: v1(), title: 'Unit', isDone: true},
   ])
+  const [filterTasks, setFilterTasks] = useState<Array<TaskType>>([...tasks])
 
   const changeTaskTitle = (id: string, title: string) => {
     const task = tasks.find(t => t.id === id)
@@ -48,18 +51,29 @@ const App = () => {
     const newArr = [...tasks]
     newArr.push(task)
     setTasks(newArr)
-    // console.log('isDone', isDone)
   }
+
+  const changeFilter = (value: FilterValueType) => {
+    setFilterValue(value)
+  }
+
+  // filter display logic
+  let tasksForFilterDisplaying = filterTasks
+  if (filterValue === 'DONE') tasksForFilterDisplaying = filterTasks.filter(t => t.isDone)
+  if (filterValue === 'ACTIVE') tasksForFilterDisplaying = filterTasks.filter(t => !t.isDone)
+
 
   return (
     <div className='app-body'>
       <CardTasks
         tasks={tasks}
+        filterTasks={tasksForFilterDisplaying}
         cardName={'Travel Tasks'}
         changeTaskTitle={changeTaskTitle}
         markTask={markTask}
         removeTask={removeTask}
         addTask={addTask}
+        changeFilter={changeFilter}
       />
     </div>
   )

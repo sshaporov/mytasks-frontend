@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {TaskType} from '../../App'
+import {FilterValueType, TaskType} from '../../App'
 import {Task} from './task/Task'
 import {DEV_VERSION} from '../../config'
 import {CardHeader} from './cardHeader/CardHeader'
@@ -11,19 +11,23 @@ import {FilterTasks} from './filterTasks/FilterTasks';
 export type CardTasksPropsType = {
   cardName: string
   tasks: Array<TaskType>
+  filterTasks: Array<TaskType>
   changeTaskTitle: (id: string, title: string) => void
   markTask: (id: string) => void
   removeTask: (id: string) => void
   addTask: (title: string) => void
+  changeFilter: (value: FilterValueType) => void
 }
 export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   {
     cardName,
     tasks,
+    filterTasks,
     changeTaskTitle,
     markTask,
     removeTask,
-    addTask
+    addTask,
+    changeFilter
   }
 ) => {
   DEV_VERSION && console.log('CardTasks ', cardName)
@@ -41,7 +45,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
 
       <Divider />
 
-      {tasks.map(t =>
+      {filterTasks.map(t =>
         <Task
           key={t.id}
           task={t}
@@ -54,7 +58,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
 
       <Divider />
 
-      <FilterTasks/>
+      <FilterTasks changeFilter={changeFilter}/>
 
     </div>
   )

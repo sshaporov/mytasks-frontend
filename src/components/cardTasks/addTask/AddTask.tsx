@@ -17,7 +17,6 @@ export const AddTask: React.FC<AddTaskPropsType> = React.memo((
 
   const [isAdding, setIsAdding] = useState<boolean>(false)
   const [taskTitle, setTaskTitle] = useState<string>('')
-  // const [taskChecked, setTaskChecked] = useState<boolean>(false)
 
   const onChangeTaskTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setTaskTitle(e.currentTarget.value)
@@ -38,10 +37,7 @@ export const AddTask: React.FC<AddTaskPropsType> = React.memo((
 
         ? <div className={s.addItemWrapper} onBlur={onBlurAddingTaskItem}>
             <Space>
-              <Checkbox disabled
-                // onChange={() => setTaskChecked(!taskChecked)}
-                // checked={taskChecked}
-              />
+              <Checkbox disabled/>
               <input
                 onChange={onChangeTaskTitle}
                 value={taskTitle}
