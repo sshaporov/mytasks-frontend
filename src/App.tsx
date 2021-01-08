@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import './App.css'
 import {DEV_VERSION} from './config'
 import {v1} from 'uuid'
@@ -25,6 +25,11 @@ const App = () => {
     {id: v1(), title: 'Unit', isDone: true},
   ])
   const [filterTasks, setFilterTasks] = useState<Array<TaskType>>([...tasks])
+
+  // при изменении tasks массива обновляем массив для фильтрации
+  useEffect(() => {
+    setFilterTasks([...tasks])
+  }, [tasks])
 
   const changeTaskTitle = (id: string, title: string) => {
     const task = tasks.find(t => t.id === id)
