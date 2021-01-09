@@ -36,7 +36,7 @@ export const CardHeader: React.FC<CardHeaderPropsType> = React.memo((
   )
 
   return (
-   <div>
+   <div className={s.cardHeaderWrapper}>
 
      <Badge count={taskCount} offset={[7, -7]} className="badge-card-count">
        <div className={s.cardText}>{cardName}</div>

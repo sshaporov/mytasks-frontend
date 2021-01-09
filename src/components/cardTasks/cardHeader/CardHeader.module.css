@@ -1,13 +1,8 @@
+.cardHeaderWrapper {
+    display: flex;
+    justify-content: space-between;
+}
 .cardText {
     font-size: 20px;
     font-weight: 500;
-}
-.dropdownBtn {
-    outline: none;
-    border: black;
-}
-.badge {
-    background-color: #fff;
-    color: #999;
-    box-shadow: 0 0 0 1px #d9d9d9 inset;
 }
