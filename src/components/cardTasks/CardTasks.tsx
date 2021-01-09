@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react'
+import React, {useCallback} from 'react'
 import {FilterValueType, TaskType} from '../../App'
 import {Task} from './task/Task'
 import {DEV_VERSION} from '../../config'
@@ -32,14 +32,14 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   }
 ) => {
   DEV_VERSION && console.log('CardTasks ', cardName)
+  console.log('CardTasks TASKS', tasks)
 
   // функция для подсчета процента выполненых тасок
   const countTaskProgress = () => {
     const doneCount = tasks.reduce((acc, t) => acc + Number(t.isDone), 0)
     return Math.ceil(100 / tasks.length * doneCount)
   }
-  // вызываем/считаем процент, оборачиваем в useMemo для кеширования значения и передаем в компоненту
-  const progress = useMemo(() => countTaskProgress(), [tasks])
+
 
   // подбираем cardId в текущей компоненте и передаем вверх колбэк
   const changeFilterHandler = (filterValue: FilterValueType) => {
@@ -66,7 +66,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
     <div className={s.cardsWrapper}>
       <Card style={{width: 300, margin: 20, borderRadius: 7, boxShadow: '0px 0px 5px 1px rgba(208, 216, 243, 0.5)'}}>
         <CardHeader cardName={'Travel list'} taskCount={tasks.length}/>
-        <CardProgressBar progress={progress}/>
+        <CardProgressBar progress={countTaskProgress()}/>
 
         <Divider/>
 
