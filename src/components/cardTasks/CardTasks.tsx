@@ -1,10 +1,10 @@
-import React, {useMemo, useState} from 'react'
+import React, {useMemo} from 'react'
 import {FilterValueType, TaskType} from '../../App'
 import {Task} from './task/Task'
 import {DEV_VERSION} from '../../config'
 import {CardHeader} from './cardHeader/CardHeader'
 import { CardProgressBar } from './cardProgressBar/CardProgressBar'
-import { Divider } from 'antd'
+import {Card, Divider } from 'antd'
 import {AddTask} from './addTask/AddTask';
 import {FilterTasks} from './filterTasks/FilterTasks';
 
@@ -32,15 +32,16 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
 ) => {
   DEV_VERSION && console.log('CardTasks ', cardName)
 
-  //useMemo
+  // функция для подсчета процента выполненых тасок
   const countTaskProgress = () => {
     const doneCount = tasks.reduce((acc, t) => acc + Number(t.isDone), 0)
     return Math.ceil(100 / tasks.length * doneCount)
   }
+  // вызываем/считаем процент, оборачиваем в useMemo для кеширования значения и передаем в компоненту
   const progress = useMemo(() => countTaskProgress(), [tasks])
 
   return (
-    <div>
+    <Card style={{width: 300, borderRadius: 7}}>
       <CardHeader cardName={'Travel list'} taskCount={tasks.length}/>
       <CardProgressBar progress={progress}/>
 
@@ -61,6 +62,6 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
 
       <FilterTasks changeFilter={changeFilter}/>
 
-    </div>
+    </Card>
   )
 })

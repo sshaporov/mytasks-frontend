@@ -14,11 +14,14 @@ export const FilterTasks: React.FC<FilterTasksPropsType> = React.memo((
 ) => {
   DEV_VERSION && console.log('Filter tasks')
 
+  // добавление стиля для растягивания кнопок по ширине (тк родительский div - flex)
+  const styles = {flex: 1}
+
   return (
     <div className={s.filterBtnWrapper}>
-        <Button onClick={() => changeFilter('ALL')}>All</Button>
-        <Button onClick={() => changeFilter('ACTIVE')}>Active</Button>
-        <Button onClick={() => changeFilter('DONE')}>Done</Button>
+        <Button onClick={() => changeFilter('ALL')} style={styles}>All</Button>
+        <Button onClick={() => changeFilter('ACTIVE')} style={styles}>Active</Button>
+        <Button onClick={() => changeFilter('DONE')} style={styles}>Done</Button>
     </div>
   )
 })
