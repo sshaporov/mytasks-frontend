@@ -1,5 +1,5 @@
 import {Button, Checkbox, Dropdown, Menu} from 'antd'
-import React, {useState} from 'react'
+import React, {useCallback, useState} from 'react'
 import {TaskType} from '../../../App'
 import {DEV_VERSION} from '../../../config'
 import {EditableTask} from './editableSpan/EditableTask'
@@ -24,19 +24,21 @@ export const Task: React.FC<TaskPropsType> = React.memo((
 
   const [editMode, setEditMode] = useState<boolean>(false)
 
-  const setEditModeHandler = (value: boolean) => {
+  const setEditModeHandler = useCallback((value: boolean) => {
     setEditMode(value)
-  }
+  },[])
 
-  const onChangeTaskTitle = (text: string) => {
+  const onChangeTaskTitle = useCallback((text: string) => {
     changeTaskTitle(task.id, text)
-  }
-  const onMarkTask = () => {
+  },[])
+
+  const onMarkTask = useCallback(() => {
     markTask(task.id)
-  }
-  const onRemoveTask = () => {
+  },[])
+
+  const onRemoveTask = useCallback(() => {
     removeTask(task.id)
-  }
+  },[])
 
 
   const menu = (
