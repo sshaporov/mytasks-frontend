@@ -5,24 +5,25 @@ import {DEV_VERSION} from '../../config'
 import {CardHeader} from './cardHeader/CardHeader'
 import { CardProgressBar } from './cardProgressBar/CardProgressBar'
 import {Card, Divider } from 'antd'
-import {AddTask} from './addTask/AddTask';
-import {FilterTasks} from './filterTasks/FilterTasks';
+import {AddTask} from './addTask/AddTask'
+import {FilterTasks} from './filterTasks/FilterTasks'
+import s from './CardTasks.module.css'
 
 export type CardTasksPropsType = {
+  cardId: string
   cardName: string
   tasks: Array<TaskType>
-  filterTasks: Array<TaskType>
   changeTaskTitle: (id: string, title: string) => void
   markTask: (id: string) => void
   removeTask: (id: string) => void
   addTask: (title: string) => void
-  changeFilter: (value: FilterValueType) => void
+  changeFilter: (value: FilterValueType, cardId: string) => void
 }
 export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   {
+    cardId,
     cardName,
     tasks,
-    filterTasks,
     changeTaskTitle,
     markTask,
     removeTask,
@@ -40,28 +41,34 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   // вызываем/считаем процент, оборачиваем в useMemo для кеширования значения и передаем в компоненту
   const progress = useMemo(() => countTaskProgress(), [tasks])
 
+  // подбираем cardId в текущей компоненте и передаем вверх колбэк
+  const changeFilterHandler = (filterValue: FilterValueType) => {
+    changeFilter(filterValue, cardId)
+  }
+
   return (
-    <Card style={{width: 300, borderRadius: 7}}>
-      <CardHeader cardName={'Travel list'} taskCount={tasks.length}/>
-      <CardProgressBar progress={progress}/>
+    <div className={s.cardsWrapper}>
+      <Card style={{width: 300, margin: 20, borderRadius: 7, boxShadow: '0px 0px 5px 1px rgba(208, 216, 243, 0.5)'}}>
+        <CardHeader cardName={'Travel list'} taskCount={tasks.length}/>
+        <CardProgressBar progress={progress}/>
 
-      <Divider />
+        <Divider/>
 
-      {filterTasks.map(t =>
-        <Task
-          key={t.id}
-          task={t}
-          changeTaskTitle={changeTaskTitle}
-          markTask={markTask}
-          removeTask={removeTask}
-        />)}
+        {tasks.map(t => <Task
+                          key={t.id}
+                          task={t}
+                          changeTaskTitle={changeTaskTitle}
+                          markTask={markTask}
+                          removeTask={removeTask}
+                        />)}
 
-      <AddTask addTask={addTask} />
+        <AddTask addTask={addTask}/>
 
-      <Divider />
+        <Divider/>
 
-      <FilterTasks changeFilter={changeFilter}/>
+        <FilterTasks changeFilter={changeFilterHandler}/>
 
-    </Card>
+      </Card>
+    </div>
   )
 })
