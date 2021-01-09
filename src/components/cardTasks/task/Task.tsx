@@ -35,7 +35,7 @@ export const Task: React.FC<TaskPropsType> = React.memo((
     changeTaskTitle(id, newTitle)
   },[])
 
-  const onMarkTaskHandler = useCallback(() => {
+  const markTaskHandler = useCallback(() => {
     markTask(id)
   },[])
 
@@ -46,7 +46,7 @@ export const Task: React.FC<TaskPropsType> = React.memo((
 
   const menu = (
     <Menu onClick={() => {}}>
-      <Menu.Item key="1" icon={<CheckOutlined/>} onClick={onMarkTaskHandler}>
+      <Menu.Item key="1" icon={<CheckOutlined/>} onClick={markTaskHandler}>
         Marked
       </Menu.Item>
       <Menu.Item key="2" icon={<EditOutlined/>} onClick={() => setEditMode(true)}>
@@ -64,7 +64,7 @@ export const Task: React.FC<TaskPropsType> = React.memo((
     <div className={s.cardWrapper}>
 
       <div>
-        <Checkbox checked={isDone} onClick={onMarkTaskHandler} style={{marginLeft: 10, marginRight: 10}}/>
+        <Checkbox checked={isDone} onClick={markTaskHandler} style={{marginLeft: 10, marginRight: 10}}/>
         <EditableTask value={title}
                       changeValue={onChangeTaskTitle}
                       editMode={editMode}

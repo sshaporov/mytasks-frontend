@@ -6,16 +6,24 @@ import { PlusOutlined, EditOutlined, InboxOutlined, DeleteOutlined, EllipsisOutl
 import './imp-ant-badge.css'
 
 export type CardHeaderPropsType = {
-  cardName: string
+  // cardId: string
+  cardTitle: string
   taskCount: number
+  removeCard: () => void
 }
 export const CardHeader: React.FC<CardHeaderPropsType> = React.memo((
   {
-    cardName,
-    taskCount
+    // cardId,
+    cardTitle,
+    taskCount,
+    removeCard,
   }
 ) => {
   DEV_VERSION && console.log('CardHeader')
+
+  const onClickRemoveDropdown = () => {
+    removeCard()
+  }
 
   const menu = (
     <Menu onClick={() => {}}>
@@ -29,7 +37,7 @@ export const CardHeader: React.FC<CardHeaderPropsType> = React.memo((
         Archive
       </Menu.Item>
       <Menu.Divider/>
-      <Menu.Item key="4" danger icon={<DeleteOutlined />}>
+      <Menu.Item key="4" danger icon={<DeleteOutlined />} onClick={onClickRemoveDropdown}>
         Remove
       </Menu.Item>
     </Menu>
@@ -39,7 +47,7 @@ export const CardHeader: React.FC<CardHeaderPropsType> = React.memo((
    <div className={s.cardHeaderWrapper}>
 
      <Badge count={taskCount} offset={[7, -7]} className="badge-card-count">
-       <div className={s.cardText}>{cardName}</div>
+       <div className={s.cardText}>{cardTitle}</div>
      </Badge>
 
      <Dropdown overlay={menu} trigger={['click']}>

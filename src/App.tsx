@@ -84,6 +84,10 @@ const App = () => {
     }
   }
 
+  const removeCard = (cardId: string) => {
+    setCards(cards.filter(c => c.id !== cardId))
+  }
+
   return (
     <div>
       {cards.map(c => {
@@ -97,6 +101,7 @@ const App = () => {
         return <CardTasks
                   cardId={c.id}
                   cardTitle={c.title}
+                  removeCard={removeCard}
                   tasks={tasksForCard}
                   changeTaskTitle={changeTaskTitle}
                   markTask={markTask}

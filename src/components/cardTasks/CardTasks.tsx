@@ -12,6 +12,7 @@ import s from './CardTasks.module.css'
 export type CardTasksPropsType = {
   cardId: string
   cardTitle: string
+  removeCard: (id: string) => void
   tasks: Array<TaskType>
   changeTaskTitle: (taskId: string, title: string, cardId: string) => void
   markTask: (taskId: string, cardId: string) => void
@@ -23,6 +24,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   {
     cardId,
     cardTitle,
+    removeCard,
     tasks,
     changeTaskTitle,
     markTask,
@@ -39,7 +41,6 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
     const doneCount = tasks.reduce((acc, t) => acc + Number(t.isDone), 0)
     return Math.ceil(100 / tasks.length * doneCount)
   }
-
 
   // подбираем cardId в текущей компоненте и передаем вверх колбэк
   const changeFilterHandler = (filterValue: FilterValueType) => {
@@ -62,10 +63,19 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
     changeTaskTitle(taskId, title, cardId)
   },[])
 
+  const removeCardHandler = () => {
+    removeCard(cardId)
+  }
+
   return (
     <div className={s.cardsWrapper}>
       <Card style={{width: 300, margin: 20, borderRadius: 7, boxShadow: '0px 0px 5px 1px rgba(208, 216, 243, 0.5)'}}>
-        <CardHeader cardName={cardTitle} taskCount={tasks.length}/>
+        <CardHeader
+          cardTitle={cardTitle}
+          // cardId={cardId}
+          taskCount={tasks.length}
+          removeCard={removeCardHandler}
+        />
         <CardProgressBar progress={countTaskProgress()}/>
 
         <Divider/>
