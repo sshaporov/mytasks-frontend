@@ -4,11 +4,15 @@ import {v1} from 'uuid'
 import {CardTasks} from './components/cardTasks/CardTasks'
 import {AddCard} from './components/cardTasks/addCard/AddCard';
 import {Card} from 'antd';
+import {AddTask} from './components/cardTasks/addTask/AddTask';
 
 export type TaskType = {
   id: string,
   title: string,
   isDone: boolean,
+}
+export type TasksType = {
+  [key: string]: Array<TaskType>
 }
 export type FilterValueType = 'ALL' | 'DONE' | 'ACTIVE'
 
@@ -22,16 +26,16 @@ const App = () => {
     {id: cardId2, title: 'Travel list', filter: 'ALL'},
   ])
 
-  const [tasks, setTasks] = useState(
+  const [tasks, setTasks] = useState<TasksType>(
     {
       [cardId1]:
         [{id: v1(), title: 'FrontEnd', isDone: true},
-        {id: v1(), title: 'BackEnd', isDone: false},
-        {id: v1(), title: 'Mobile', isDone: true},
-        {id: v1(), title: 'DB', isDone: false},
-        {id: v1(), title: 'Rest', isDone: true},
-        {id: v1(), title: 'WebSocket', isDone: false},
-        {id: v1(), title: 'Unit', isDone: true}],
+          {id: v1(), title: 'BackEnd', isDone: false},
+          {id: v1(), title: 'Mobile', isDone: true},
+          {id: v1(), title: 'DB', isDone: false},
+          {id: v1(), title: 'Rest', isDone: true},
+          {id: v1(), title: 'WebSocket', isDone: false},
+          {id: v1(), title: 'Unit', isDone: true}],
       [cardId2]:
         [{id: v1(), title: 'Passport', isDone: true},
         {id: v1(), title: 'Tickets', isDone: false},
@@ -80,11 +84,21 @@ const App = () => {
       card.filter = value
       setCards([...cards])
     }
-  },[cards])
+  }, [cards])
 
   const removeCard = useCallback((cardId: string) => {
     setCards(cards.filter(c => c.id !== cardId))
-  },[cards])
+  }, [cards])
+
+  const addCard = (cardTitle: string) => {
+    const newCardId = v1()
+    const newCard = {id: newCardId, title: cardTitle, filter: 'ALL'}
+    setCards([...cards, newCard])
+    setTasks({
+      ...tasks,
+      [newCardId]: []
+    })
+  }
 
   return (
     <div>
@@ -110,7 +124,7 @@ const App = () => {
       }
 
       <Card style={{width: 300, margin: 20, borderRadius: 7, boxShadow: '0px 0px 5px 1px rgba(208, 216, 243, 0.5)'}}>
-        <AddCard/>
+        <AddTask addTask={addCard}/>
       </Card>
 
     </div>
