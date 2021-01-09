@@ -70,23 +70,21 @@ const App = () => {
   const addTask = useCallback((taskTitle: string, cardId: string) => {
     const task = {id: v1(), title: taskTitle, isDone: false}
     const tasksByCardId = tasks[cardId]
-    // const newArrCardsByTaskId = [...cardsByTaskId]
-    // newArrCardsByTaskId.push(task)
     tasks[cardId] = [...tasksByCardId, task]
     setTasks({...tasks})
   }, [tasks])
 
-  const changeFilter = (value: FilterValueType, cardId: string) => {
+  const changeFilter = useCallback((value: FilterValueType, cardId: string) => {
     const card = cards.find(c => c.id === cardId)
     if (card) {
       card.filter = value
       setCards([...cards])
     }
-  }
+  },[cards])
 
-  const removeCard = (cardId: string) => {
+  const removeCard = useCallback((cardId: string) => {
     setCards(cards.filter(c => c.id !== cardId))
-  }
+  },[cards])
 
   return (
     <div>

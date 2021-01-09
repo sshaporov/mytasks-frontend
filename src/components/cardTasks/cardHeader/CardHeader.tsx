@@ -1,19 +1,17 @@
 import {DEV_VERSION} from '../../../config'
-import React from 'react'
+import React, {useCallback} from 'react'
 import { Badge, Button, Dropdown, Menu } from 'antd'
 import s from './CardHeader.module.css'
 import { PlusOutlined, EditOutlined, InboxOutlined, DeleteOutlined, EllipsisOutlined } from '@ant-design/icons'
 import './imp-ant-badge.css'
 
 export type CardHeaderPropsType = {
-  // cardId: string
   cardTitle: string
   taskCount: number
   removeCard: () => void
 }
 export const CardHeader: React.FC<CardHeaderPropsType> = React.memo((
   {
-    // cardId,
     cardTitle,
     taskCount,
     removeCard,
@@ -21,9 +19,9 @@ export const CardHeader: React.FC<CardHeaderPropsType> = React.memo((
 ) => {
   DEV_VERSION && console.log('CardHeader')
 
-  const onClickRemoveDropdown = () => {
+  const onClickRemoveDropdown = useCallback(() => {
     removeCard()
-  }
+  },[])
 
   const menu = (
     <Menu onClick={() => {}}>

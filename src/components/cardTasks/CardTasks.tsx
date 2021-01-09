@@ -43,9 +43,9 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   }
 
   // подбираем cardId в текущей компоненте и передаем вверх колбэк
-  const changeFilterHandler = (filterValue: FilterValueType) => {
+  const changeFilterHandler = useCallback((filterValue: FilterValueType) => {
     changeFilter(filterValue, cardId)
-  }
+  },[])
 
   const removeTaskHandler = useCallback((taskId: string) => {
     removeTask(taskId, cardId)
@@ -63,16 +63,15 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
     changeTaskTitle(taskId, title, cardId)
   },[])
 
-  const removeCardHandler = () => {
+  const removeCardHandler = useCallback(() => {
     removeCard(cardId)
-  }
+  },[])
 
   return (
     <div className={s.cardsWrapper}>
       <Card style={{width: 300, margin: 20, borderRadius: 7, boxShadow: '0px 0px 5px 1px rgba(208, 216, 243, 0.5)'}}>
         <CardHeader
           cardTitle={cardTitle}
-          // cardId={cardId}
           taskCount={tasks.length}
           removeCard={removeCardHandler}
         />
