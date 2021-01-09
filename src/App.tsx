@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import './App.css'
 import {DEV_VERSION} from './config'
 import {v1} from 'uuid'
@@ -11,7 +11,7 @@ export type TaskType = {
 }
 export type FilterValueType = 'ALL' | 'DONE' | 'ACTIVE'
 
-const App = () => {
+const App = React.memo(() => {
   DEV_VERSION && console.log('App');
 
   const [filterValue, setFilterValue] = useState<FilterValueType>('ALL')
@@ -31,36 +31,36 @@ const App = () => {
     setFilterTasks([...tasks])
   }, [tasks])
 
-  const changeTaskTitle = (id: string, title: string) => {
+  const changeTaskTitle = useCallback((id: string, title: string) => {
     const task = tasks.find(t => t.id === id)
     if (task) {
       task.title = title
       setTasks([...tasks])
     }
-  }
+  },[tasks])
 
-  const markTask = (id: string) => {
+  const markTask = useCallback((id: string) => {
     const task = tasks.find(t => t.id === id)
     if (task) {
       task.isDone = !task.isDone
       setTasks([...tasks])
     }
-  }
+  },[tasks])
 
-  const removeTask = (id: string) => {
+  const removeTask = useCallback((id: string) => {
     setTasks(tasks.filter(t => t.id !== id))
-  }
+  },[tasks])
 
-  const addTask = (title: string) => {
+  const addTask = useCallback((title: string) => {
     const task: TaskType = {id: v1(), title, isDone: false}
     const newArr = [...tasks]
     newArr.push(task)
     setTasks(newArr)
-  }
+  },[tasks])
 
-  const changeFilter = (value: FilterValueType) => {
+  const changeFilter = useCallback((value: FilterValueType) => {
     setFilterValue(value)
-  }
+  },[])
 
   // filter display logic
   let tasksForFilterDisplaying = filterTasks
@@ -82,6 +82,6 @@ const App = () => {
       />
     </div>
   )
-}
+})
 
 export default App;

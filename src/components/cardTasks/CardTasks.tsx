@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useMemo, useState} from 'react'
 import {FilterValueType, TaskType} from '../../App'
 import {Task} from './task/Task'
 import {DEV_VERSION} from '../../config'
@@ -37,11 +37,12 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
     const doneCount = tasks.reduce((acc, t) => acc + Number(t.isDone), 0)
     return Math.ceil(100 / tasks.length * doneCount)
   }
+  const progress = useMemo(() => countTaskProgress(), [tasks])
 
   return (
     <div>
       <CardHeader cardName={'Travel list'} taskCount={tasks.length}/>
-      <CardProgressBar progress={countTaskProgress()}/>
+      <CardProgressBar progress={progress}/>
 
       <Divider />
 

@@ -22,13 +22,17 @@ export const AddTask: React.FC<AddTaskPropsType> = React.memo((
     setTaskTitle(e.currentTarget.value)
   },[taskTitle])
 
-  const onBlurAddingTaskItem = () => {
+  const onBlurAddingTaskItem = useCallback(() => {
     if(taskTitle !== '') {
       addTask(taskTitle)
       setTaskTitle('')
     }
     setIsAdding(false)
-  }
+  },[taskTitle])
+
+  const onClickAddBtn = useCallback(() => {
+    setIsAdding(true)
+  },[isAdding])
 
   return (
     <div>
@@ -50,7 +54,7 @@ export const AddTask: React.FC<AddTaskPropsType> = React.memo((
             type="text"
             icon={<PlusCircleOutlined/>}
             block
-            onClick={() => setIsAdding(true)}
+            onClick={onClickAddBtn}
           >Add task</Button>
       }
 
