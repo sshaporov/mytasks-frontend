@@ -8,9 +8,9 @@ import s from './Task.module.css'
 
 export type TaskPropsType = {
   task: TaskType
-  changeTaskTitle: (id: string, title: string) => void
-  markTask: (id: string) => void
-  removeTask: (id: string) => void
+  changeTaskTitle: (taskId: string, title: string) => void
+  markTask: (taskId: string) => void
+  removeTask: (taskId: string) => void
 }
 export const Task: React.FC<TaskPropsType> = React.memo((
   {
@@ -28,8 +28,8 @@ export const Task: React.FC<TaskPropsType> = React.memo((
     setEditMode(value)
   },[])
 
-  const onChangeTaskTitle = useCallback((text: string) => {
-    changeTaskTitle(task.id, text)
+  const onChangeTaskTitle = useCallback((title: string) => {
+    changeTaskTitle(task.id, title)
   },[])
 
   const onMarkTask = useCallback(() => {

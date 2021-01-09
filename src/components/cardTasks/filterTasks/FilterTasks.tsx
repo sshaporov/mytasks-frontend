@@ -14,10 +14,6 @@ export const FilterTasks: React.FC<FilterTasksPropsType> = React.memo((
 ) => {
   DEV_VERSION && console.log('Filter tasks')
 
-  const onClickFilterBtn = () => {
-    changeFilter
-  }
-
   // добавление стиля для растягивания кнопок по ширине (тк родительский div - flex)
   const styles = {flex: 1}
 

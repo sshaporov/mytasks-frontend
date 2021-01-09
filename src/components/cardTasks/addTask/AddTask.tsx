@@ -5,7 +5,7 @@ import {PlusCircleOutlined} from '@ant-design/icons'
 import s from './AddTask.module.css'
 
 export type AddTaskPropsType = {
-  addTask: (title: string) => void
+  addTask: (taskTitle: string) => void
 }
 
 export const AddTask: React.FC<AddTaskPropsType> = React.memo((
