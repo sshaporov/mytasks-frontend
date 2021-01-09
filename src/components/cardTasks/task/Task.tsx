@@ -1,5 +1,5 @@
 import {Button, Checkbox, Dropdown, Menu} from 'antd'
-import React from 'react'
+import React, {useState} from 'react'
 import {TaskType} from '../../../App'
 import {DEV_VERSION} from '../../../config'
 import {EditableTask} from './editableSpan/EditableTask'
@@ -22,6 +22,12 @@ export const Task: React.FC<TaskPropsType> = React.memo((
 ) => {
   DEV_VERSION && console.log('Task ', task.title)
 
+  const [editMode, setEditMode] = useState<boolean>(false)
+
+  const setEditModeHandler = (value: boolean) => {
+    setEditMode(value)
+  }
+
   const onChangeTaskTitle = (text: string) => {
     changeTaskTitle(task.id, text)
   }
@@ -31,12 +37,14 @@ export const Task: React.FC<TaskPropsType> = React.memo((
   const onRemoveTask = () => {
     removeTask(task.id)
   }
+
+
   const menu = (
     <Menu onClick={() => {}}>
       <Menu.Item key="1" icon={<CheckOutlined/>} onClick={onMarkTask}>
         Marked
       </Menu.Item>
-      <Menu.Item key="2" icon={<EditOutlined/>}>
+      <Menu.Item key="2" icon={<EditOutlined/>} onClick={() => setEditMode(true)}>
         Edit
       </Menu.Item>
       <Menu.Divider/>
@@ -52,7 +60,11 @@ export const Task: React.FC<TaskPropsType> = React.memo((
 
       <div>
         <Checkbox checked={task.isDone} onClick={onMarkTask} style={{marginLeft: 10, marginRight: 10}}/>
-        <EditableTask value={task.title} changeValue={onChangeTaskTitle}/>
+        <EditableTask value={task.title}
+                      changeValue={onChangeTaskTitle}
+                      editMode={editMode}
+                      setEditMode={setEditModeHandler}
+        />
       </div>
 
       <Dropdown overlay={menu} trigger={['click']}>

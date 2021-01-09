@@ -1,23 +1,26 @@
-import React, {ChangeEvent, useState} from 'react'
+import React, {ChangeEvent, useEffect, useState} from 'react'
 
 type EditableSpanPropsType = {
   value: string
   changeValue: (value: string) => void
+  editMode: boolean,
+  setEditMode: (flag: boolean) => void
 }
 
 export const EditableTask: React.FC<EditableSpanPropsType> = React.memo((
   {
     value,
-    changeValue
+    changeValue,
+    editMode,
+    setEditMode,
   }
 ) => {
-  let [editMode, setEditMode] = useState<boolean>(false)
   let [title, setTitle] = useState<string>(value)
 
-  const activatedEditMode = () => {
+  const onDoubleClickSpan = () => {
     setEditMode(true)
   }
-  const deActivatedEditMode = () => {
+  const onBlurInput = () => {
     setEditMode(false)
     changeValue(title)
   }
@@ -29,7 +32,7 @@ export const EditableTask: React.FC<EditableSpanPropsType> = React.memo((
     ? <input
         value={title}
         onChange={onChangeHandler}
-        onBlur={deActivatedEditMode}
+        onBlur={onBlurInput}
         autoFocus={true}/>
-    : <span onDoubleClick={activatedEditMode}>{value}</span>
+    : <span onDoubleClick={onDoubleClickSpan}>{value}</span>
 })
