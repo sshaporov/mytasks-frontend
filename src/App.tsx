@@ -12,7 +12,7 @@ export type TaskType = {
 }
 export type FilterValueType = 'ALL' | 'DONE' | 'ACTIVE'
 
-const App = React.memo(() => {
+const App = () => {
   DEV_VERSION && console.log('App');
 
   const cardId1 = v1()
@@ -38,7 +38,7 @@ const App = React.memo(() => {
         {id: v1(), title: 'Country', isDone: true},
         {id: v1(), title: 'Hotel', isDone: false},
         {id: v1(), title: 'Airline', isDone: true},
-        {id: v1(), title: 'bus', isDone: false}]
+        {id: v1(), title: 'bus', isDone: false}],
     }
   )
 
@@ -52,13 +52,14 @@ const App = React.memo(() => {
   }, [tasks])
 
   const markTask = useCallback((taskId: string, cardId: string) => {
+    //debugger
     const tasksByCardId = tasks[cardId]
     const task = tasksByCardId.find(t => t.id === taskId)
     if (task) {
       task.isDone = !task.isDone
       setTasks({...tasks})
     }
-  },[tasks])
+  }, [])
 
   const removeTask = useCallback((taskId: string, cardId: string) => {
     const tasksByCardId = tasks[cardId]
@@ -67,7 +68,7 @@ const App = React.memo(() => {
   }, [tasks])
 
   const addTask = useCallback((taskTitle: string, cardId: string) => {
-    const task: TaskType = {id: v1(), title: taskTitle, isDone: false}
+    const task = {id: v1(), title: taskTitle, isDone: false}
     const tasksByCardId = tasks[cardId]
     // const newArrCardsByTaskId = [...cardsByTaskId]
     // newArrCardsByTaskId.push(task)
@@ -89,7 +90,9 @@ const App = React.memo(() => {
 
         // filter display logic
         let allTasksByCardId = tasks[c.id]
+        console.log('allTasksByCardId', allTasksByCardId)
         let tasksForCard = allTasksByCardId
+        console.log('tasksForCard', tasksForCard)
         if (c.filter === 'DONE') tasksForCard = allTasksByCardId.filter(t => t.isDone)
         if (c.filter === 'ACTIVE') tasksForCard = allTasksByCardId.filter(t => !t.isDone)
 
@@ -111,6 +114,6 @@ const App = React.memo(() => {
 
     </div>
   )
-})
+}
 
 export default App;

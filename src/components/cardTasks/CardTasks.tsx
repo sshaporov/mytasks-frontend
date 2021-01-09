@@ -72,7 +72,9 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
 
         {tasks.map(t => <Task
                           key={t.id}
-                          task={t}
+                          id={t.id}
+                          title={t.title}
+                          isDone={t.isDone}
                           changeTaskTitle={changeTaskTitleHandler}
                           markTask={markTaskHandler}
                           removeTask={removeTaskHandler}

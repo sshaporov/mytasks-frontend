@@ -1,26 +1,29 @@
 import {Button, Checkbox, Dropdown, Menu} from 'antd'
 import React, {useCallback, useState} from 'react'
-import {TaskType} from '../../../App'
 import {DEV_VERSION} from '../../../config'
 import {EditableTask} from './editableSpan/EditableTask'
 import {DeleteOutlined, EditOutlined, EllipsisOutlined, CheckOutlined} from '@ant-design/icons'
 import s from './Task.module.css'
 
 export type TaskPropsType = {
-  task: TaskType
+  id: string
+  title: string
+  isDone: boolean
   changeTaskTitle: (taskId: string, title: string) => void
   markTask: (taskId: string) => void
   removeTask: (taskId: string) => void
 }
 export const Task: React.FC<TaskPropsType> = React.memo((
   {
-    task,
+    id,
+    title,
+    isDone,
     changeTaskTitle,
     markTask,
     removeTask
   }
 ) => {
-  DEV_VERSION && console.log('Task ', task.title)
+  DEV_VERSION && console.log('Task ', title)
 
   const [editMode, setEditMode] = useState<boolean>(false)
 
@@ -28,29 +31,29 @@ export const Task: React.FC<TaskPropsType> = React.memo((
     setEditMode(value)
   },[])
 
-  const onChangeTaskTitle = useCallback((title: string) => {
-    changeTaskTitle(task.id, title)
+  const onChangeTaskTitle = useCallback((newTitle: string) => {
+    changeTaskTitle(id, newTitle)
   },[])
 
-  const onMarkTask = useCallback(() => {
-    markTask(task.id)
+  const onMarkTaskHandler = useCallback(() => {
+    markTask(id)
   },[])
 
-  const onRemoveTask = useCallback(() => {
-    removeTask(task.id)
+  const onClickRemoveDropdown = useCallback(() => {
+    removeTask(id)
   },[])
 
 
   const menu = (
     <Menu onClick={() => {}}>
-      <Menu.Item key="1" icon={<CheckOutlined/>} onClick={onMarkTask}>
+      <Menu.Item key="1" icon={<CheckOutlined/>} onClick={onMarkTaskHandler}>
         Marked
       </Menu.Item>
       <Menu.Item key="2" icon={<EditOutlined/>} onClick={() => setEditMode(true)}>
         Edit
       </Menu.Item>
       <Menu.Divider/>
-      <Menu.Item key="3" danger icon={<DeleteOutlined/>} onClick={onRemoveTask}>
+      <Menu.Item key="3" danger icon={<DeleteOutlined/>} onClick={onClickRemoveDropdown}>
         Remove
       </Menu.Item>
     </Menu>
@@ -61,8 +64,8 @@ export const Task: React.FC<TaskPropsType> = React.memo((
     <div className={s.cardWrapper}>
 
       <div>
-        <Checkbox checked={task.isDone} onClick={onMarkTask} style={{marginLeft: 10, marginRight: 10}}/>
-        <EditableTask value={task.title}
+        <Checkbox checked={isDone} onClick={onMarkTaskHandler} style={{marginLeft: 10, marginRight: 10}}/>
+        <EditableTask value={title}
                       changeValue={onChangeTaskTitle}
                       editMode={editMode}
                       setEditMode={setEditModeHandler}
