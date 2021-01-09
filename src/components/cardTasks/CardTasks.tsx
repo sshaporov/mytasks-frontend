@@ -11,7 +11,7 @@ import s from './CardTasks.module.css'
 
 export type CardTasksPropsType = {
   cardId: string
-  cardName: string
+  cardTitle: string
   tasks: Array<TaskType>
   changeTaskTitle: (taskId: string, title: string, cardId: string) => void
   markTask: (taskId: string, cardId: string) => void
@@ -22,7 +22,7 @@ export type CardTasksPropsType = {
 export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   {
     cardId,
-    cardName,
+    cardTitle,
     tasks,
     changeTaskTitle,
     markTask,
@@ -31,7 +31,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
     changeFilter
   }
 ) => {
-  DEV_VERSION && console.log('CardTasks ', cardName)
+  DEV_VERSION && console.log('CardTasks ', cardTitle)
   console.log('CardTasks TASKS', tasks)
 
   // функция для подсчета процента выполненых тасок
@@ -65,7 +65,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   return (
     <div className={s.cardsWrapper}>
       <Card style={{width: 300, margin: 20, borderRadius: 7, boxShadow: '0px 0px 5px 1px rgba(208, 216, 243, 0.5)'}}>
-        <CardHeader cardName={'Travel list'} taskCount={tasks.length}/>
+        <CardHeader cardName={cardTitle} taskCount={tasks.length}/>
         <CardProgressBar progress={countTaskProgress()}/>
 
         <Divider/>
