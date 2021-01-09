@@ -1,3 +1,8 @@
-.addItemWrapper {
-    padding: 0px 10px;
+input {
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #1890ff;
 }

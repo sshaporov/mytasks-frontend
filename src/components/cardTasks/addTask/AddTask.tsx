@@ -39,15 +39,15 @@ export const AddTask: React.FC<AddTaskPropsType> = React.memo((
 
       {isAdding
 
-        ? <div className={s.addItemWrapper} onBlur={onBlurAddingTaskItem}>
-            <Space>
-              <Checkbox disabled/>
+        ? <div onBlur={onBlurAddingTaskItem}>
+              <Checkbox disabled style={{marginLeft: 10, marginRight: 10}}/>
               <input
+                // s.customInput - не используется, для сброса дефолтных стилей см AddTask.module.css тег класс input
+                className={s.customInput}
                 onChange={onChangeTaskTitle}
                 value={taskTitle}
                 autoFocus
               />
-            </Space>
           </div>
 
         : <Button

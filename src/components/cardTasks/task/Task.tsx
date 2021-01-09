@@ -1,4 +1,4 @@
-import {Button, Checkbox, Dropdown, Menu, Space} from 'antd'
+import {Button, Checkbox, Dropdown, Menu} from 'antd'
 import React from 'react'
 import {TaskType} from '../../../App'
 import {DEV_VERSION} from '../../../config'
@@ -33,10 +33,10 @@ export const Task: React.FC<TaskPropsType> = React.memo((
   }
   const menu = (
     <Menu onClick={() => {}}>
-      <Menu.Item key="1" icon={<CheckOutlined />} onClick={onMarkTask}>
+      <Menu.Item key="1" icon={<CheckOutlined/>} onClick={onMarkTask}>
         Marked
       </Menu.Item>
-      <Menu.Item key="2" icon={<EditOutlined />}>
+      <Menu.Item key="2" icon={<EditOutlined/>}>
         Edit
       </Menu.Item>
       <Menu.Divider/>
@@ -47,9 +47,9 @@ export const Task: React.FC<TaskPropsType> = React.memo((
   )
 
   return (
+    // обрачиваем в div чтобы на флексах выровнять чекбокс, спан и меню
     <div className={s.cardWrapper}>
 
-      {/*<Space>*/}
       <div>
         <Checkbox checked={task.isDone} onClick={onMarkTask} style={{marginLeft: 10, marginRight: 10}}/>
         <EditableTask value={task.title} changeValue={onChangeTaskTitle}/>
@@ -58,8 +58,6 @@ export const Task: React.FC<TaskPropsType> = React.memo((
       <Dropdown overlay={menu} trigger={['click']}>
         <Button icon={<EllipsisOutlined/>} type={'text'}/>
       </Dropdown>
-
-      {/*</Space>*/}
 
     </div>
   )
