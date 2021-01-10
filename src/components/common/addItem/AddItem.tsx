@@ -18,21 +18,21 @@ export const AddItem: React.FC<AddTaskPropsType> = React.memo((
   const [isAdding, setIsAdding] = useState<boolean>(false)
   const [itemTitle, setItemTitle] = useState<string>('')
 
-  const onChangeTaskTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeTaskTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setItemTitle(e.currentTarget.value)
-  },[itemTitle])
+  }
 
-  const onBlurAddingTaskItem = useCallback(() => {
+  const onBlurAddingTaskItem = () => {
     if(itemTitle !== '') {
       addItem(itemTitle)
       setItemTitle('')
     }
     setIsAdding(false)
-  },[itemTitle])
+  }
 
-  const onClickAddBtn = useCallback(() => {
+  const onClickAddBtn = () => {
     setIsAdding(true)
-  },[isAdding])
+  }
 
   return (
     <div>

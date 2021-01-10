@@ -27,21 +27,21 @@ export const Task: React.FC<TaskPropsType> = React.memo((
 
   const [editMode, setEditMode] = useState<boolean>(false)
 
-  const setEditModeHandler = useCallback((value: boolean) => {
+  const setEditModeHandler = (value: boolean) => {
     setEditMode(value)
-  },[])
+  }
 
-  const onChangeTaskTitle = useCallback((newTitle: string) => {
+  const onChangeTaskTitle = (newTitle: string) => {
     changeTaskTitle(id, newTitle)
-  },[])
+  }
 
-  const markTaskHandler = useCallback(() => {
+  const markTaskHandler = () => {
     markTask(id)
-  },[])
+  }
 
-  const onClickRemoveDropdown = useCallback(() => {
+  const onClickRemoveDropdown = () => {
     removeTask(id)
-  },[])
+  }
 
 
   const menu = (

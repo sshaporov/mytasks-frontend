@@ -43,29 +43,29 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   }
 
   // подбираем cardId в текущей компоненте и передаем вверх колбэк
-  const changeFilterHandler = useCallback((filterValue: FilterValueType) => {
+  const changeFilterHandler = (filterValue: FilterValueType) => {
     changeFilter(filterValue, cardId)
-  },[])
+  }
 
-  const removeTaskHandler = useCallback((taskId: string) => {
+  const removeTaskHandler = (taskId: string) => {
     removeTask(taskId, cardId)
-  },[])
+  }
 
-  const markTaskHandler = useCallback((taskId: string) => {
+  const markTaskHandler = (taskId: string) => {
     markTask(taskId, cardId)
-  },[])
+  }
 
-  const addTaskHandler = useCallback((taskTitle: string) => {
+  const addTaskHandler = (taskTitle: string) => {
     addTask(taskTitle, cardId)
-  },[])
+  }
 
-  const changeTaskTitleHandler = useCallback((taskId: string, title: string) => {
+  const changeTaskTitleHandler = (taskId: string, title: string) => {
     changeTaskTitle(taskId, title, cardId)
-  },[])
+  }
 
-  const removeCardHandler = useCallback(() => {
+  const removeCardHandler = () => {
     removeCard(cardId)
-  },[])
+  }
 
   return (
     <div className={s.cardsWrapper}>

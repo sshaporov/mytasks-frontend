@@ -48,16 +48,16 @@ const App = () => {
     }
   )
 
-  const changeTaskTitle = useCallback((taskId: string, title: string, cardId: string) => {
+  const changeTaskTitle = (taskId: string, title: string, cardId: string) => {
     const tasksByCardId = tasks[cardId]
     const task = tasksByCardId.find(t => t.id === taskId)
     if (task) {
       task.title = title
       setTasks({...tasks})
     }
-  }, [tasks])
+  }
 
-  const markTask = useCallback((taskId: string, cardId: string) => {
+  const markTask = (taskId: string, cardId: string) => {
     //debugger
     const tasksByCardId = tasks[cardId]
     const task = tasksByCardId.find(t => t.id === taskId)
@@ -65,39 +65,39 @@ const App = () => {
       task.isDone = !task.isDone
       setTasks({...tasks})
     }
-  }, [cards, tasks])
+  }
 
-  const removeTask = useCallback((taskId: string, cardId: string) => {
+  const removeTask = (taskId: string, cardId: string) => {
     const tasksByCardId = tasks[cardId]
     tasks[cardId] = tasksByCardId.filter(t => t.id != taskId)
     setTasks({...tasks})
-  }, [cards, tasks])
+  }
 
-  const addTask = useCallback((taskTitle: string, cardId: string) => {
+  const addTask = (taskTitle: string, cardId: string) => {
     const task = {id: v1(), title: taskTitle, isDone: false}
     const tasksByCardId = tasks[cardId]
     tasks[cardId] = [...tasksByCardId, task]
     setTasks({...tasks})
-  }, [cards, tasks])
+  }
 
-  const changeFilter = useCallback((value: FilterValueType, cardId: string) => {
+  const changeFilter = (value: FilterValueType, cardId: string) => {
     const card = cards.find(c => c.id === cardId)
     if (card) {
       card.filter = value
       setCards([...cards])
     }
-  }, [cards, tasks])
+  }
 
-  const removeCard = useCallback((cardId: string) => {
+  const removeCard = (cardId: string) => {
     setCards(cards.filter(c => c.id !== cardId))
-  }, [cards])
+  }
 
-  const addCard = useCallback((cardTitle: string) => {
+  const addCard = (cardTitle: string) => {
     const newCardId = v1()
     const newCard = {id: newCardId, title: cardTitle, filter: 'ALL'}
     setCards([...cards, newCard])
     setTasks({...tasks, [newCardId]: []})
-  }, [cards])
+  }
 
   return (
     <div>

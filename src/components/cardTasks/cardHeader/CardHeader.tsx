@@ -19,9 +19,9 @@ export const CardHeader: React.FC<CardHeaderPropsType> = React.memo((
 ) => {
   DEV_VERSION && console.log('CardHeader')
 
-  const onClickRemoveDropdown = useCallback(() => {
+  const onClickRemoveDropdown = () => {
     removeCard()
-  },[])
+  }
 
   const menu = (
     <Menu onClick={() => {}}>
