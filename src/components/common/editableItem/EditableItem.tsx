@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback, useState} from 'react'
+import React, {ChangeEvent, useState} from 'react'
 import s from './EditableItem.module.css'
 
 type EditableSpanPropsType = {
@@ -20,18 +20,18 @@ export const EditableItem: React.FC<EditableSpanPropsType> = React.memo((
 ) => {
   let [title, setTitle] = useState<string>(value)
 
-  const onDoubleClickSpan = useCallback(() => {
+  const onDoubleClickSpan = () => {
     setEditMode(true)
-  }, [])
+  }
 
-  const onBlurInput = useCallback(() => {
+  const onBlurInput = () => {
     changeValue(title)
     setEditMode(false)
-  }, [title])
+  }
 
-  const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value)
-  }, [])
+  }
 
   return editMode
     ? <input

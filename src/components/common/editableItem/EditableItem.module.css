@@ -5,8 +5,11 @@
 .taskInput {
     font-size: 14px;
     padding: 4px 0;
+    width: 182px;
 }
 .cardInput {
     font-size: 20px;
     font-weight: 500;
+    width: 214px;
+    padding: 2px 0;
 }

@@ -69,7 +69,7 @@ const App = () => {
 
   const removeTask = (taskId: string, cardId: string) => {
     const tasksByCardId = tasks[cardId]
-    tasks[cardId] = tasksByCardId.filter(t => t.id != taskId)
+    tasks[cardId] = tasksByCardId.filter(t => t.id !== taskId)
     setTasks({...tasks})
   }
 
@@ -100,9 +100,11 @@ const App = () => {
   }
 
   const changeCardTitle = (cardId: string, newCardTitle: string) => {
-    console.log('changeCardTitle: ')
-    console.log('cardId', cardId)
-    console.log('newCardTitle', newCardTitle)
+    const card = cards.find(c => c.id === cardId)
+    if (card) {
+      card.title = newCardTitle
+      setCards([...cards])
+    }
   }
 
   return (
@@ -116,6 +118,7 @@ const App = () => {
         if (c.filter === 'ACTIVE') tasksForCard = allTasksByCardId.filter(t => !t.isDone)
 
         return <CardTasks
+                  key={c.id}
                   cardId={c.id}
                   cardTitle={c.title}
                   removeCard={removeCard}
