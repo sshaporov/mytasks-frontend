@@ -1,5 +1,5 @@
 import {DEV_VERSION} from '../../../config'
-import React, {useCallback} from 'react'
+import React from 'react'
 import { Badge, Button, Dropdown, Menu } from 'antd'
 import s from './CardHeader.module.css'
 import { PlusOutlined, EditOutlined, InboxOutlined, DeleteOutlined, EllipsisOutlined } from '@ant-design/icons'

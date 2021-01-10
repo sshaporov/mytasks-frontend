@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react'
+import React, {useState} from 'react'
 import {DEV_VERSION} from './config'
 import {v1} from 'uuid'
 import {CardTasks} from './components/cardTasks/CardTasks'
@@ -123,7 +123,7 @@ const App = () => {
       }
 
       <Card style={{width: 300, margin: 20, borderRadius: 7, boxShadow: '0px 0px 5px 1px rgba(208, 216, 243, 0.5)'}}>
-        <AddItem addItem={addCard}/>
+        <AddItem addItem={addCard} type={'card'}/>
       </Card>
 
     </div>

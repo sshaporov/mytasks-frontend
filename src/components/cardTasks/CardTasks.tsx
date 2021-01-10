@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react'
+import React from 'react'
 import {FilterValueType, TaskType} from '../../App'
 import {Task} from './task/Task'
 import {DEV_VERSION} from '../../config'
@@ -89,7 +89,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
                           removeTask={removeTaskHandler}
                         />)}
 
-        <AddItem addItem={addTaskHandler}/>
+        <AddItem addItem={addTaskHandler} type={'task'}/>
 
         <Divider/>
 

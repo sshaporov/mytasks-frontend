@@ -1,5 +1,5 @@
 import {Button, Checkbox, Dropdown, Menu} from 'antd'
-import React, {useCallback, useState} from 'react'
+import React, {useState} from 'react'
 import {DEV_VERSION} from '../../../config'
 import {EditableTask} from './editableSpan/EditableTask'
 import {DeleteOutlined, EditOutlined, EllipsisOutlined, CheckOutlined} from '@ant-design/icons'

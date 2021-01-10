@@ -1,8 +1,15 @@
 input {
-    font-size: 14px;
     padding: 0;
     margin: 0;
     outline: none;
     border: none;
     border-bottom: 1px solid #1890ff;
+}
+.taskInput {
+    font-size: 14px;
+    padding: 5px 0;
+}
+.cardInput {
+    font-size: 20px;
+    font-weight: 500;
 }
