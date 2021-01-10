@@ -1,7 +1,7 @@
 import {Button, Checkbox, Dropdown, Menu} from 'antd'
 import React, {useState} from 'react'
 import {DEV_VERSION} from '../../../config'
-import {EditableTask} from './editableSpan/EditableTask'
+import {EditableItem} from '../../common/editableItem/EditableItem'
 import {DeleteOutlined, EditOutlined, EllipsisOutlined, CheckOutlined} from '@ant-design/icons'
 import s from './Task.module.css'
 
@@ -31,7 +31,7 @@ export const Task: React.FC<TaskPropsType> = React.memo((
     setEditMode(value)
   }
 
-  const onChangeTaskTitle = (newTitle: string) => {
+  const onChangeTaskTitleHandler = (newTitle: string) => {
     changeTaskTitle(id, newTitle)
   }
 
@@ -65,8 +65,9 @@ export const Task: React.FC<TaskPropsType> = React.memo((
 
       <div>
         <Checkbox checked={isDone} onClick={markTaskHandler} style={{marginLeft: 10, marginRight: 10}}/>
-        <EditableTask value={title}
-                      changeValue={onChangeTaskTitle}
+        <EditableItem value={title}
+                      type={'task'}
+                      changeValue={onChangeTaskTitleHandler}
                       editMode={editMode}
                       setEditMode={setEditModeHandler}
         />

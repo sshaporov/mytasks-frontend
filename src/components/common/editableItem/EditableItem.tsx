@@ -1,14 +1,17 @@
 import React, {ChangeEvent, useCallback, useState} from 'react'
+import s from './EditableItem.module.css'
 
 type EditableSpanPropsType = {
+  type: 'card' | 'task'
   value: string
   changeValue: (value: string) => void
   editMode: boolean,
   setEditMode: (flag: boolean) => void
 }
 
-export const EditableTask: React.FC<EditableSpanPropsType> = React.memo((
+export const EditableItem: React.FC<EditableSpanPropsType> = React.memo((
   {
+    type,
     value,
     changeValue,
     editMode,
@@ -36,6 +39,7 @@ export const EditableTask: React.FC<EditableSpanPropsType> = React.memo((
         onChange={onChangeHandler}
         onBlur={onBlurInput}
         autoFocus={true}
-      />
-    : <span onDoubleClick={onDoubleClickSpan}>{value}</span>
+        className={type === 'task' ? s.taskInput : s.cardInput}
+    />
+    : <span onDoubleClick={onDoubleClickSpan} className={type === 'card' ? s.cardText : undefined}>{value}</span>
 })

@@ -99,6 +99,12 @@ const App = () => {
     setTasks({...tasks, [newCardId]: []})
   }
 
+  const changeCardTitle = (cardId: string, newCardTitle: string) => {
+    console.log('changeCardTitle: ')
+    console.log('cardId', cardId)
+    console.log('newCardTitle', newCardTitle)
+  }
+
   return (
     <div>
       {cards.map(c => {
@@ -113,6 +119,7 @@ const App = () => {
                   cardId={c.id}
                   cardTitle={c.title}
                   removeCard={removeCard}
+                  changeCardTitle={changeCardTitle}
                   tasks={tasksForCard}
                   changeTaskTitle={changeTaskTitle}
                   markTask={markTask}
