@@ -1,34 +1,34 @@
 import React, {ChangeEvent, useCallback, useState} from 'react'
 import {DEV_VERSION} from '../../../config'
-import {Button, Checkbox, Space} from 'antd'
+import {Button, Checkbox} from 'antd'
 import {PlusCircleOutlined} from '@ant-design/icons'
-import s from './AddTask.module.css'
+import s from './AddItem.module.css'
 
 export type AddTaskPropsType = {
-  addTask: (taskTitle: string) => void
+  addItem: (itemTitle: string) => void
 }
 
-export const AddTask: React.FC<AddTaskPropsType> = React.memo((
+export const AddItem: React.FC<AddTaskPropsType> = React.memo((
   {
-    addTask
+    addItem
   }
 ) => {
   DEV_VERSION && console.log('Add task')
 
   const [isAdding, setIsAdding] = useState<boolean>(false)
-  const [taskTitle, setTaskTitle] = useState<string>('')
+  const [itemTitle, setItemTitle] = useState<string>('')
 
   const onChangeTaskTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setTaskTitle(e.currentTarget.value)
-  },[taskTitle])
+    setItemTitle(e.currentTarget.value)
+  },[itemTitle])
 
   const onBlurAddingTaskItem = useCallback(() => {
-    if(taskTitle !== '') {
-      addTask(taskTitle)
-      setTaskTitle('')
+    if(itemTitle !== '') {
+      addItem(itemTitle)
+      setItemTitle('')
     }
     setIsAdding(false)
-  },[taskTitle])
+  },[itemTitle])
 
   const onClickAddBtn = useCallback(() => {
     setIsAdding(true)
@@ -45,7 +45,7 @@ export const AddTask: React.FC<AddTaskPropsType> = React.memo((
                 // s.customInput - не используется, для сброса дефолтных стилей см AddTask.module.css тег класс input
                 className={s.customInput}
                 onChange={onChangeTaskTitle}
-                value={taskTitle}
+                value={itemTitle}
                 autoFocus
               />
           </div>

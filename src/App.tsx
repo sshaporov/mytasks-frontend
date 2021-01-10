@@ -2,9 +2,8 @@ import React, {useCallback, useState} from 'react'
 import {DEV_VERSION} from './config'
 import {v1} from 'uuid'
 import {CardTasks} from './components/cardTasks/CardTasks'
-import {AddCard} from './components/cardTasks/addCard/AddCard';
 import {Card} from 'antd';
-import {AddTask} from './components/cardTasks/addTask/AddTask';
+import {AddItem} from './components/common/addItem/AddItem';
 
 export type TaskType = {
   id: string,
@@ -21,6 +20,7 @@ const App = () => {
 
   const cardId1 = v1()
   const cardId2 = v1()
+
   const [cards, setCards] = useState([
     {id: cardId1, title: 'Learn list', filter: 'ALL'},
     {id: cardId2, title: 'Travel list', filter: 'ALL'},
@@ -28,21 +28,23 @@ const App = () => {
 
   const [tasks, setTasks] = useState<TasksType>(
     {
-      [cardId1]:
-        [{id: v1(), title: 'FrontEnd', isDone: true},
-          {id: v1(), title: 'BackEnd', isDone: false},
-          {id: v1(), title: 'Mobile', isDone: true},
-          {id: v1(), title: 'DB', isDone: false},
-          {id: v1(), title: 'Rest', isDone: true},
-          {id: v1(), title: 'WebSocket', isDone: false},
-          {id: v1(), title: 'Unit', isDone: true}],
-      [cardId2]:
-        [{id: v1(), title: 'Passport', isDone: true},
+      [cardId1]: [
+        {id: v1(), title: 'FrontEnd', isDone: true},
+        {id: v1(), title: 'BackEnd', isDone: false},
+        {id: v1(), title: 'Mobile', isDone: true},
+        {id: v1(), title: 'DB', isDone: false},
+        {id: v1(), title: 'Rest', isDone: true},
+        {id: v1(), title: 'WebSocket', isDone: false},
+        {id: v1(), title: 'Unit', isDone: true}
+      ],
+      [cardId2]: [
+        {id: v1(), title: 'Passport', isDone: true},
         {id: v1(), title: 'Tickets', isDone: false},
         {id: v1(), title: 'Country', isDone: true},
         {id: v1(), title: 'Hotel', isDone: false},
         {id: v1(), title: 'Airline', isDone: true},
-        {id: v1(), title: 'bus', isDone: false}],
+        {id: v1(), title: 'bus', isDone: false}
+      ],
     }
   )
 
@@ -63,20 +65,20 @@ const App = () => {
       task.isDone = !task.isDone
       setTasks({...tasks})
     }
-  }, [])
+  }, [cards, tasks])
 
   const removeTask = useCallback((taskId: string, cardId: string) => {
     const tasksByCardId = tasks[cardId]
     tasks[cardId] = tasksByCardId.filter(t => t.id != taskId)
     setTasks({...tasks})
-  }, [tasks])
+  }, [cards, tasks])
 
   const addTask = useCallback((taskTitle: string, cardId: string) => {
     const task = {id: v1(), title: taskTitle, isDone: false}
     const tasksByCardId = tasks[cardId]
     tasks[cardId] = [...tasksByCardId, task]
     setTasks({...tasks})
-  }, [tasks])
+  }, [cards, tasks])
 
   const changeFilter = useCallback((value: FilterValueType, cardId: string) => {
     const card = cards.find(c => c.id === cardId)
@@ -84,21 +86,18 @@ const App = () => {
       card.filter = value
       setCards([...cards])
     }
-  }, [cards])
+  }, [cards, tasks])
 
   const removeCard = useCallback((cardId: string) => {
     setCards(cards.filter(c => c.id !== cardId))
   }, [cards])
 
-  const addCard = (cardTitle: string) => {
+  const addCard = useCallback((cardTitle: string) => {
     const newCardId = v1()
     const newCard = {id: newCardId, title: cardTitle, filter: 'ALL'}
     setCards([...cards, newCard])
-    setTasks({
-      ...tasks,
-      [newCardId]: []
-    })
-  }
+    setTasks({...tasks, [newCardId]: []})
+  }, [cards])
 
   return (
     <div>
@@ -124,7 +123,7 @@ const App = () => {
       }
 
       <Card style={{width: 300, margin: 20, borderRadius: 7, boxShadow: '0px 0px 5px 1px rgba(208, 216, 243, 0.5)'}}>
-        <AddTask addTask={addCard}/>
+        <AddItem addItem={addCard}/>
       </Card>
 
     </div>

@@ -5,7 +5,7 @@ import {DEV_VERSION} from '../../config'
 import {CardHeader} from './cardHeader/CardHeader'
 import { CardProgressBar } from './cardProgressBar/CardProgressBar'
 import {Card, Divider } from 'antd'
-import {AddTask} from './addTask/AddTask'
+import {AddItem} from '../common/addItem/AddItem'
 import {FilterTasks} from './filterTasks/FilterTasks'
 import s from './CardTasks.module.css'
 
@@ -89,7 +89,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
                           removeTask={removeTaskHandler}
                         />)}
 
-        <AddTask addTask={addTaskHandler}/>
+        <AddItem addItem={addTaskHandler}/>
 
         <Divider/>
 
