@@ -9,14 +9,12 @@ export type CardHeaderPropsType = {
   cardTitle: string
   taskCount: number
   removeCard: () => void
-  duplicateCard: () => void
 }
 export const CardHeader: React.FC<CardHeaderPropsType> = React.memo((
   {
     cardTitle,
     taskCount,
     removeCard,
-    duplicateCard,
   }
 ) => {
   DEV_VERSION && console.log('CardHeader')
@@ -24,17 +22,11 @@ export const CardHeader: React.FC<CardHeaderPropsType> = React.memo((
   const onClickRemoveDropdown = () => {
     removeCard()
   }
-  const onClickDuplicateDropdown = () => {
-    duplicateCard()
-  }
 
   const menu = (
     <Menu onClick={() => {}}>
       <Menu.Item key="2" icon={<EditOutlined />}>
         Edit
-      </Menu.Item>
-      <Menu.Item key="3" icon={<CopyOutlined />} onClick={onClickDuplicateDropdown}>
-        Duplicate
       </Menu.Item>
       <Menu.Divider/>
       <Menu.Item key="4" danger icon={<DeleteOutlined />} onClick={onClickRemoveDropdown}>

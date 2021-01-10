@@ -5,6 +5,10 @@ input {
     border: none;
     border-bottom: 1px solid #1890ff;
 }
+input::placeholder {
+    color: #bcbbbb;
+    font-weight: 400;
+}
 .taskInput {
     font-size: 14px;
     padding: 5px 0;

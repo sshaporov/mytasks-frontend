@@ -32,10 +32,10 @@ export const EditableTask: React.FC<EditableSpanPropsType> = React.memo((
 
   return editMode
     ? <input
-      value={title}
-      onChange={onChangeHandler}
-      onBlur={onBlurInput}
-      autoFocus={true}
-    />
+        value={title}
+        onChange={onChangeHandler}
+        onBlur={onBlurInput}
+        autoFocus={true}
+      />
     : <span onDoubleClick={onDoubleClickSpan}>{value}</span>
 })
