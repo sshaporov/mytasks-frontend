@@ -99,6 +99,17 @@ const App = () => {
     setTasks({...tasks, [newCardId]: []})
   }
 
+  const duplicateCard = (cardId: string) => {
+    const cardByCardId = cards.find(c => c.id === cardId)
+    if(cardByCardId){
+      const tasksByCardId = tasks[cardId]
+      const newCardId = v1()
+      const newCard = {...cardByCardId, id: newCardId}
+      setCards([...cards, newCard])
+      setTasks({...tasks, [newCardId]: tasksByCardId})
+    }
+  }
+
   return (
     <div>
       {cards.map(c => {
@@ -117,6 +128,7 @@ const App = () => {
                   changeTaskTitle={changeTaskTitle}
                   markTask={markTask}
                   removeTask={removeTask}
+                  duplicateCard={duplicateCard}
                   addTask={addTask}
                   changeFilter={changeFilter}
                 />})

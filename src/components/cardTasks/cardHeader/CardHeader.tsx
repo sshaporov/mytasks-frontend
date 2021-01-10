@@ -2,19 +2,21 @@ import {DEV_VERSION} from '../../../config'
 import React from 'react'
 import { Badge, Button, Dropdown, Menu } from 'antd'
 import s from './CardHeader.module.css'
-import { PlusOutlined, EditOutlined, InboxOutlined, DeleteOutlined, EllipsisOutlined } from '@ant-design/icons'
+import { EditOutlined, CopyOutlined, DeleteOutlined, EllipsisOutlined } from '@ant-design/icons'
 import './imp-ant-badge.css'
 
 export type CardHeaderPropsType = {
   cardTitle: string
   taskCount: number
   removeCard: () => void
+  duplicateCard: () => void
 }
 export const CardHeader: React.FC<CardHeaderPropsType> = React.memo((
   {
     cardTitle,
     taskCount,
     removeCard,
+    duplicateCard,
   }
 ) => {
   DEV_VERSION && console.log('CardHeader')
@@ -22,17 +24,17 @@ export const CardHeader: React.FC<CardHeaderPropsType> = React.memo((
   const onClickRemoveDropdown = () => {
     removeCard()
   }
+  const onClickDuplicateDropdown = () => {
+    duplicateCard()
+  }
 
   const menu = (
     <Menu onClick={() => {}}>
-      <Menu.Item key="1" icon={<PlusOutlined />}>
-        Add
-      </Menu.Item>
       <Menu.Item key="2" icon={<EditOutlined />}>
         Edit
       </Menu.Item>
-      <Menu.Item key="3" icon={<InboxOutlined />}>
-        Archive
+      <Menu.Item key="3" icon={<CopyOutlined />} onClick={onClickDuplicateDropdown}>
+        Duplicate
       </Menu.Item>
       <Menu.Divider/>
       <Menu.Item key="4" danger icon={<DeleteOutlined />} onClick={onClickRemoveDropdown}>

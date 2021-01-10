@@ -12,7 +12,8 @@ import s from './CardTasks.module.css'
 export type CardTasksPropsType = {
   cardId: string
   cardTitle: string
-  removeCard: (id: string) => void
+  removeCard: (cardId: string) => void
+  duplicateCard: (cardId: string) => void
   tasks: Array<TaskType>
   changeTaskTitle: (taskId: string, title: string, cardId: string) => void
   markTask: (taskId: string, cardId: string) => void
@@ -30,7 +31,8 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
     markTask,
     removeTask,
     addTask,
-    changeFilter
+    changeFilter,
+    duplicateCard
   }
 ) => {
   DEV_VERSION && console.log('CardTasks ', cardTitle)
@@ -67,6 +69,10 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
     removeCard(cardId)
   }
 
+  const duplicateCardHandler = () => {
+    duplicateCard(cardId)
+  }
+
   return (
     <div className={s.cardsWrapper}>
       <Card style={{width: 300, margin: 20, borderRadius: 7, boxShadow: '0px 0px 5px 1px rgba(208, 216, 243, 0.5)'}}>
@@ -74,6 +80,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
           cardTitle={cardTitle}
           taskCount={tasks.length}
           removeCard={removeCardHandler}
+          duplicateCard={duplicateCardHandler}
         />
         <CardProgressBar progress={countTaskProgress()}/>
 
