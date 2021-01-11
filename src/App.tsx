@@ -21,7 +21,9 @@ const App = () => {
 
   const cards = useSelector<AppStateType, Array<CardType>>(state => state.cards)
   const tasks = useSelector<AppStateType, TasksType>(state => state.tasks)
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
+
+  console.log('cards App: ', cards)
 
   const addCard = useCallback((cardTitle: string) => {
     dispatch(addCardAC(cardTitle))
@@ -61,6 +63,8 @@ const App = () => {
   return (
     <div>
       {cards.map(card => {
+
+        console.log('card', card.id, card)
 
         // filter display logic
         const allTasksByCardId = tasks[card.id]
