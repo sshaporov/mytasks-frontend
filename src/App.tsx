@@ -109,18 +109,18 @@ const App = () => {
 
   return (
     <div>
-      {cards.map(c => {
+      {cards.map(card => {
 
         // filter display logic
-        const allTasksByCardId = tasks[c.id]
+        const allTasksByCardId = tasks[card.id]
         let tasksForCard = allTasksByCardId
-        if (c.filter === 'DONE') tasksForCard = allTasksByCardId.filter(t => t.isDone)
-        if (c.filter === 'ACTIVE') tasksForCard = allTasksByCardId.filter(t => !t.isDone)
+        if (card.filter === 'DONE') tasksForCard = allTasksByCardId.filter(t => t.isDone)
+        if (card.filter === 'ACTIVE') tasksForCard = allTasksByCardId.filter(t => !t.isDone)
 
         return <CardTasks
-                  key={c.id}
-                  cardId={c.id}
-                  cardTitle={c.title}
+                  key={card.id}
+                  cardId={card.id}
+                  cardTitle={card.title}
                   removeCard={removeCard}
                   changeCardTitle={changeCardTitle}
                   tasks={tasksForCard}
