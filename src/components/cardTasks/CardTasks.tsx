@@ -1,5 +1,4 @@
 import React from 'react'
-import {FilterValueType, TaskType} from '../../App'
 import {Task} from './task/Task'
 import {DEV_VERSION} from '../../config'
 import {CardHeader} from './cardHeader/CardHeader'
@@ -8,6 +7,8 @@ import {Card, Divider } from 'antd'
 import {AddItem} from '../common/addItem/AddItem'
 import {FilterTasks} from './filterTasks/FilterTasks'
 import s from './CardTasks.module.css'
+import {TaskType} from '../../bll/tasks-reducer'
+import {CardFilterType} from '../../bll/cards-reducer'
 
 export type CardTasksPropsType = {
   cardId: string
@@ -16,10 +17,10 @@ export type CardTasksPropsType = {
   changeCardTitle: (cardId: string, title: string) => void
   tasks: Array<TaskType>
   changeTaskTitle: (taskId: string, title: string, cardId: string) => void
-  markTask: (taskId: string, cardId: string) => void
+  changeTaskStatus: (taskId: string, cardId: string) => void
   removeTask: (taskId: string, cardId: string) => void
   addTask: (taskTitle: string, cardId: string) => void
-  changeFilter: (value: FilterValueType, cardId: string) => void
+  changeFilter: (value: CardFilterType, cardId: string) => void
 }
 export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   {
@@ -29,7 +30,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
     changeCardTitle,
     tasks,
     changeTaskTitle,
-    markTask,
+    changeTaskStatus,
     removeTask,
     addTask,
     changeFilter,
@@ -44,7 +45,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   }
 
   // подбираем cardId в текущей компоненте и передаем вверх колбэк
-  const changeFilterHandler = (filterValue: FilterValueType) => {
+  const changeFilterHandler = (filterValue: CardFilterType) => {
     changeFilter(filterValue, cardId)
   }
 
@@ -52,8 +53,8 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
     removeTask(taskId, cardId)
   }
 
-  const markTaskHandler = (taskId: string) => {
-    markTask(taskId, cardId)
+  const changeTaskStatusHandler = (taskId: string) => {
+    changeTaskStatus(taskId, cardId)
   }
 
   const addTaskHandler = (taskTitle: string) => {
@@ -91,7 +92,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
                           title={task.title}
                           isDone={task.isDone}
                           changeTaskTitle={changeTaskTitleHandler}
-                          markTask={markTaskHandler}
+                          changeTaskStatus={changeTaskStatusHandler}
                           removeTask={removeTaskHandler}
                         />)}
 

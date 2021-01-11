@@ -1,111 +1,62 @@
-import React, {useState} from 'react'
+import React, {useCallback} from 'react'
 import {DEV_VERSION} from './config'
-import {v1} from 'uuid'
 import {CardTasks} from './components/cardTasks/CardTasks'
 import {Card} from 'antd';
 import {AddItem} from './components/common/addItem/AddItem';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  addCardAC,
+  CardFilterType,
+  CardType,
+  changeCardFilterAC,
+  changeCardTitleAC,
+  removeCardAC
+} from './bll/cards-reducer';
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TasksType} from './bll/tasks-reducer';
+import {AppStateType} from './bll/store';
 
-export type TaskType = {
-  id: string,
-  title: string,
-  isDone: boolean,
-}
-export type TasksType = {
-  [key: string]: Array<TaskType>
-}
-export type FilterValueType = 'ALL' | 'DONE' | 'ACTIVE'
 
 const App = () => {
   DEV_VERSION && console.log('App');
 
-  const cardId1 = v1()
-  const cardId2 = v1()
+  const cards = useSelector<AppStateType, Array<CardType>>(state => state.cards)
+  const tasks = useSelector<AppStateType, TasksType>(state => state.tasks)
+  const dispatch = useDispatch();
 
-  const [cards, setCards] = useState([
-    {id: cardId1, title: 'Learn list', filter: 'ALL'},
-    {id: cardId2, title: 'Travel list', filter: 'ALL'},
-  ])
+  const addCard = useCallback((cardTitle: string) => {
+    dispatch(addCardAC(cardTitle))
+  },[dispatch])
 
-  const [tasks, setTasks] = useState<TasksType>(
-    {
-      [cardId1]: [
-        {id: v1(), title: 'FrontEnd', isDone: true},
-        {id: v1(), title: 'BackEnd', isDone: false},
-        {id: v1(), title: 'Mobile', isDone: true},
-        {id: v1(), title: 'DB', isDone: false},
-        {id: v1(), title: 'Rest', isDone: true},
-        {id: v1(), title: 'WebSocket', isDone: false},
-        {id: v1(), title: 'Unit', isDone: true}
-      ],
-      [cardId2]: [
-        {id: v1(), title: 'Passport', isDone: true},
-        {id: v1(), title: 'Tickets', isDone: false},
-        {id: v1(), title: 'Country', isDone: true},
-        {id: v1(), title: 'Hotel', isDone: false},
-        {id: v1(), title: 'Airline', isDone: true},
-        {id: v1(), title: 'bus', isDone: false}
-      ],
-    }
-  )
+  const changeCardTitle = useCallback((cardId: string, newCardTitle: string) => {
+    dispatch(changeCardTitleAC(cardId,newCardTitle))
+  }, [dispatch])
 
-  const changeTaskTitle = (taskId: string, title: string, cardId: string) => {
-    const tasksByCardId = tasks[cardId]
-    const task = tasksByCardId.find(t => t.id === taskId)
-    if (task) {
-      task.title = title
-      setTasks({...tasks})
-    }
-  }
+  const removeCard = useCallback((cardId: string) => {
+    dispatch(removeCardAC(cardId))
+  }, [dispatch])
 
-  const markTask = (taskId: string, cardId: string) => {
-    //debugger
-    const tasksByCardId = tasks[cardId]
-    const task = tasksByCardId.find(t => t.id === taskId)
-    if (task) {
-      task.isDone = !task.isDone
-      setTasks({...tasks})
-    }
-  }
+  const changeTaskStatus = useCallback((taskId: string, cardId: string) => {
+    dispatch(changeTaskStatusAC(taskId, cardId))
+  },[dispatch])
 
-  const removeTask = (taskId: string, cardId: string) => {
-    const tasksByCardId = tasks[cardId]
-    tasks[cardId] = tasksByCardId.filter(t => t.id !== taskId)
-    setTasks({...tasks})
-  }
+  const addTask = useCallback((taskTitle: string, cardId: string) => {
+    dispatch(addTaskAC(taskTitle, cardId))
+  },[dispatch])
 
-  const addTask = (taskTitle: string, cardId: string) => {
-    const task = {id: v1(), title: taskTitle, isDone: false}
-    const tasksByCardId = tasks[cardId]
-    tasks[cardId] = [...tasksByCardId, task]
-    setTasks({...tasks})
-  }
+  const changeTaskTitle = useCallback((taskId: string, taskTitle: string, cardId: string) => {
+    dispatch(changeTaskTitleAC(taskId, taskTitle, cardId))
+  },[dispatch])
 
-  const changeFilter = (value: FilterValueType, cardId: string) => {
-    const card = cards.find(c => c.id === cardId)
-    if (card) {
-      card.filter = value
-      setCards([...cards])
-    }
-  }
+  const removeTask = useCallback((taskId: string, cardId: string) => {
+    dispatch(removeTaskAC(taskId, cardId))
+  },[dispatch])
 
-  const removeCard = (cardId: string) => {
-    setCards(cards.filter(c => c.id !== cardId))
-  }
+  const changeFilter = useCallback((filter: CardFilterType, cardId: string) => {
+    dispatch(changeCardFilterAC(filter,cardId))
+  },[dispatch])
 
-  const addCard = (cardTitle: string) => {
-    const newCardId = v1()
-    const newCard = {id: newCardId, title: cardTitle, filter: 'ALL'}
-    setCards([...cards, newCard])
-    setTasks({...tasks, [newCardId]: []})
-  }
 
-  const changeCardTitle = (cardId: string, newCardTitle: string) => {
-    const card = cards.find(c => c.id === cardId)
-    if (card) {
-      card.title = newCardTitle
-      setCards([...cards])
-    }
-  }
+
 
   return (
     <div>
@@ -125,7 +76,7 @@ const App = () => {
                   changeCardTitle={changeCardTitle}
                   tasks={tasksForCard}
                   changeTaskTitle={changeTaskTitle}
-                  markTask={markTask}
+                  changeTaskStatus={changeTaskStatus}
                   removeTask={removeTask}
                   addTask={addTask}
                   changeFilter={changeFilter}

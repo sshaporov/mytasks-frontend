@@ -1,14 +1,15 @@
 import {DEV_VERSION} from '../config'
 import thunkMiddleware from 'redux-thunk'
-
 import {createStore, combineReducers, compose, applyMiddleware} from 'redux'
 import { cardsReducer } from './cards-reducer'
+import { tasksReducer } from './tasks-reducer'
 
 const reducers = combineReducers({
   cards: cardsReducer,
+  tasks: tasksReducer,
 
 })
-export type AppStoreType = ReturnType<typeof reducers>
+export type AppStateType = ReturnType<typeof reducers>
 
 //@ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

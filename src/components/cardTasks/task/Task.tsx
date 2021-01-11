@@ -10,7 +10,7 @@ export type TaskPropsType = {
   title: string
   isDone: boolean
   changeTaskTitle: (taskId: string, title: string) => void
-  markTask: (taskId: string) => void
+  changeTaskStatus: (taskId: string) => void
   removeTask: (taskId: string) => void
 }
 export const Task: React.FC<TaskPropsType> = React.memo((
@@ -19,7 +19,7 @@ export const Task: React.FC<TaskPropsType> = React.memo((
     title,
     isDone,
     changeTaskTitle,
-    markTask,
+    changeTaskStatus,
     removeTask
   }
 ) => {
@@ -35,8 +35,8 @@ export const Task: React.FC<TaskPropsType> = React.memo((
     changeTaskTitle(id, newTitle)
   }
 
-  const markTaskHandler = () => {
-    markTask(id)
+  const changeTaskStatusHandler = () => {
+    changeTaskStatus(id)
   }
 
   const onClickRemoveDropdown = () => {
@@ -46,7 +46,7 @@ export const Task: React.FC<TaskPropsType> = React.memo((
 
   const menu = (
     <Menu onClick={() => {}}>
-      <Menu.Item key="1" icon={<CheckOutlined/>} onClick={markTaskHandler}>
+      <Menu.Item key="1" icon={<CheckOutlined/>} onClick={changeTaskStatusHandler}>
         Marked
       </Menu.Item>
       <Menu.Item key="2" icon={<EditOutlined/>} onClick={() => setEditMode(true)}>
@@ -64,7 +64,7 @@ export const Task: React.FC<TaskPropsType> = React.memo((
     <div className={s.cardWrapper}>
 
       <div>
-        <Checkbox checked={isDone} onClick={markTaskHandler} style={{marginLeft: 10, marginRight: 10}}/>
+        <Checkbox checked={isDone} onClick={changeTaskStatusHandler} style={{marginLeft: 10, marginRight: 10}}/>
         <EditableItem value={title}
                       type={'task'}
                       changeValue={onChangeTaskTitleHandler}
