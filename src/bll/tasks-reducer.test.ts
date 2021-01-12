@@ -1,51 +1,66 @@
-import {
-  addCardAC,
-  CardFilterType,
-  cardsReducer,
-  CardType,
-  changeCardFilterAC,
-  changeCardTitleAC,
-  removeCardAC
-} from './cards-reducer'
-import {v1} from 'uuid'
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer, TasksType} from './tasks-reducer'
+import {addCardAC, removeCardAC} from './cards-reducer'
 
-let cardId1: string
-let cardId2: string
-let startCardState: Array<CardType> = []
-
+let startTasksState: TasksType = {}
 beforeEach(() => {
-  cardId1 = v1()
-  cardId2 = v1()
-  startCardState = [
-    {id: cardId1, title: "Travel list", filter: "ALL"},
-    {id: cardId2, title: "My home tasks", filter: "ALL"},
-  ]
+  startTasksState = {
+    'cardId1': [
+      { id: '1', title: 'JS', isDone: false },
+      { id: '2', title: 'REACT', isDone: true },
+      { id: '3', title: 'REST API', isDone: false },
+      { id: '4', title: 'CSS', isDone: false },
+      { id: '5', title: 'NODE', isDone: false },
+    ],
+    'cardId2': [
+      { id: '1', title: 'bread', isDone: false },
+      { id: '2', title: 'milk', isDone: true },
+      { id: '3', title: 'tea', isDone: false },
+      { id: '4', title: 'fish', isDone: false },
+      { id: '5', title: 'cream', isDone: false },
+    ]
+  }
 })
 
-test('Card tasks should be removed', () => {
-  const endState = cardsReducer(startCardState, removeCardAC(cardId1))
-  expect(endState.length).toBe(1)
-  expect(endState[0].id).toBe(cardId2)
+test('Task should be deleted from correct array', () => {
+  const endTasksState = tasksReducer(startTasksState, removeTaskAC('5', 'cardId2'))
+  expect(endTasksState['cardId1'].length).toBe(5)
+  expect(endTasksState['cardId2'].length).toBe(4)
+  expect(endTasksState['cardId2'].every(t => t.id != '5')).toBeTruthy()
 })
 
-test('Card tasks should be added', () => {
-  let newCardTitle = "New card tasks"
-  const endState = cardsReducer(startCardState, addCardAC(newCardTitle))
-  expect(endState.length).toBe(3)
-  expect(endState[2].title).toBe(newCardTitle)
-  expect(endState[0].filter).toBe("ALL")
+test('Task should be added to correct array', () => {
+  const endTasksState = tasksReducer(startTasksState, addTaskAC('sugar', 'cardId2'))
+  expect(endTasksState['cardId1'].length).toBe(5)
+  expect(endTasksState['cardId2'].length).toBe(6)
+  expect(endTasksState['cardId2'][5].id).toBeDefined()
+  expect(endTasksState['cardId2'][5].title).toBe('sugar')
+  expect(endTasksState['cardId2'][5].isDone).toBe(false)
 })
 
-test('Card tasks should change title', () => {
-  let newCardTitle = "New card tasks"
-  const endState = cardsReducer(startCardState, changeCardTitleAC(cardId2, newCardTitle))
-  expect(endState[0].title).toBe("Travel list")
-  expect(endState[1].title).toBe(newCardTitle)
+test('Task status should be changed', () => {
+  const endTasksState = tasksReducer(startTasksState, changeTaskStatusAC('1', 'cardId1'))
+  expect(endTasksState['cardId1'][0].isDone).toBe(true)
+  expect(endTasksState['cardId2'][0].isDone).toBe(false)
 })
 
-test('Filter of card tasks should be changed', () => {
-  let newFilter: CardFilterType = "DONE"
-  const endState = cardsReducer(startCardState, changeCardFilterAC(newFilter, cardId2));
-  expect(endState[0].filter).toBe("ALL")
-  expect(endState[1].filter).toBe(newFilter)
+test('Task title should be changed', () => {
+  const endTasksState = tasksReducer(startTasksState, changeTaskTitleAC("1", "rise", "cardId2"))
+  expect(endTasksState['cardId1'][0].title).toBe("JS")
+  expect(endTasksState['cardId2'][0].title).toBe("rise")
+})
+
+test('New array should be added when new card is added', () => {
+  const endTasksState = tasksReducer(startTasksState, addCardAC('new card'))
+  const keys = Object.keys(endTasksState)
+  const newKey = keys.find(k => k != 'cardId1' && k != 'cardId2')
+  if (!newKey) throw Error('new key should be added')
+  expect(keys.length).toBe(3)
+  expect(endTasksState[newKey]).toEqual([])
+})
+
+test('Card should be deleted', () => {
+  const endTasksState = tasksReducer(startTasksState, removeCardAC('cardId2'))
+  const keys = Object.keys(endTasksState);
+  expect(keys.length).toBe(1);
+  expect(endTasksState['cardId2']).not.toBeDefined();
 });
