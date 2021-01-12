@@ -1,5 +1,6 @@
 import React, {ChangeEvent, useState} from 'react'
 import s from './EditableItem.module.css'
+import {DEV_VERSION} from '../../../config';
 
 type EditableSpanPropsType = {
   type: 'card' | 'task'
@@ -18,6 +19,8 @@ export const EditableItem: React.FC<EditableSpanPropsType> = React.memo((
     setEditMode,
   }
 ) => {
+  DEV_VERSION && console.log('EditableItem')
+
   let [title, setTitle] = useState<string>(value)
 
   const onDoubleClickSpan = () => {

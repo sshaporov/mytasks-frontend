@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useMemo} from 'react'
 import {Task} from './task/Task'
 import {DEV_VERSION} from '../../config'
 import {CardHeader} from './cardHeader/CardHeader'
@@ -13,6 +13,7 @@ import {CardFilterType} from '../../bll/cards-reducer'
 export type CardTasksPropsType = {
   cardId: string
   cardTitle: string
+  cardFilter: string
   removeCard: (cardId: string) => void
   changeCardTitle: (cardId: string, title: string) => void
   tasks: Array<TaskType>
@@ -26,6 +27,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   {
     cardId,
     cardTitle,
+    cardFilter,
     removeCard,
     changeCardTitle,
     tasks,
@@ -38,40 +40,45 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
 ) => {
   DEV_VERSION && console.log('CardTasks ', cardTitle)
 
-  // функция для подсчета процента выполненых тасок
-  const countTaskProgress = () => {
+  // мемоизированная функция для подсчета процента выполненых тасок
+  const countTaskProgress = useMemo(() => {
     const doneCount = tasks.reduce((acc, t) => acc + Number(t.isDone), 0)
     return Math.ceil(100 / tasks.length * doneCount)
-  }
+  },[tasks])
 
   // подбираем cardId в текущей компоненте и передаем вверх колбэк
-  const changeFilterHandler = (filterValue: CardFilterType) => {
+  const changeFilterHandler = useCallback((filterValue: CardFilterType) => {
     changeFilter(filterValue, cardId)
-  }
+  },[changeFilter, cardId])
 
-  const removeTaskHandler = (taskId: string) => {
+  const removeTaskHandler = useCallback((taskId: string) => {
     removeTask(taskId, cardId)
-  }
+  },[removeTask, cardId])
 
-  const changeTaskStatusHandler = (taskId: string) => {
+  const changeTaskStatusHandler = useCallback((taskId: string) => {
     changeTaskStatus(taskId, cardId)
-  }
+  },[changeTaskStatus, cardId])
 
-  const addTaskHandler = (taskTitle: string) => {
+  const addTaskHandler = useCallback((taskTitle: string) => {
     addTask(taskTitle, cardId)
-  }
+  },[addTask, cardId])
 
-  const changeTaskTitleHandler = (taskId: string, title: string) => {
+  const changeTaskTitleHandler = useCallback((taskId: string, title: string) => {
     changeTaskTitle(taskId, title, cardId)
-  }
+  },[changeTaskTitle, cardId])
 
-  const removeCardHandler = () => {
+  const removeCardHandler = useCallback(() => {
     removeCard(cardId)
-  }
+  },[removeCard, cardId])
 
-  const changeCardTitleHandler = (newCardTitle: string) => {
+  const changeCardTitleHandler = useCallback((newCardTitle: string) => {
     changeCardTitle(cardId, newCardTitle)
-  }
+  },[changeCardTitle, cardId])
+
+  // логика фильтрации тасок
+  let tasksForCard = tasks
+  if (cardFilter === 'DONE') tasksForCard = tasks.filter(t => t.isDone)
+  if (cardFilter === 'ACTIVE') tasksForCard = tasks.filter(t => !t.isDone)
 
   return (
     <div className={s.cardsWrapper}>
@@ -82,11 +89,11 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
           removeCard={removeCardHandler}
           changeCardTitle={changeCardTitleHandler}
         />
-        <CardProgressBar progress={countTaskProgress()}/>
+        <CardProgressBar progress={countTaskProgress}/>
 
         <Divider/>
 
-        {tasks.map(task => <Task
+        {tasksForCard.map(task => <Task
                           key={task.id}
                           id={task.id}
                           title={task.title}

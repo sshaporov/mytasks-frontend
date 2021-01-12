@@ -23,8 +23,6 @@ const App = () => {
   const tasks = useSelector<AppStateType, TasksType>(state => state.tasks)
   const dispatch = useDispatch()
 
-  console.log('cards App: ', cards)
-
   const addCard = useCallback((cardTitle: string) => {
     dispatch(addCardAC(cardTitle))
   },[dispatch])
@@ -57,25 +55,17 @@ const App = () => {
     dispatch(changeCardFilterAC(filter,cardId))
   },[dispatch])
 
-
-
-
   return (
     <div>
       {cards.map(card => {
-
-        console.log('card', card.id, card)
-
-        // filter display logic
-        const allTasksByCardId = tasks[card.id]
-        let tasksForCard = allTasksByCardId
-        if (card.filter === 'DONE') tasksForCard = allTasksByCardId.filter(t => t.isDone)
-        if (card.filter === 'ACTIVE') tasksForCard = allTasksByCardId.filter(t => !t.isDone)
+        // получаем все таски для текущей карточки и прокидываем их в CardTasks как tasks={tasksForCard}
+        const tasksForCard = tasks[card.id]
 
         return <CardTasks
                   key={card.id}
                   cardId={card.id}
                   cardTitle={card.title}
+                  cardFilter={card.filter}
                   removeCard={removeCard}
                   changeCardTitle={changeCardTitle}
                   tasks={tasksForCard}

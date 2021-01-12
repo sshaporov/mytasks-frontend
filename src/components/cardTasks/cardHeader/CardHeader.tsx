@@ -1,5 +1,5 @@
 import {DEV_VERSION} from '../../../config'
-import React, {useState} from 'react'
+import React, {useCallback, useState} from 'react'
 import {Badge, Button, Dropdown, Menu} from 'antd'
 import s from './CardHeader.module.css'
 import { EditOutlined, DeleteOutlined, EllipsisOutlined } from '@ant-design/icons'
@@ -24,13 +24,13 @@ export const CardHeader: React.FC<CardHeaderPropsType> = React.memo((
 
   const [editMode, setEditMode] = useState<boolean>(false)
 
-  const setEditModeHandler = (value: boolean) => {
+  const setEditModeHandler = useCallback((value: boolean) => {
     setEditMode(value)
-  }
+  },[])
 
-  const onClickRemoveDropdown = () => {
+  const onClickRemoveDropdown = useCallback(() => {
     removeCard()
-  }
+  },[removeCard])
 
   const menu = (
     <Menu onClick={() => {

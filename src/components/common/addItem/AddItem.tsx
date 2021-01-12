@@ -15,7 +15,7 @@ export const AddItem: React.FC<AddTaskPropsType> = React.memo((
     addItem,
   }
 ) => {
-  DEV_VERSION && console.log('Add task')
+  DEV_VERSION && console.log('Add item')
 
   const [isAdding, setIsAdding] = useState<boolean>(false)
   const [itemTitle, setItemTitle] = useState<string>('')

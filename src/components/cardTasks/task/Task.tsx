@@ -1,5 +1,5 @@
 import {Button, Checkbox, Dropdown, Menu} from 'antd'
-import React, {useState} from 'react'
+import React, {useCallback, useState} from 'react'
 import {DEV_VERSION} from '../../../config'
 import {EditableItem} from '../../common/editableItem/EditableItem'
 import {DeleteOutlined, EditOutlined, EllipsisOutlined, CheckOutlined} from '@ant-design/icons'
@@ -27,21 +27,21 @@ export const Task: React.FC<TaskPropsType> = React.memo((
 
   const [editMode, setEditMode] = useState<boolean>(false)
 
-  const setEditModeHandler = (value: boolean) => {
+  const setEditModeHandler = useCallback((value: boolean) => {
     setEditMode(value)
-  }
+  },[])
 
-  const onChangeTaskTitleHandler = (newTitle: string) => {
+  const onChangeTaskTitleHandler = useCallback((newTitle: string) => {
     changeTaskTitle(id, newTitle)
-  }
+  },[changeTaskTitle, id])
 
-  const changeTaskStatusHandler = () => {
+  const changeTaskStatusHandler = useCallback(() => {
     changeTaskStatus(id)
-  }
+  },[changeTaskStatus, id])
 
-  const onClickRemoveDropdown = () => {
+  const onClickRemoveDropdown = useCallback(() => {
     removeTask(id)
-  }
+  },[removeTask, id])
 
 
   const menu = (
