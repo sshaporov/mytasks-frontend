@@ -44,21 +44,21 @@ export const cardsReducer = (state: Array<CardType> = initialState, action: Card
 export const addCardAC = (cardTitle: string) => ({
   type: ACTIONS_CARDS_TYPE.ADD_CARD,
   cardTitle,
-  cardId: v1()
+  cardId: v1(),
 } as const)
 export const changeCardTitleAC = (cardId: string, cardTitle: string) => ({
   type: ACTIONS_CARDS_TYPE.CHANGE_CARD_TITLE,
   cardId,
-  cardTitle
+  cardTitle,
 } as const)
 export const removeCardAC = (cardId: string) => ({
   type: ACTIONS_CARDS_TYPE.REMOVE_CARD,
-  cardId
+  cardId,
 } as const)
 export const changeCardFilterAC = (filter: CardFilterType, cardId: string) => ({
   type: ACTIONS_CARDS_TYPE.CHANGE_CARD_FILTER,
   cardId,
-  filter
+  filter,
 } as const)
 
 // types

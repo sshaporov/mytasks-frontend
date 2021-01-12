@@ -63,4 +63,4 @@ test('Card should be deleted', () => {
   const keys = Object.keys(endTasksState);
   expect(keys.length).toBe(1);
   expect(endTasksState['cardId2']).not.toBeDefined();
-});
+})

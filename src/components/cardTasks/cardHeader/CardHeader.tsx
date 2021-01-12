@@ -17,7 +17,7 @@ export const CardHeader: React.FC<CardHeaderPropsType> = React.memo((
     cardTitle,
     taskCount,
     removeCard,
-    changeCardTitle
+    changeCardTitle,
   }
 ) => {
   DEV_VERSION && console.log('CardHeader ', cardTitle)

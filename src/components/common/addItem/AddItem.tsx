@@ -12,7 +12,7 @@ export type AddTaskPropsType = {
 export const AddItem: React.FC<AddTaskPropsType> = React.memo((
   {
     type,
-    addItem
+    addItem,
   }
 ) => {
   DEV_VERSION && console.log('Add task')

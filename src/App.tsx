@@ -1,9 +1,9 @@
 import React, {useCallback} from 'react'
 import {DEV_VERSION} from './config'
 import {CardTasks} from './components/cardTasks/CardTasks'
-import {Card} from 'antd';
-import {AddItem} from './components/common/addItem/AddItem';
-import {useDispatch, useSelector} from 'react-redux';
+import {Card} from 'antd'
+import {AddItem} from './components/common/addItem/AddItem'
+import {useDispatch, useSelector} from 'react-redux'
 import {
   addCardAC,
   CardFilterType,
@@ -11,13 +11,13 @@ import {
   changeCardFilterAC,
   changeCardTitleAC,
   removeCardAC
-} from './bll/cards-reducer';
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TasksType} from './bll/tasks-reducer';
-import {AppStateType} from './bll/store';
+} from './bll/cards-reducer'
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TasksType} from './bll/tasks-reducer'
+import {AppStateType} from './bll/store'
 
 
 const App = () => {
-  DEV_VERSION && console.log('App');
+  DEV_VERSION && console.log('App')
 
   const cards = useSelector<AppStateType, Array<CardType>>(state => state.cards)
   const tasks = useSelector<AppStateType, TasksType>(state => state.tasks)

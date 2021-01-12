@@ -21,7 +21,7 @@ const initialState: TasksType = {}
 export const tasksReducer = (state: TasksType = initialState, action: TasksACType | RemoveCardACType | AddCardACType) => {
   switch (action.type) {
     case ACTIONS_TASKS_TYPE.CHANGE_TASK_STATUS: {
-      let todolistTasks = state[action.cardId];
+      let todolistTasks = state[action.cardId]
       state[action.cardId] = todolistTasks
         .map(t => t.id === action.taskId
           ? {...t, isDone: !t.isDone}
@@ -60,9 +60,9 @@ export const tasksReducer = (state: TasksType = initialState, action: TasksACTyp
         [action.cardId]: []
       }
     case ACTIONS_CARDS_TYPE.REMOVE_CARD: {
-      const copyState = {...state};
-      delete copyState[action.cardId];
-      return copyState;
+      const copyState = {...state}
+      delete copyState[action.cardId]
+      return copyState
     }
     default:
       return state
@@ -73,23 +73,23 @@ export const tasksReducer = (state: TasksType = initialState, action: TasksACTyp
 export const changeTaskStatusAC = (taskId: string, cardId: string) => ({
   type: ACTIONS_TASKS_TYPE.CHANGE_TASK_STATUS,
   taskId,
-  cardId
+  cardId,
 } as const)
 export const addTaskAC = (taskTitle: string, cardId: string) => ({
   type: ACTIONS_TASKS_TYPE.ADD_TASK,
   taskTitle,
-  cardId
+  cardId,
 } as const)
 export const changeTaskTitleAC = (taskId: string, taskTitle: string, cardId: string) => ({
   type: ACTIONS_TASKS_TYPE.CHANGE_TASK_TITLE,
   taskId,
   taskTitle,
-  cardId
+  cardId,
 } as const)
 export const removeTaskAC = (taskId: string, cardId: string) => ({
   type: ACTIONS_TASKS_TYPE.REMOVE_TASK,
   taskId,
-  cardId
+  cardId,
 } as const)
 
 

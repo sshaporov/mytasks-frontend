@@ -1,6 +1,6 @@
 import React from 'react'
-import { Progress } from 'antd';
-import {DEV_VERSION} from '../../../config';
+import { Progress } from 'antd'
+import {DEV_VERSION} from '../../../config'
 
 export type CardProgressBarPropsType = {
   progress: number
