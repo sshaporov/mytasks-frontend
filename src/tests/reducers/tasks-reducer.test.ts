@@ -1,5 +1,5 @@
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer, TasksType} from './tasks-reducer'
-import {addCardAC, removeCardAC} from './cards-reducer'
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer, TasksType} from '../../bll/tasks-reducer'
+import {addCardAC, removeCardAC} from '../../bll/cards-reducer'
 
 let startTasksState: TasksType = {}
 beforeEach(() => {

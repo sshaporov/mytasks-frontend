@@ -6,7 +6,7 @@ import {
   changeCardFilterAC,
   changeCardTitleAC,
   removeCardAC
-} from './cards-reducer'
+} from '../../bll/cards-reducer'
 import {v1} from 'uuid'
 
 let cardId1: string

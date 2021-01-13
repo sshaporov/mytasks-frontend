@@ -1,5 +1,5 @@
-import {addCardAC, cardsReducer, CardType} from './cards-reducer'
-import {tasksReducer, TasksType} from './tasks-reducer'
+import {addCardAC, cardsReducer, CardType} from '../../bll/cards-reducer'
+import {tasksReducer, TasksType} from '../../bll/tasks-reducer'
 
 test('Card should be created using 2 reducers', () => {
   const startTasksState: TasksType = {}
