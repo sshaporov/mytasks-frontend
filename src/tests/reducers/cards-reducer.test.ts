@@ -22,13 +22,13 @@ beforeEach(() => {
   ]
 })
 
-test('Card tasks should be removed', () => {
+it('Card tasks should be removed', () => {
   const endState = cardsReducer(startCardState, removeCardAC(cardId1))
   expect(endState.length).toBe(1)
   expect(endState[0].id).toBe(cardId2)
 })
 
-test('Card tasks should be added', () => {
+it('Card tasks should be added', () => {
   let newCardTitle = "New card tasks"
   const endState = cardsReducer(startCardState, addCardAC(newCardTitle))
   expect(endState.length).toBe(3)
@@ -36,16 +36,16 @@ test('Card tasks should be added', () => {
   expect(endState[0].filter).toBe("ALL")
 })
 
-test('Card tasks should change title', () => {
+it('Card tasks should change title', () => {
   let newCardTitle = "New card tasks"
   const endState = cardsReducer(startCardState, changeCardTitleAC(cardId2, newCardTitle))
   expect(endState[0].title).toBe("Travel list")
   expect(endState[1].title).toBe(newCardTitle)
 })
 
-test('Filter of card tasks should be changed', () => {
+it('Filter of card tasks should be changed', () => {
   let newFilter: CardFilterType = "DONE"
-  const endState = cardsReducer(startCardState, changeCardFilterAC(newFilter, cardId2));
+  const endState = cardsReducer(startCardState, changeCardFilterAC(newFilter, cardId2))
   expect(endState[0].filter).toBe("ALL")
   expect(endState[1].filter).toBe(newFilter)
-});
+})

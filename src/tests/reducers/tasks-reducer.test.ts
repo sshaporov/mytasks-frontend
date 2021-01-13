@@ -21,14 +21,14 @@ beforeEach(() => {
   }
 })
 
-test('Task should be deleted from correct array', () => {
+it('Task should be deleted from correct array', () => {
   const endTasksState = tasksReducer(startTasksState, removeTaskAC('5', 'cardId2'))
   expect(endTasksState['cardId1'].length).toBe(5)
   expect(endTasksState['cardId2'].length).toBe(4)
   expect(endTasksState['cardId2'].every(t => t.id != '5')).toBeTruthy()
 })
 
-test('Task should be added to correct array', () => {
+it('Task should be added to correct array', () => {
   const endTasksState = tasksReducer(startTasksState, addTaskAC('sugar', 'cardId2'))
   expect(endTasksState['cardId1'].length).toBe(5)
   expect(endTasksState['cardId2'].length).toBe(6)
@@ -37,19 +37,19 @@ test('Task should be added to correct array', () => {
   expect(endTasksState['cardId2'][5].isDone).toBe(false)
 })
 
-test('Task status should be changed', () => {
+it('Task status should be changed', () => {
   const endTasksState = tasksReducer(startTasksState, changeTaskStatusAC('1', 'cardId1'))
   expect(endTasksState['cardId1'][0].isDone).toBe(true)
   expect(endTasksState['cardId2'][0].isDone).toBe(false)
 })
 
-test('Task title should be changed', () => {
+it('Task title should be changed', () => {
   const endTasksState = tasksReducer(startTasksState, changeTaskTitleAC("1", "rise", "cardId2"))
   expect(endTasksState['cardId1'][0].title).toBe("JS")
   expect(endTasksState['cardId2'][0].title).toBe("rise")
 })
 
-test('New array should be added when new card is added', () => {
+it('New array should be added when new card is added', () => {
   const endTasksState = tasksReducer(startTasksState, addCardAC('new card'))
   const keys = Object.keys(endTasksState)
   const newKey = keys.find(k => k != 'cardId1' && k != 'cardId2')
@@ -58,9 +58,9 @@ test('New array should be added when new card is added', () => {
   expect(endTasksState[newKey]).toEqual([])
 })
 
-test('Card should be deleted', () => {
+it('Card should be deleted', () => {
   const endTasksState = tasksReducer(startTasksState, removeCardAC('cardId2'))
-  const keys = Object.keys(endTasksState);
-  expect(keys.length).toBe(1);
-  expect(endTasksState['cardId2']).not.toBeDefined();
+  const keys = Object.keys(endTasksState)
+  expect(keys.length).toBe(1)
+  expect(endTasksState['cardId2']).not.toBeDefined()
 })
