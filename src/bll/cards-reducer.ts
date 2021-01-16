@@ -1,4 +1,9 @@
+import { Dispatch } from 'react'
 import {v1} from 'uuid'
+import { AppStateType } from './store'
+import {ThunkAction} from 'redux-thunk'
+import { cardsAPI } from '../dal/cards-api'
+
 
 export enum ACTIONS_CARDS_TYPE {
   ADD_CARD = 'Cards/ADD_CARD',
@@ -67,4 +72,19 @@ export type ChangeCardTitleACType = ReturnType<typeof changeCardTitleAC>
 export type RemoveCardACType = ReturnType<typeof removeCardAC>
 export type ChangeCardFilterACType = ReturnType<typeof changeCardFilterAC>
 export type CardsACType = AddCardACType | ChangeCardTitleACType | RemoveCardACType | ChangeCardFilterACType
+export type CardThunkType = ThunkAction<void, AppStateType, Dispatch<CardsACType>, CardsACType>
 
+
+// thunks
+export const getCardsTC = (): CardThunkType => {
+  return (dispatch, getState) => {
+    cardsAPI.getCards()
+      .then(res => {
+        // dispatch(addCardAC(res.cardPacks))
+        console.log('getCards() - res Obj', res)
+      })
+      .catch(e => {
+        console.log('getCards() - error Obj: ', e)
+      })
+  }
+}

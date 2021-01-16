@@ -1,7 +1,7 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import {DEV_VERSION} from './config'
 import {CardTasks} from './components/cardTasks/CardTasks'
-import {Card} from 'antd'
+import {Button, Card} from 'antd'
 import {AddItem} from './components/common/addItem/AddItem'
 import {useDispatch, useSelector} from 'react-redux'
 import {
@@ -9,7 +9,7 @@ import {
   CardFilterType,
   CardType,
   changeCardFilterAC,
-  changeCardTitleAC,
+  changeCardTitleAC, getCardsTC,
   removeCardAC
 } from './bll/cards-reducer'
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TasksType} from './bll/tasks-reducer'
@@ -55,6 +55,12 @@ const App = () => {
     dispatch(changeCardFilterAC(filter,cardId))
   },[dispatch])
 
+  // ********************************************* server test
+  const onClickTestBtn = () => {
+    dispatch(getCardsTC())
+  }
+  // *********************************************
+
   return (
     <div>
       {cards.map(card => {
@@ -80,6 +86,8 @@ const App = () => {
       <Card style={{width: 300, margin: 20, borderRadius: 7, boxShadow: '0px 0px 5px 1px rgba(208, 216, 243, 0.5)'}}>
         <AddItem addItem={addCard} type={'card'}/>
       </Card>
+
+      <Button onClick={onClickTestBtn}>Test server</Button>
 
     </div>
   )

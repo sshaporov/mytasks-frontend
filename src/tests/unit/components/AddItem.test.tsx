@@ -1,6 +1,6 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import {AddItem} from '../../components/common/addItem/AddItem'
+import {AddItem} from '../../../components/common/addItem/AddItem'
 
 it('CARD AddItem component renders correctly', () => {
   const tree = renderer
