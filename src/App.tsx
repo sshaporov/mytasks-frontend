@@ -21,6 +21,7 @@ const App = () => {
 
   const cards = useSelector<AppStateType, Array<CardType>>(state => state.cards)
   const tasks = useSelector<AppStateType, TasksType>(state => state.tasks)
+
   const dispatch = useDispatch()
 
   const addCard = useCallback((cardTitle: string) => {
@@ -65,7 +66,13 @@ const App = () => {
     <div>
       {cards.map(card => {
         // получаем все таски для текущей карточки и прокидываем их в CardTasks как tasks={tasksForCard}
-        const tasksForCard = tasks[card.id]
+        // не забыть сменить let -> const - удалить !!!
+        let tasksForCard = tasks[card.id]
+
+        // заглушка на undefined для - удалить!!!
+        if (tasksForCard === undefined) {
+          tasksForCard = []
+        }
 
         return <CardTasks
                   key={card.id}
