@@ -23,17 +23,17 @@ const initialState: Array<CardType> = []
 
 export const cardsReducer = (state: Array<CardType> = initialState, action: CardsACType): Array<CardType> => {
   switch (action.type){
-    case ACTIONS_CARDS_TYPE.ADD_CARD:
-      return [...state, {id: action.cardId, title: action.cardTitle, filter: 'ALL'}]
-    case ACTIONS_CARDS_TYPE.CHANGE_CARD_TITLE: {
-      const card = state.find(card => card.id === action.cardId)
-      if (card) {
-        card.title = action.cardTitle
-      }
-      return [...state]
-    }
-    case ACTIONS_CARDS_TYPE.REMOVE_CARD:
-      return state.filter(card => card.id !== action.cardId)
+    // case ACTIONS_CARDS_TYPE.ADD_CARD:
+    //   return [...state, {id: action.cardId, title: action.cardTitle, filter: 'ALL'}]
+    // case ACTIONS_CARDS_TYPE.CHANGE_CARD_TITLE: {
+    //   const card = state.find(card => card.id === action.cardId)
+    //   if (card) {
+    //     card.title = action.cardTitle
+    //   }
+    //   return [...state]
+    // }
+    // case ACTIONS_CARDS_TYPE.REMOVE_CARD:
+    //   return state.filter(card => card.id !== action.cardId)
     case ACTIONS_CARDS_TYPE.CHANGE_CARD_FILTER: {
       const card = state.find(card => card.id === action.cardId)
       if (card) {
@@ -76,14 +76,16 @@ export const setCardsAC = (cards: Array<CardType>) => ({
 } as const)
 
 // types
-export type AddCardACType = ReturnType<typeof addCardAC>
-export type ChangeCardTitleACType = ReturnType<typeof changeCardTitleAC>
-export type RemoveCardACType = ReturnType<typeof removeCardAC>
+// export type AddCardACType = ReturnType<typeof addCardAC>
+// export type ChangeCardTitleACType = ReturnType<typeof changeCardTitleAC>
+// export type RemoveCardACType = ReturnType<typeof removeCardAC>
 export type ChangeCardFilterACType = ReturnType<typeof changeCardFilterAC>
 export type SetCardsACType = ReturnType<typeof setCardsAC>
-export type CardsACType = AddCardACType
-  | ChangeCardTitleACType  | RemoveCardACType
-  | ChangeCardFilterACType | SetCardsACType
+export type CardsACType =
+  // AddCardACType |
+  // ChangeCardTitleACType |
+  // RemoveCardACType |
+  ChangeCardFilterACType | SetCardsACType
 export type CardsThunkType = ThunkAction<void, AppStateType, Dispatch<CardsACType>, CardsACType>
 
 
@@ -116,6 +118,18 @@ export const addCardTC = (cardTitle: string): CardsThunkType => {
 export const removeCardTC = (cardId: string): CardsThunkType => {
   return (dispatch) => {
     cardsAPI.removeCard(cardId)
+      .then(res => {
+        dispatch(getCardsTC())
+      })
+      .catch(e => {
+        console.log('error removeCardTC ', e)
+      })
+  }
+}
+
+export const changeCardTitleTC = (cardId: string, newCardTitle: string): CardsThunkType => {
+  return (dispatch) => {
+    cardsAPI.changeCardTitle(cardId, newCardTitle)
       .then(res => {
         dispatch(getCardsTC())
       })

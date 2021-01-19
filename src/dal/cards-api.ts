@@ -1,4 +1,4 @@
-import {instance} from './instance';
+import {instance} from './instance'
 
 export const cardsAPI = {
   getCards() {
@@ -9,5 +9,8 @@ export const cardsAPI = {
   },
   removeCard(cardId: string) {
     return instance.delete(`/cards/${cardId}`).then(res => res.data)
+  },
+  changeCardTitle(cardId: string, newCardTitle: string) {
+    return instance.put(`/cards/${cardId}`, {title: newCardTitle}).then(res => res.data)
   },
 }

@@ -1,5 +1,10 @@
 import {v1} from 'uuid'
-import {ACTIONS_CARDS_TYPE, AddCardACType, RemoveCardACType} from './cards-reducer'
+import {
+  ACTIONS_CARDS_TYPE, CardsThunkType, getCardsTC,
+  // AddCardACType,
+  // RemoveCardACType
+} from './cards-reducer'
+import {tasksAPI} from '../dal/tasks-api';
 
 export enum ACTIONS_TASKS_TYPE {
   CHANGE_TASK_STATUS = 'Tasks/CHANGE_TASK_STATUS',
@@ -18,7 +23,10 @@ export type TasksType = {
 }
 const initialState: TasksType = {}
 
-export const tasksReducer = (state: TasksType = initialState, action: TasksACType | RemoveCardACType | AddCardACType) => {
+export const tasksReducer = (state: TasksType = initialState, action: TasksACType
+  // | RemoveCardACType
+  // | AddCardACType
+) => {
   switch (action.type) {
     case ACTIONS_TASKS_TYPE.CHANGE_TASK_STATUS: {
       let todolistTasks = state[action.cardId]
@@ -54,16 +62,16 @@ export const tasksReducer = (state: TasksType = initialState, action: TasksACTyp
       stateCopy[action.cardId] = tasks.filter(t => t.id !== action.taskId)
       return stateCopy
     }
-    case ACTIONS_CARDS_TYPE.ADD_CARD:
-      return {
-        ...state,
-        [action.cardId]: []
-      }
-    case ACTIONS_CARDS_TYPE.REMOVE_CARD: {
-      const copyState = {...state}
-      delete copyState[action.cardId]
-      return copyState
-    }
+    // case ACTIONS_CARDS_TYPE.ADD_CARD:
+    //   return {
+    //     ...state,
+    //     [action.cardId]: []
+    //   }
+    // case ACTIONS_CARDS_TYPE.REMOVE_CARD: {
+    //   const copyState = {...state}
+    //   delete copyState[action.cardId]
+    //   return copyState
+    // }
     default:
       return state
   }
@@ -99,5 +107,18 @@ export type AddTaskACType = ReturnType<typeof addTaskAC>
 export type ChangeTaskTitleACType = ReturnType<typeof changeTaskTitleAC>
 export type RemoveTaskACType = ReturnType<typeof removeTaskAC>
 export type TasksACType = AddTaskACType | ChangeTaskTitleACType | ChangeTaskStatusACType | RemoveTaskACType
+
+// thunks
+export const addTaskTC = (taskTitle: string, cardId: string): CardsThunkType => {
+  return (dispatch) => {
+    tasksAPI.createTask(taskTitle, cardId)
+      .then(res => {
+        console.log('task success!!!')
+      })
+      .catch(e => {
+        console.log('error addTaskTC ', e)
+      })
+  }
+}
 
 

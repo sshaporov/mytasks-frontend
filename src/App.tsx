@@ -9,10 +9,10 @@ import {
   CardFilterType,
   CardType,
   changeCardFilterAC,
-  changeCardTitleAC, getCardsTC,
+  changeCardTitleAC, changeCardTitleTC, getCardsTC,
   removeCardAC, removeCardTC
 } from './bll/cards-reducer'
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TasksType} from './bll/tasks-reducer'
+import {addTaskAC, addTaskTC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TasksType} from './bll/tasks-reducer'
 import {AppStateType} from './bll/store'
 
 
@@ -30,7 +30,8 @@ const App = () => {
   },[dispatch])
 
   const changeCardTitle = useCallback((cardId: string, newCardTitle: string) => {
-    dispatch(changeCardTitleAC(cardId,newCardTitle))
+    // dispatch(changeCardTitleAC(cardId,newCardTitle))
+    dispatch(changeCardTitleTC(cardId, newCardTitle))
   }, [dispatch])
 
   const removeCard = useCallback((cardId: string) => {
@@ -43,7 +44,8 @@ const App = () => {
   },[dispatch])
 
   const addTask = useCallback((taskTitle: string, cardId: string) => {
-    dispatch(addTaskAC(taskTitle, cardId))
+    // dispatch(addTaskAC(taskTitle, cardId))
+    dispatch(addTaskTC(cardId, taskTitle))
   },[dispatch])
 
   const changeTaskTitle = useCallback((taskId: string, taskTitle: string, cardId: string) => {
