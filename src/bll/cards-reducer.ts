@@ -43,6 +43,8 @@ export const cardsReducer = (state: Array<CardType> = initialState, action: Card
     }
     case ACTIONS_CARDS_TYPE.SET_CARDS:
       return action.cards.map(card => ({...card, filter: 'ALL'}))
+
+
     default:
       return state
   }
@@ -82,34 +84,45 @@ export type SetCardsACType = ReturnType<typeof setCardsAC>
 export type CardsACType = AddCardACType
   | ChangeCardTitleACType  | RemoveCardACType
   | ChangeCardFilterACType | SetCardsACType
-export type CardThunkType = ThunkAction<void, AppStateType, Dispatch<CardsACType>, CardsACType>
+export type CardsThunkType = ThunkAction<void, AppStateType, Dispatch<CardsACType>, CardsACType>
 
 
 // thunks
-export const getCardsTC = (): CardThunkType => {
-  return (dispatch, getState) => {
+export const getCardsTC = (): CardsThunkType => {
+  return (dispatch) => {
     cardsAPI.getCards()
       .then(res => {
-        console.log('getCards() - res Obj', res)
-        dispatch(setCardsAC(res))
+        //@ts-ignore
+        const cards = res.map(card => ({id: card._id, title: card.title}))
+        dispatch(setCardsAC(cards))
       })
       .catch(e => {
-        console.log('getCards() - error Obj: ', e)
+        console.log('error getCardsTC ', e)
+      })
+  }
+}
+export const addCardTC = (cardTitle: string): CardsThunkType => {
+  return (dispatch) => {
+    cardsAPI.createCard(cardTitle)
+      .then(res => {
+        dispatch(getCardsTC())
+      })
+      .catch(e => {
+        console.log('error addCardsTC ', e)
       })
   }
 }
 
-// export const addCardTC = (title: string): CardThunkType => {
-//   return (dispatch, getState) => {
-//     cardsAPI.createCard(title)
-//       .then(res => {
-//         console.log('getCards() - res Obj', res)
-//         dispatch(addCardAC())
-//       })
-//       .catch(e => {
-//         console.log('getCards() - error Obj: ', e)
-//       })
-//   }
-// }
+export const removeCardTC = (cardId: string): CardsThunkType => {
+  return (dispatch) => {
+    cardsAPI.removeCard(cardId)
+      .then(res => {
+        dispatch(getCardsTC())
+      })
+      .catch(e => {
+        console.log('error removeCardTC ', e)
+      })
+  }
+}
 
 

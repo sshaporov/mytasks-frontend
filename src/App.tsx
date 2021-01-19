@@ -1,16 +1,16 @@
-import React, {useCallback, useEffect} from 'react'
+import React, {useCallback} from 'react'
 import {DEV_VERSION} from './config'
 import {CardTasks} from './components/cardTasks/CardTasks'
 import {Button, Card} from 'antd'
 import {AddItem} from './components/common/addItem/AddItem'
 import {useDispatch, useSelector} from 'react-redux'
 import {
-  addCardAC,
+  addCardAC, addCardTC,
   CardFilterType,
   CardType,
   changeCardFilterAC,
   changeCardTitleAC, getCardsTC,
-  removeCardAC
+  removeCardAC, removeCardTC
 } from './bll/cards-reducer'
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TasksType} from './bll/tasks-reducer'
 import {AppStateType} from './bll/store'
@@ -25,7 +25,8 @@ const App = () => {
   const dispatch = useDispatch()
 
   const addCard = useCallback((cardTitle: string) => {
-    dispatch(addCardAC(cardTitle))
+    // dispatch(addCardAC(cardTitle))
+    dispatch(addCardTC(cardTitle))
   },[dispatch])
 
   const changeCardTitle = useCallback((cardId: string, newCardTitle: string) => {
@@ -33,7 +34,8 @@ const App = () => {
   }, [dispatch])
 
   const removeCard = useCallback((cardId: string) => {
-    dispatch(removeCardAC(cardId))
+    // dispatch(removeCardAC(cardId))
+    dispatch(removeCardTC(cardId))
   }, [dispatch])
 
   const changeTaskStatus = useCallback((taskId: string, cardId: string) => {
@@ -57,9 +59,12 @@ const App = () => {
   },[dispatch])
 
   // ********************************************* server test
-  const onClickTestBtn = () => {
+  const onClickTestBtnGet = () => {
     dispatch(getCardsTC())
   }
+  // const onClickTestBtnAdd = () => {
+  //   dispatch(createCardTC())
+  // }
   // *********************************************
 
   return (
@@ -94,7 +99,8 @@ const App = () => {
         <AddItem addItem={addCard} type={'card'}/>
       </Card>
 
-      <Button onClick={onClickTestBtn}>Test server</Button>
+      <Button onClick={onClickTestBtnGet}>Get tasks</Button>
+      {/*<Button onClick={onClickTestBtnAdd}>Add mock task</Button>*/}
 
     </div>
   )
