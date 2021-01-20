@@ -17,20 +17,14 @@ const initialState: Array<CardStateType> = []
 
 export const cardsReducer = (state: Array<CardStateType> = initialState, action: CardsACType): Array<CardStateType> => {
   switch (action.type){
-
     case ACTIONS_CARDS_TYPE.ADD_CARD:
       return [{ ...action.card, filter: 'ALL' }, ...state]
-
     case ACTIONS_CARDS_TYPE.SET_CARDS:
       return action.cards.map(card => ({...card, filter: 'ALL'}))
-
     case ACTIONS_CARDS_TYPE.CHANGE_CARD_TITLE:
       return state.map(card => card._id === action.cardId ? {...card, title: action.cardTitle} : card)
-
-
-    // case ACTIONS_CARDS_TYPE.REMOVE_CARD:
-    //   return state.filter(card => card.id !== action.cardId)
-
+    case ACTIONS_CARDS_TYPE.REMOVE_CARD:
+      return state.filter(card => card._id !== action.cardId)
     case ACTIONS_CARDS_TYPE.CHANGE_CARD_FILTER: {
       const card = state.find(card => card._id === action.cardId)
       if (card) {
@@ -38,9 +32,6 @@ export const cardsReducer = (state: Array<CardStateType> = initialState, action:
       }
       return [...state]
     }
-
-
-
     default:
       return state
   }
@@ -70,20 +61,14 @@ export const changeCardFilterAC = (filter: CardFilterValuesType, cardId: string)
   filter,
 } as const)
 
-
 // types
 export type AddCardACType = ReturnType<typeof addCardAC>
 export type SetCardsACType = ReturnType<typeof setCardsAC>
 export type ChangeCardTitleACType = ReturnType<typeof changeCardTitleAC>
-
-// export type RemoveCardACType = ReturnType<typeof removeCardAC>
+export type RemoveCardACType = ReturnType<typeof removeCardAC>
 export type ChangeCardFilterACType = ReturnType<typeof changeCardFilterAC>
-
-export type CardsACType = AddCardACType | SetCardsACType | ChangeCardTitleACType |
-  // RemoveCardACType |
-  ChangeCardFilterACType
+export type CardsACType = AddCardACType | SetCardsACType | ChangeCardTitleACType | RemoveCardACType | ChangeCardFilterACType
 export type CardsThunkType = ThunkAction<void, AppStateType, Dispatch<CardsACType>, CardsACType>
-
 
 // thunks
 export const getCardsTC = (): CardsThunkType => {
@@ -108,7 +93,6 @@ export const addCardTC = (cardTitle: string): CardsThunkType => {
       })
   }
 }
-
 export const changeCardTitleTC = (cardId: string, newCardTitle: string): CardsThunkType => {
   return (dispatch) => {
     cardsAPI.changeCardTitle(cardId, newCardTitle)
@@ -120,19 +104,14 @@ export const changeCardTitleTC = (cardId: string, newCardTitle: string): CardsTh
       })
   }
 }
-
 export const removeCardTC = (cardId: string): CardsThunkType => {
   return (dispatch) => {
     cardsAPI.removeCard(cardId)
       .then(res => {
-        dispatch(getCardsTC())
+        dispatch(removeCardAC(cardId))
       })
       .catch(e => {
         console.log('error removeCardTC ', e)
       })
   }
 }
-
-
-
-
