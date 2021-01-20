@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import {DEV_VERSION} from './config'
 import {CardTasks} from './components/cardTasks/CardTasks'
 import {Button, Card} from 'antd'
@@ -23,6 +23,10 @@ const App = () => {
   const tasks = useSelector<AppStateType, TasksType>(state => state.tasks)
 
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getCardsTC())
+  }, [dispatch])
 
   const addCard = useCallback((cardTitle: string) => {
     // dispatch(addCardAC(cardTitle))

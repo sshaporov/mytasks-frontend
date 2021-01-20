@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react'
+import React, {useCallback, useEffect, useMemo} from 'react'
 import {Task} from './task/Task'
 import {DEV_VERSION} from '../../config'
 import {CardHeader} from './cardHeader/CardHeader'
@@ -7,8 +7,9 @@ import {Card, Divider } from 'antd'
 import {AddItem} from '../common/addItem/AddItem'
 import {FilterTasks} from './filterTasks/FilterTasks'
 import s from './CardTasks.module.css'
-import {TaskType} from '../../bll/tasks-reducer'
+import {getTasksTC, TaskType} from '../../bll/tasks-reducer'
 import { CardFilterValuesType } from '../../bll/cards-reducer'
+import {useDispatch} from 'react-redux';
 
 export type CardTasksPropsType = {
   cardId: string
@@ -39,6 +40,11 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   }
 ) => {
   DEV_VERSION && console.log('CardTasks ', cardTitle)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getTasksTC(cardId))
+  },[dispatch])
 
   // мемоизированная функция для подсчета процента выполненых тасок
   const countTaskProgress = useMemo(() => {
