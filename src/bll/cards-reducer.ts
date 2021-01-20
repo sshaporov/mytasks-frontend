@@ -21,13 +21,13 @@ export const cardsReducer = (state: Array<CardStateType> = initialState, action:
     case ACTIONS_CARDS_TYPE.ADD_CARD:
       return [{ ...action.card, filter: 'ALL' }, ...state]
 
-    // case ACTIONS_CARDS_TYPE.CHANGE_CARD_TITLE: {
-    //   const card = state.find(card => card.id === action.cardId)
-    //   if (card) {
-    //     card.title = action.cardTitle
-    //   }
-    //   return [...state]
-    // }
+    case ACTIONS_CARDS_TYPE.SET_CARDS:
+      return action.cards.map(card => ({...card, filter: 'ALL'}))
+
+    case ACTIONS_CARDS_TYPE.CHANGE_CARD_TITLE:
+      return state.map(card => card._id === action.cardId ? {...card, title: action.cardTitle} : card)
+
+
     // case ACTIONS_CARDS_TYPE.REMOVE_CARD:
     //   return state.filter(card => card.id !== action.cardId)
 
@@ -38,8 +38,7 @@ export const cardsReducer = (state: Array<CardStateType> = initialState, action:
       }
       return [...state]
     }
-    case ACTIONS_CARDS_TYPE.SET_CARDS:
-      return action.cards.map(card => ({...card, filter: 'ALL'}))
+
 
 
     default:
@@ -51,6 +50,10 @@ export const cardsReducer = (state: Array<CardStateType> = initialState, action:
 export const addCardAC = (card: CardType) => ({
   type: ACTIONS_CARDS_TYPE.ADD_CARD,
   card
+} as const)
+export const setCardsAC = (cards: Array<CardType>) => ({
+  type: ACTIONS_CARDS_TYPE.SET_CARDS,
+  cards
 } as const)
 export const changeCardTitleAC = (cardId: string, cardTitle: string) => ({
   type: ACTIONS_CARDS_TYPE.CHANGE_CARD_TITLE,
@@ -66,22 +69,19 @@ export const changeCardFilterAC = (filter: CardFilterValuesType, cardId: string)
   cardId,
   filter,
 } as const)
-export const setCardsAC = (cards: Array<CardType>) => ({
-  type: ACTIONS_CARDS_TYPE.SET_CARDS,
-  cards
-} as const)
+
 
 // types
 export type AddCardACType = ReturnType<typeof addCardAC>
-// export type ChangeCardTitleACType = ReturnType<typeof changeCardTitleAC>
+export type SetCardsACType = ReturnType<typeof setCardsAC>
+export type ChangeCardTitleACType = ReturnType<typeof changeCardTitleAC>
+
 // export type RemoveCardACType = ReturnType<typeof removeCardAC>
 export type ChangeCardFilterACType = ReturnType<typeof changeCardFilterAC>
-export type SetCardsACType = ReturnType<typeof setCardsAC>
-export type CardsACType =
-  AddCardACType |
-  // ChangeCardTitleACType |
+
+export type CardsACType = AddCardACType | SetCardsACType | ChangeCardTitleACType |
   // RemoveCardACType |
-  ChangeCardFilterACType | SetCardsACType
+  ChangeCardFilterACType
 export type CardsThunkType = ThunkAction<void, AppStateType, Dispatch<CardsACType>, CardsACType>
 
 
@@ -90,11 +90,10 @@ export const getCardsTC = (): CardsThunkType => {
   return (dispatch) => {
     cardsAPI.getCards()
       .then(res => {
-        //const cards = res.map(card => ({id: card._id, title: card.title}))
         dispatch(setCardsAC(res))
       })
       .catch(e => {
-        console.log('error getCardsTC ', e)
+        console.log('error - getCardsTC ', e)
       })
   }
 }
@@ -102,11 +101,22 @@ export const addCardTC = (cardTitle: string): CardsThunkType => {
   return (dispatch) => {
     cardsAPI.createCard(cardTitle)
       .then(res => {
-        // dispatch(getCardsTC())
         dispatch(addCardAC(res.item))
       })
       .catch(e => {
-        console.log('error addCardsTC ', e)
+        console.log('error - addCardsTC ', e)
+      })
+  }
+}
+
+export const changeCardTitleTC = (cardId: string, newCardTitle: string): CardsThunkType => {
+  return (dispatch) => {
+    cardsAPI.changeCardTitle(cardId, newCardTitle)
+      .then(res => {
+        dispatch(changeCardTitleAC(cardId, newCardTitle))
+      })
+      .catch(e => {
+        console.log('error - changeCardTitleTC ', e)
       })
   }
 }
@@ -123,16 +133,6 @@ export const removeCardTC = (cardId: string): CardsThunkType => {
   }
 }
 
-export const changeCardTitleTC = (cardId: string, newCardTitle: string): CardsThunkType => {
-  return (dispatch) => {
-    cardsAPI.changeCardTitle(cardId, newCardTitle)
-      .then(res => {
-        dispatch(getCardsTC())
-      })
-      .catch(e => {
-        console.log('error removeCardTC ', e)
-      })
-  }
-}
+
 
 
