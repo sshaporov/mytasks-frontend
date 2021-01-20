@@ -11,6 +11,7 @@ export enum ACTIONS_TASKS_TYPE {
   ADD_TASK = 'Tasks/ADD_TASK',
   CHANGE_TASK_TITLE = 'Tasks/CHANGE_TASK_TITLE',
   REMOVE_TASK = 'Tasks/REMOVE_TASK',
+  SET_TASKS = 'Tasks/SET_TASKS',
 }
 
 export type TaskType = {
@@ -62,6 +63,9 @@ export const tasksReducer = (state: TasksType = initialState, action: TasksACTyp
       stateCopy[action.cardId] = tasks.filter(t => t.id !== action.taskId)
       return stateCopy
     }
+    case ACTIONS_TASKS_TYPE.SET_TASKS: {
+      return {...state, [action.cardId]: action.tasks}
+    }
     // case ACTIONS_CARDS_TYPE.ADD_CARD:
     //   return {
     //     ...state,
@@ -99,24 +103,42 @@ export const removeTaskAC = (taskId: string, cardId: string) => ({
   taskId,
   cardId,
 } as const)
-
+export const setTasksAC = (tasks: Array<TaskType>, cardId: string) => ({
+  type: ACTIONS_TASKS_TYPE.SET_TASKS,
+  tasks,
+  cardId,
+} as const)
 
 // types
 export type ChangeTaskStatusACType = ReturnType<typeof changeTaskStatusAC>
 export type AddTaskACType = ReturnType<typeof addTaskAC>
 export type ChangeTaskTitleACType = ReturnType<typeof changeTaskTitleAC>
 export type RemoveTaskACType = ReturnType<typeof removeTaskAC>
-export type TasksACType = AddTaskACType | ChangeTaskTitleACType | ChangeTaskStatusACType | RemoveTaskACType
+export type SetTasksACType = ReturnType<typeof setTasksAC>
+export type TasksACType = AddTaskACType | ChangeTaskTitleACType | ChangeTaskStatusACType | RemoveTaskACType | SetTasksACType
 
 // thunks
 export const addTaskTC = (taskTitle: string, cardId: string): CardsThunkType => {
   return (dispatch) => {
     tasksAPI.createTask(taskTitle, cardId)
       .then(res => {
-        console.log('task success!!!')
+        dispatch(getTasksTC(cardId))
       })
       .catch(e => {
-        console.log('error addTaskTC ', e)
+        console.log('error - addTaskTC ', e)
+      })
+  }
+}
+
+export const getTasksTC = (cardId: string): CardsThunkType => {
+  return (dispatch) => {
+    tasksAPI.getTasks(cardId)
+      .then(res => {
+        //@ts-ignore
+        dispatch(setTasksAC(res, cardId))
+      })
+      .catch(e => {
+        console.log('error getTasksTC ', e)
       })
   }
 }

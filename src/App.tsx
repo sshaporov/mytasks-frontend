@@ -6,8 +6,8 @@ import {AddItem} from './components/common/addItem/AddItem'
 import {useDispatch, useSelector} from 'react-redux'
 import {
   addCardAC, addCardTC,
-  CardFilterType,
-  CardType,
+  CardFilterValuesType,
+  CardStateType,
   changeCardFilterAC,
   changeCardTitleAC, changeCardTitleTC, getCardsTC,
   removeCardAC, removeCardTC
@@ -19,7 +19,7 @@ import {AppStateType} from './bll/store'
 const App = () => {
   DEV_VERSION && console.log('App')
 
-  const cards = useSelector<AppStateType, Array<CardType>>(state => state.cards)
+  const cards = useSelector<AppStateType, Array<CardStateType>>(state => state.cards)
   const tasks = useSelector<AppStateType, TasksType>(state => state.tasks)
 
   const dispatch = useDispatch()
@@ -45,7 +45,7 @@ const App = () => {
 
   const addTask = useCallback((taskTitle: string, cardId: string) => {
     // dispatch(addTaskAC(taskTitle, cardId))
-    dispatch(addTaskTC(cardId, taskTitle))
+    dispatch(addTaskTC(taskTitle, cardId))
   },[dispatch])
 
   const changeTaskTitle = useCallback((taskId: string, taskTitle: string, cardId: string) => {
@@ -56,7 +56,7 @@ const App = () => {
     dispatch(removeTaskAC(taskId, cardId))
   },[dispatch])
 
-  const changeFilter = useCallback((filter: CardFilterType, cardId: string) => {
+  const changeFilter = useCallback((filter: CardFilterValuesType, cardId: string) => {
     dispatch(changeCardFilterAC(filter,cardId))
   },[dispatch])
 
@@ -74,7 +74,7 @@ const App = () => {
       {cards.map(card => {
         // получаем все таски для текущей карточки и прокидываем их в CardTasks как tasks={tasksForCard}
         // не забыть сменить let -> const - удалить !!!
-        let tasksForCard = tasks[card.id]
+        let tasksForCard = tasks[card._id]
 
         // заглушка на undefined для - удалить!!!
         if (tasksForCard === undefined) {
@@ -82,8 +82,8 @@ const App = () => {
         }
 
         return <CardTasks
-                  key={card.id}
-                  cardId={card.id}
+                  key={card._id}
+                  cardId={card._id}
                   cardTitle={card.title}
                   cardFilter={card.filter}
                   removeCard={removeCard}
@@ -108,4 +108,4 @@ const App = () => {
   )
 }
 
-export default App;
+export default App

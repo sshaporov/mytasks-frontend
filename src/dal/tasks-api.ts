@@ -1,7 +1,10 @@
 import {instance} from './instance'
 
 export const tasksAPI = {
-  createTask(cardId: string, cardTitle: string) {
-    return instance.post(`/cards/tasks`, {cardId, title: cardTitle}).then(res => res.data)
+  createTask(cardTitle: string, cardId: string) {
+    return instance.post(`/cards/${cardId}/tasks`, { title: cardTitle }).then(res => res.data)
+  },
+  getTasks(cardId: string) {
+    return instance.get(`/cards/${cardId}/tasks`).then(res => res.data)
   },
 }

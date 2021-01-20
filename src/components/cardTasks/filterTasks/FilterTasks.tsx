@@ -2,10 +2,10 @@ import React, {useCallback} from 'react'
 import {DEV_VERSION} from '../../../config'
 import {Button} from 'antd'
 import s from './FilterTasks.module.css'
-import {CardFilterType} from '../../../bll/cards-reducer'
+import { CardFilterValuesType } from '../../../bll/cards-reducer'
 
 export type FilterTasksPropsType = {
-  changeFilter: (value: CardFilterType) => void
+  changeFilter: (value: CardFilterValuesType) => void
 }
 export const FilterTasks: React.FC<FilterTasksPropsType> = React.memo((
   {

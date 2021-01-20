@@ -1,9 +1,7 @@
 import { Dispatch } from 'react'
-import {v1} from 'uuid'
 import { AppStateType } from './store'
-import {ThunkAction} from 'redux-thunk'
-import { cardsAPI } from '../dal/cards-api'
-
+import { ThunkAction } from 'redux-thunk'
+import { cardsAPI, CardType } from '../dal/cards-api'
 
 export enum ACTIONS_CARDS_TYPE {
   ADD_CARD = 'Cards/ADD_CARD',
@@ -13,18 +11,16 @@ export enum ACTIONS_CARDS_TYPE {
   SET_CARDS = 'Card/SET_CARDS',
 }
 
-export type CardFilterType = 'ALL' | 'ACTIVE' | 'DONE'
-export type CardType = {
-  id: string
-  title: string
-  filter: string
-}
-const initialState: Array<CardType> = []
+export type CardFilterValuesType = 'ALL' | 'ACTIVE' | 'DONE'
+export type CardStateType = CardType & { filter: CardFilterValuesType }
+const initialState: Array<CardStateType> = []
 
-export const cardsReducer = (state: Array<CardType> = initialState, action: CardsACType): Array<CardType> => {
+export const cardsReducer = (state: Array<CardStateType> = initialState, action: CardsACType): Array<CardStateType> => {
   switch (action.type){
-    // case ACTIONS_CARDS_TYPE.ADD_CARD:
-    //   return [...state, {id: action.cardId, title: action.cardTitle, filter: 'ALL'}]
+
+    case ACTIONS_CARDS_TYPE.ADD_CARD:
+      return [{ ...action.card, filter: 'ALL' }, ...state]
+
     // case ACTIONS_CARDS_TYPE.CHANGE_CARD_TITLE: {
     //   const card = state.find(card => card.id === action.cardId)
     //   if (card) {
@@ -34,8 +30,9 @@ export const cardsReducer = (state: Array<CardType> = initialState, action: Card
     // }
     // case ACTIONS_CARDS_TYPE.REMOVE_CARD:
     //   return state.filter(card => card.id !== action.cardId)
+
     case ACTIONS_CARDS_TYPE.CHANGE_CARD_FILTER: {
-      const card = state.find(card => card.id === action.cardId)
+      const card = state.find(card => card._id === action.cardId)
       if (card) {
         card.filter = action.filter
       }
@@ -51,10 +48,9 @@ export const cardsReducer = (state: Array<CardType> = initialState, action: Card
 }
 
 // actions
-export const addCardAC = (cardTitle: string) => ({
+export const addCardAC = (card: CardType) => ({
   type: ACTIONS_CARDS_TYPE.ADD_CARD,
-  cardTitle,
-  cardId: v1(),
+  card
 } as const)
 export const changeCardTitleAC = (cardId: string, cardTitle: string) => ({
   type: ACTIONS_CARDS_TYPE.CHANGE_CARD_TITLE,
@@ -65,7 +61,7 @@ export const removeCardAC = (cardId: string) => ({
   type: ACTIONS_CARDS_TYPE.REMOVE_CARD,
   cardId,
 } as const)
-export const changeCardFilterAC = (filter: CardFilterType, cardId: string) => ({
+export const changeCardFilterAC = (filter: CardFilterValuesType, cardId: string) => ({
   type: ACTIONS_CARDS_TYPE.CHANGE_CARD_FILTER,
   cardId,
   filter,
@@ -76,13 +72,13 @@ export const setCardsAC = (cards: Array<CardType>) => ({
 } as const)
 
 // types
-// export type AddCardACType = ReturnType<typeof addCardAC>
+export type AddCardACType = ReturnType<typeof addCardAC>
 // export type ChangeCardTitleACType = ReturnType<typeof changeCardTitleAC>
 // export type RemoveCardACType = ReturnType<typeof removeCardAC>
 export type ChangeCardFilterACType = ReturnType<typeof changeCardFilterAC>
 export type SetCardsACType = ReturnType<typeof setCardsAC>
 export type CardsACType =
-  // AddCardACType |
+  AddCardACType |
   // ChangeCardTitleACType |
   // RemoveCardACType |
   ChangeCardFilterACType | SetCardsACType
@@ -94,9 +90,8 @@ export const getCardsTC = (): CardsThunkType => {
   return (dispatch) => {
     cardsAPI.getCards()
       .then(res => {
-        //@ts-ignore
-        const cards = res.map(card => ({id: card._id, title: card.title}))
-        dispatch(setCardsAC(cards))
+        //const cards = res.map(card => ({id: card._id, title: card.title}))
+        dispatch(setCardsAC(res))
       })
       .catch(e => {
         console.log('error getCardsTC ', e)
@@ -107,7 +102,8 @@ export const addCardTC = (cardTitle: string): CardsThunkType => {
   return (dispatch) => {
     cardsAPI.createCard(cardTitle)
       .then(res => {
-        dispatch(getCardsTC())
+        // dispatch(getCardsTC())
+        dispatch(addCardAC(res.item))
       })
       .catch(e => {
         console.log('error addCardsTC ', e)

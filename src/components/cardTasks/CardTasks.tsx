@@ -8,7 +8,7 @@ import {AddItem} from '../common/addItem/AddItem'
 import {FilterTasks} from './filterTasks/FilterTasks'
 import s from './CardTasks.module.css'
 import {TaskType} from '../../bll/tasks-reducer'
-import {CardFilterType} from '../../bll/cards-reducer'
+import { CardFilterValuesType } from '../../bll/cards-reducer'
 
 export type CardTasksPropsType = {
   cardId: string
@@ -21,7 +21,7 @@ export type CardTasksPropsType = {
   changeTaskStatus: (taskId: string, cardId: string) => void
   removeTask: (taskId: string, cardId: string) => void
   addTask: (taskTitle: string, cardId: string) => void
-  changeFilter: (value: CardFilterType, cardId: string) => void
+  changeFilter: (value: CardFilterValuesType, cardId: string) => void
 }
 export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   {
@@ -47,7 +47,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   },[tasks])
 
   // подбираем cardId в текущей компоненте и передаем вверх колбэк
-  const changeFilterHandler = useCallback((filterValue: CardFilterType) => {
+  const changeFilterHandler = useCallback((filterValue: CardFilterValuesType) => {
     changeFilter(filterValue, cardId)
   },[changeFilter, cardId])
 
