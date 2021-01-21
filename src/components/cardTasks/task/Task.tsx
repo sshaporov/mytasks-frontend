@@ -43,7 +43,6 @@ export const Task: React.FC<TaskPropsType> = React.memo((
     removeTask(id)
   },[removeTask, id])
 
-
   const menu = (
     <Menu onClick={() => {}}>
       <Menu.Item key="1" icon={<CheckOutlined/>} onClick={changeTaskStatusHandler}>
@@ -62,17 +61,16 @@ export const Task: React.FC<TaskPropsType> = React.memo((
   return (
     // обрачиваем в div чтобы на флексах выровнять чекбокс, спан и меню
     <div className={s.cardWrapper}>
-
       <div>
         <Checkbox checked={isChecked} onChange={changeTaskStatusHandler} style={{marginLeft: 10, marginRight: 10}}/>
-        <EditableItem value={title}
-                      type={'task'}
-                      changeValue={onChangeTaskTitleHandler}
-                      editMode={editMode}
-                      setEditMode={setEditModeHandler}
+        <EditableItem
+          value={title}
+          type={'task'}
+          changeValue={onChangeTaskTitleHandler}
+          editMode={editMode}
+          setEditMode={setEditModeHandler}
         />
       </div>
-
       <Dropdown overlay={menu} trigger={['click']}>
         <Button icon={<EllipsisOutlined/>} type={'text'}/>
       </Dropdown>

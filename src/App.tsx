@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react'
 import {DEV_VERSION} from './config'
 import {CardTasks} from './components/cardTasks/CardTasks'
-import {Button, Card} from 'antd'
+import {Card} from 'antd'
 import {AddItem} from './components/common/addItem/AddItem'
 import {useDispatch, useSelector} from 'react-redux'
 import {
@@ -69,16 +69,8 @@ const App = () => {
 
   return (
     <div>
+
       {cards.map(card => {
-        // получаем все таски для текущей карточки и прокидываем их в CardTasks как tasks={tasksForCard}
-        // не забыть сменить let -> const - удалить !!!
-        let tasksForCard = tasks[card._id]
-
-        // заглушка на undefined для - удалить!!!
-        if (tasksForCard === undefined) {
-          tasksForCard = []
-        }
-
         return <CardTasks
                   key={card._id}
                   cardId={card._id}
@@ -86,7 +78,7 @@ const App = () => {
                   cardFilter={card.filter}
                   removeCard={removeCard}
                   changeCardTitle={changeCardTitle}
-                  tasks={tasksForCard}
+                  tasks={tasks[card._id]}
                   changeTaskTitle={changeTaskTitle}
                   changeTaskStatus={changeTaskStatus}
                   removeTask={removeTask}

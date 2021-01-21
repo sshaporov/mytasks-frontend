@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from 'react'
 import s from './EditableItem.module.css'
-import {DEV_VERSION} from '../../../config';
+import {DEV_VERSION} from '../../../config'
 
 type EditableSpanPropsType = {
   type: 'card' | 'task'
