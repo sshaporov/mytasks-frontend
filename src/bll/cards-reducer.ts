@@ -22,7 +22,7 @@ export const cardsReducer = (state: Array<CardStateType> = initialState, action:
       return action.cards.map(card => ({...card, filter: 'ALL'}))
 
     case ACTIONS_CARDS_TYPE.ADD_CARD:
-      return [{ ...action.card, filter: 'ALL' }, ...state]
+      return [...state, { ...action.card, filter: 'ALL' }]
 
     case ACTIONS_CARDS_TYPE.CHANGE_CARD_TITLE:
       return state.map(card => card._id === action.cardId ? {...card, title: action.cardTitle} : card)

@@ -1,5 +1,5 @@
-import {ACTIONS_CARDS_TYPE, AddCardACType, CardsACType, CardsThunkType, SetCardsACType} from './cards-reducer'
-import { tasksAPI, TaskType } from '../dal/tasks-api'
+import {ACTIONS_CARDS_TYPE, AddCardACType, CardsThunkType, RemoveCardACType, SetCardsACType} from './cards-reducer'
+import {tasksAPI, TaskType} from '../dal/tasks-api'
 import {ThunkAction} from 'redux-thunk';
 import {AppStateType} from './store';
 import {Dispatch} from 'react';
@@ -25,19 +25,25 @@ export type TasksType = {
 const initialState: TasksType = {}
 
 export const tasksReducer = (state: TasksType = initialState, action: TasksACType
-  | AddCardACType | SetCardsACType
+  | AddCardACType | SetCardsACType | RemoveCardACType
 ) => {
   switch (action.type) {
-
-    case ACTIONS_CARDS_TYPE.ADD_CARD: {
-      return {...state, [action.card._id]: []}
-    }
 
     case ACTIONS_CARDS_TYPE.SET_CARDS: {
       const copyState = {...state}
       action.cards.forEach(card => {
         copyState[card._id] = []
       })
+      return copyState
+    }
+
+    case ACTIONS_CARDS_TYPE.ADD_CARD: {
+      return {...state, [action.card._id]: []}
+    }
+
+    case ACTIONS_CARDS_TYPE.REMOVE_CARD: {
+      const copyState = {...state}
+      delete copyState[action.cardId]
       return copyState
     }
 
@@ -49,15 +55,14 @@ export const tasksReducer = (state: TasksType = initialState, action: TasksACTyp
       return {...state, [action.task.card_id]: [...state[action.task.card_id], action.task]}
     }
 
-
     case ACTIONS_TASKS_TYPE.CHANGE_TASK_STATUS: {
-      let todolistTasks = state[action.cardId]
-      state[action.cardId] = todolistTasks
-        .map(t => t._id === action.taskId
-          ? {...t, isDone: action.taskStatus}
-          : t)
-      return {...state}
+      return {
+        ...state, [action.task.card_id]: state[action.task.card_id]
+          .map(t => t._id === action.task._id ? {...t, ...action.task} : t)
+      }
     }
+
+
     case ACTIONS_TASKS_TYPE.CHANGE_TASK_TITLE: {
       const todolistTasks = state[action.cardId]
       state[action.cardId] = todolistTasks
@@ -73,11 +78,7 @@ export const tasksReducer = (state: TasksType = initialState, action: TasksACTyp
       return stateCopy
     }
 
-    // case ACTIONS_CARDS_TYPE.REMOVE_CARD: {
-    //   const copyState = {...state}
-    //   delete copyState[action.cardId]
-    //   return copyState
-    // }
+
     default:
       return state
   }
@@ -95,11 +96,9 @@ export const addTaskAC = (task: TaskType) => ({
 } as const)
 
 
-export const changeTaskStatusAC = (taskId: string, taskStatus: boolean, cardId: string) => ({
+export const changeTaskStatusAC = (task: TaskType) => ({
   type: ACTIONS_TASKS_TYPE.CHANGE_TASK_STATUS,
-  taskId,
-  taskStatus,
-  cardId,
+  task,
 } as const)
 export const changeTaskTitleAC = (taskId: string, taskTitle: string, cardId: string) => ({
   type: ACTIONS_TASKS_TYPE.CHANGE_TASK_TITLE,
@@ -162,7 +161,7 @@ export const changeTaskStatusTC = (taskId: string, taskStatus: boolean, cardId: 
     tasksAPI.changeTaskStatus(taskId, taskStatus, cardId)
       .then(res => {
         //@ts-ignore
-        dispatch(changeTaskStatusAC(taskId, taskStatus, cardId))
+        dispatch(changeTaskStatusAC(res.item))
       })
       .catch(e => {
         console.log('error getTasksTC ', e)
