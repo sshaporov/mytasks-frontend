@@ -143,4 +143,17 @@ export const getTasksTC = (cardId: string): CardsThunkType => {
   }
 }
 
+// export const getTasksTC = (cardId: string): CardsThunkType => {
+//   return (dispatch) => {
+//     tasksAPI.getTasks(cardId)
+//       .then(res => {
+//         //@ts-ignore
+//         dispatch(setTasksAC(res, cardId))
+//       })
+//       .catch(e => {
+//         console.log('error getTasksTC ', e)
+//       })
+//   }
+// }
+
 
