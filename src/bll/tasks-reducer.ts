@@ -57,8 +57,9 @@ export const tasksReducer = (state: TasksType = initialState, action: TasksACTyp
 
     case ACTIONS_TASKS_TYPE.CHANGE_TASK_STATUS: {
       return {
-        ...state, [action.task.card_id]: state[action.task.card_id]
-          .map(t => t._id === action.task._id ? {...t, ...action.task} : t)
+        ...state,
+        [action.cardId]: state[action.cardId]
+          .map(t => t._id === action.taskId ? {...t, checked: action.taskStatus} : t )
       }
     }
 
@@ -96,9 +97,11 @@ export const addTaskAC = (task: TaskType) => ({
 } as const)
 
 
-export const changeTaskStatusAC = (task: TaskType) => ({
+export const changeTaskStatusAC = (taskId: string, taskStatus: boolean, cardId: string) => ({
   type: ACTIONS_TASKS_TYPE.CHANGE_TASK_STATUS,
-  task,
+  taskId,
+  taskStatus,
+  cardId,
 } as const)
 export const changeTaskTitleAC = (taskId: string, taskTitle: string, cardId: string) => ({
   type: ACTIONS_TASKS_TYPE.CHANGE_TASK_TITLE,
@@ -161,7 +164,7 @@ export const changeTaskStatusTC = (taskId: string, taskStatus: boolean, cardId: 
     tasksAPI.changeTaskStatus(taskId, taskStatus, cardId)
       .then(res => {
         //@ts-ignore
-        dispatch(changeTaskStatusAC(res.item))
+        dispatch(changeTaskStatusAC(taskId, taskStatus, cardId))
       })
       .catch(e => {
         console.log('error getTasksTC ', e)
