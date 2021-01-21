@@ -1,13 +1,7 @@
 import {
-  ACTIONS_TASKS_TYPE,
-  changeTaskStatusAC,
-  changeTaskTitleAC, removeTaskAC,
-  setTasksAC
-} from '../../../bll/tasks-reducer'
-import {
   ACTIONS_CARDS_TYPE,
   addCardAC,
-  CardFilterValuesType, changeCardFilterAC,
+  changeCardFilterAC,
   changeCardTitleAC,
   removeCardAC,
   setCardsAC
