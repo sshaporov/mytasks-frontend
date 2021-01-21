@@ -7,8 +7,14 @@ export const tasksAPI = {
   createTask(cardTitle: string, cardId: string) {
     return instance.post<CreateTaskResponseType>(`/cards/${cardId}/tasks`, {title: cardTitle}).then(res => res.data)
   },
-  changeTaskStatus(taskId: string, taskStatus: boolean, cardId: string) {
-    return instance.put<ChangeTaskStatusResponseType>(`/cards/${cardId}/tasks/${taskId}`, {status: taskStatus}).then(res => res.data)
+  changeTaskStatus(taskId: string, taskIsChecked: boolean, cardId: string) {
+    return instance.put<ChangeTaskResponseType>(`/cards/${cardId}/tasks/${taskId}`, {checked: taskIsChecked}).then(res => res.data)
+  },
+  changeTaskTitle(taskId: string, taskTitle: string, cardId: string) {
+    return instance.put<ChangeTaskResponseType>(`/cards/${cardId}/tasks/${taskId}`, {title: taskTitle}).then(res => res.data)
+  },
+  removeTask(taskId: string, cardId: string) {
+    return instance.delete<ChangeTaskResponseType>(`/cards/${cardId}/tasks/${taskId}`).then(res => res.data)
   },
 }
 
@@ -21,4 +27,4 @@ export type TaskType = {
 }
 export type GetTasksResponseType = Array<TaskType>
 export type CreateTaskResponseType = { item: TaskType }
-export type ChangeTaskStatusResponseType = { item: TaskType }
+export type ChangeTaskResponseType = { item: TaskType }

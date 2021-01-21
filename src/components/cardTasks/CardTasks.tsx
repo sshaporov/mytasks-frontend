@@ -63,8 +63,8 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   }, [removeTask, cardId])
 
 
-  const changeTaskStatusHandler = useCallback((taskId: string, taskStatus: boolean) => {
-    changeTaskStatus(taskId, taskStatus, cardId)
+  const changeTaskStatusHandler = useCallback((taskId: string, taskIsChecked: boolean) => {
+    changeTaskStatus(taskId, taskIsChecked, cardId)
   }, [changeTaskStatus, cardId])
 
 
@@ -106,7 +106,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
           key={task._id}
           id={task._id}
           title={task.title}
-          checked={task.checked}
+          isChecked={task.checked}
           changeTaskTitle={changeTaskTitleHandler}
           changeTaskStatus={changeTaskStatusHandler}
           removeTask={removeTaskHandler}

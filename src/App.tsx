@@ -5,21 +5,20 @@ import {Button, Card} from 'antd'
 import {AddItem} from './components/common/addItem/AddItem'
 import {useDispatch, useSelector} from 'react-redux'
 import {
-  addCardAC, addCardTC,
+  addCardTC,
   CardFilterValuesType,
   CardStateType,
   changeCardFilterAC,
-  changeCardTitleAC, changeCardTitleTC, getCardsTC,
-  removeCardAC, removeCardTC
+  changeCardTitleTC,
+  getCardsTC,
+  removeCardTC,
 } from './bll/cards-reducer'
 import {
-  addTaskAC,
   addTaskTC,
-  changeTaskStatusAC,
   changeTaskStatusTC,
-  changeTaskTitleAC,
-  removeTaskAC,
-  TasksType
+  changeTaskTitleTC,
+  removeTaskTC,
+  TasksType,
 } from './bll/tasks-reducer'
 import {AppStateType} from './bll/store'
 
@@ -52,37 +51,21 @@ const App = () => {
     dispatch(addTaskTC(taskTitle, cardId))
   },[dispatch])
 
-  const changeTaskStatus = useCallback((taskId: string, taskStatus: boolean, cardId: string) => {
-    // dispatch(changeTaskStatusAC(taskId, cardId))
-    dispatch(changeTaskStatusTC(taskId, taskStatus, cardId))
-    console.log(taskId, taskStatus, cardId)
+  const changeTaskStatus = useCallback((taskId: string, taskIsChecked: boolean, cardId: string) => {
+    dispatch(changeTaskStatusTC(taskId, taskIsChecked, cardId))
   },[dispatch])
 
-
-
-
-
-
   const changeTaskTitle = useCallback((taskId: string, taskTitle: string, cardId: string) => {
-    dispatch(changeTaskTitleAC(taskId, taskTitle, cardId))
+    dispatch(changeTaskTitleTC(taskId, taskTitle, cardId))
   },[dispatch])
 
   const removeTask = useCallback((taskId: string, cardId: string) => {
-    dispatch(removeTaskAC(taskId, cardId))
+    dispatch(removeTaskTC(taskId, cardId))
   },[dispatch])
 
   const changeFilter = useCallback((filter: CardFilterValuesType, cardId: string) => {
-    dispatch(changeCardFilterAC(filter,cardId))
+    dispatch(changeCardFilterAC(filter, cardId))
   },[dispatch])
-
-  // ********************************************* server test
-  const onClickTestBtnGet = () => {
-    dispatch(getCardsTC())
-  }
-  // const onClickTestBtnAdd = () => {
-  //   dispatch(createCardTC())
-  // }
-  // *********************************************
 
   return (
     <div>
@@ -115,9 +98,6 @@ const App = () => {
       <Card style={{width: 300, margin: 20, borderRadius: 7, boxShadow: '0px 0px 5px 1px rgba(208, 216, 243, 0.5)'}}>
         <AddItem addItem={addCard} type={'card'}/>
       </Card>
-
-      <Button onClick={onClickTestBtnGet}>Get tasks</Button>
-      {/*<Button onClick={onClickTestBtnAdd}>Add mock task</Button>*/}
 
     </div>
   )

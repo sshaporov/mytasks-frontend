@@ -4,12 +4,11 @@ import {DEV_VERSION} from '../../../config'
 import {EditableItem} from '../../common/editableItem/EditableItem'
 import {DeleteOutlined, EditOutlined, EllipsisOutlined, CheckOutlined} from '@ant-design/icons'
 import s from './Task.module.css'
-import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 
 export type TaskPropsType = {
   id: string
   title: string
-  checked: boolean
+  isChecked: boolean
   changeTaskTitle: (taskId: string, title: string) => void
   changeTaskStatus: (taskId: string, taskStatus: boolean) => void
   removeTask: (taskId: string) => void
@@ -18,7 +17,7 @@ export const Task: React.FC<TaskPropsType> = React.memo((
   {
     id,
     title,
-    checked,
+    isChecked,
     changeTaskTitle,
     changeTaskStatus,
     removeTask
@@ -37,8 +36,8 @@ export const Task: React.FC<TaskPropsType> = React.memo((
   },[changeTaskTitle, id])
 
   const changeTaskStatusHandler = useCallback(() => {
-    changeTaskStatus(id, !checked)
-  },[changeTaskStatus, id, checked])
+    changeTaskStatus(id, !isChecked)
+  },[changeTaskStatus, id, isChecked])
 
   const onClickRemoveDropdown = useCallback(() => {
     removeTask(id)
@@ -47,9 +46,7 @@ export const Task: React.FC<TaskPropsType> = React.memo((
 
   const menu = (
     <Menu onClick={() => {}}>
-      <Menu.Item key="1" icon={<CheckOutlined/>}
-                 // onClick={changeTaskStatusHandler}
-      >
+      <Menu.Item key="1" icon={<CheckOutlined/>} onClick={changeTaskStatusHandler}>
         Marked
       </Menu.Item>
       <Menu.Item key="2" icon={<EditOutlined/>} onClick={() => setEditMode(true)}>
@@ -67,7 +64,7 @@ export const Task: React.FC<TaskPropsType> = React.memo((
     <div className={s.cardWrapper}>
 
       <div>
-        <Checkbox checked={checked} onChange={changeTaskStatusHandler} style={{marginLeft: 10, marginRight: 10}}/>
+        <Checkbox checked={isChecked} onChange={changeTaskStatusHandler} style={{marginLeft: 10, marginRight: 10}}/>
         <EditableItem value={title}
                       type={'task'}
                       changeValue={onChangeTaskTitleHandler}
