@@ -17,14 +17,19 @@ const initialState: Array<CardStateType> = []
 
 export const cardsReducer = (state: Array<CardStateType> = initialState, action: CardsACType): Array<CardStateType> => {
   switch (action.type){
-    case ACTIONS_CARDS_TYPE.ADD_CARD:
-      return [{ ...action.card, filter: 'ALL' }, ...state]
+
     case ACTIONS_CARDS_TYPE.SET_CARDS:
       return action.cards.map(card => ({...card, filter: 'ALL'}))
+
+    case ACTIONS_CARDS_TYPE.ADD_CARD:
+      return [{ ...action.card, filter: 'ALL' }, ...state]
+
     case ACTIONS_CARDS_TYPE.CHANGE_CARD_TITLE:
       return state.map(card => card._id === action.cardId ? {...card, title: action.cardTitle} : card)
+
     case ACTIONS_CARDS_TYPE.REMOVE_CARD:
       return state.filter(card => card._id !== action.cardId)
+
     case ACTIONS_CARDS_TYPE.CHANGE_CARD_FILTER: {
       const card = state.find(card => card._id === action.cardId)
       if (card) {
@@ -32,6 +37,7 @@ export const cardsReducer = (state: Array<CardStateType> = initialState, action:
       }
       return [...state]
     }
+
     default:
       return state
   }

@@ -12,7 +12,15 @@ import {
   changeCardTitleAC, changeCardTitleTC, getCardsTC,
   removeCardAC, removeCardTC
 } from './bll/cards-reducer'
-import {addTaskAC, addTaskTC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TasksType} from './bll/tasks-reducer'
+import {
+  addTaskAC,
+  addTaskTC,
+  changeTaskStatusAC,
+  changeTaskStatusTC,
+  changeTaskTitleAC,
+  removeTaskAC,
+  TasksType
+} from './bll/tasks-reducer'
 import {AppStateType} from './bll/store'
 
 
@@ -29,28 +37,31 @@ const App = () => {
   }, [dispatch])
 
   const addCard = useCallback((cardTitle: string) => {
-    // dispatch(addCardAC(cardTitle))
     dispatch(addCardTC(cardTitle))
   },[dispatch])
 
   const changeCardTitle = useCallback((cardId: string, newCardTitle: string) => {
-    // dispatch(changeCardTitleAC(cardId,newCardTitle))
     dispatch(changeCardTitleTC(cardId, newCardTitle))
   }, [dispatch])
 
   const removeCard = useCallback((cardId: string) => {
-    // dispatch(removeCardAC(cardId))
     dispatch(removeCardTC(cardId))
   }, [dispatch])
 
-  const changeTaskStatus = useCallback((taskId: string, cardId: string) => {
-    dispatch(changeTaskStatusAC(taskId, cardId))
-  },[dispatch])
-
   const addTask = useCallback((taskTitle: string, cardId: string) => {
-    // dispatch(addTaskAC(taskTitle, cardId))
     dispatch(addTaskTC(taskTitle, cardId))
   },[dispatch])
+
+  const changeTaskStatus = useCallback((taskId: string, taskStatus: boolean, cardId: string) => {
+    // dispatch(changeTaskStatusAC(taskId, cardId))
+    dispatch(changeTaskStatusTC(taskId, taskStatus, cardId))
+    console.log(taskId, taskStatus, cardId)
+  },[dispatch])
+
+
+
+
+
 
   const changeTaskTitle = useCallback((taskId: string, taskTitle: string, cardId: string) => {
     dispatch(changeTaskTitleAC(taskId, taskTitle, cardId))

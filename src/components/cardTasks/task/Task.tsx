@@ -8,16 +8,16 @@ import s from './Task.module.css'
 export type TaskPropsType = {
   id: string
   title: string
-  isDone: boolean
+  checked: boolean
   changeTaskTitle: (taskId: string, title: string) => void
-  changeTaskStatus: (taskId: string) => void
+  changeTaskStatus: (taskId: string, taskStatus: boolean) => void
   removeTask: (taskId: string) => void
 }
 export const Task: React.FC<TaskPropsType> = React.memo((
   {
     id,
     title,
-    isDone,
+    checked,
     changeTaskTitle,
     changeTaskStatus,
     removeTask
@@ -36,8 +36,8 @@ export const Task: React.FC<TaskPropsType> = React.memo((
   },[changeTaskTitle, id])
 
   const changeTaskStatusHandler = useCallback(() => {
-    changeTaskStatus(id)
-  },[changeTaskStatus, id])
+    changeTaskStatus(id, checked)
+  },[changeTaskStatus, id, checked])
 
   const onClickRemoveDropdown = useCallback(() => {
     removeTask(id)
@@ -64,7 +64,7 @@ export const Task: React.FC<TaskPropsType> = React.memo((
     <div className={s.cardWrapper}>
 
       <div>
-        <Checkbox checked={isDone} onClick={changeTaskStatusHandler} style={{marginLeft: 10, marginRight: 10}}/>
+        <Checkbox checked={checked} onClick={changeTaskStatusHandler} style={{marginLeft: 10, marginRight: 10}}/>
         <EditableItem value={title}
                       type={'task'}
                       changeValue={onChangeTaskTitleHandler}

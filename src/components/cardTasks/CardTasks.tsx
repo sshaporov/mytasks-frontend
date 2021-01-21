@@ -2,14 +2,15 @@ import React, {useCallback, useEffect, useMemo} from 'react'
 import {Task} from './task/Task'
 import {DEV_VERSION} from '../../config'
 import {CardHeader} from './cardHeader/CardHeader'
-import { CardProgressBar } from './cardProgressBar/CardProgressBar'
-import {Card, Divider } from 'antd'
+import {CardProgressBar} from './cardProgressBar/CardProgressBar'
+import {Card, Divider} from 'antd'
 import {AddItem} from '../common/addItem/AddItem'
 import {FilterTasks} from './filterTasks/FilterTasks'
 import s from './CardTasks.module.css'
-import {getTasksTC, TaskType} from '../../bll/tasks-reducer'
-import { CardFilterValuesType } from '../../bll/cards-reducer'
-import {useDispatch} from 'react-redux';
+import {getTasksTC} from '../../bll/tasks-reducer'
+import {CardFilterValuesType} from '../../bll/cards-reducer'
+import {useDispatch} from 'react-redux'
+import {TaskType} from '../../dal/tasks-api'
 
 export type CardTasksPropsType = {
   cardId: string
@@ -19,7 +20,7 @@ export type CardTasksPropsType = {
   changeCardTitle: (cardId: string, title: string) => void
   tasks: Array<TaskType>
   changeTaskTitle: (taskId: string, title: string, cardId: string) => void
-  changeTaskStatus: (taskId: string, cardId: string) => void
+  changeTaskStatus: (taskId: string, taskStatus: boolean, cardId: string) => void
   removeTask: (taskId: string, cardId: string) => void
   addTask: (taskTitle: string, cardId: string) => void
   changeFilter: (value: CardFilterValuesType, cardId: string) => void
@@ -48,43 +49,45 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
 
   // мемоизированная функция для подсчета процента выполненых тасок
   const countTaskProgress = useMemo(() => {
-    const doneCount = tasks.reduce((acc, t) => acc + Number(t.isDone), 0)
+    const doneCount = tasks.reduce((acc, task) => acc + Number(task.checked), 0)
     return Math.ceil(100 / tasks.length * doneCount)
   },[tasks])
 
   // подбираем cardId в текущей компоненте и передаем вверх колбэк
   const changeFilterHandler = useCallback((filterValue: CardFilterValuesType) => {
     changeFilter(filterValue, cardId)
-  },[changeFilter, cardId])
+  }, [changeFilter, cardId])
 
   const removeTaskHandler = useCallback((taskId: string) => {
     removeTask(taskId, cardId)
-  },[removeTask, cardId])
+  }, [removeTask, cardId])
 
-  const changeTaskStatusHandler = useCallback((taskId: string) => {
-    changeTaskStatus(taskId, cardId)
-  },[changeTaskStatus, cardId])
+
+  const changeTaskStatusHandler = useCallback((taskId: string, taskStatus: boolean) => {
+    changeTaskStatus(taskId, taskStatus, cardId)
+  }, [changeTaskStatus, cardId])
+
 
   const addTaskHandler = useCallback((taskTitle: string) => {
     addTask(taskTitle, cardId)
-  },[addTask, cardId])
+  }, [addTask, cardId])
 
   const changeTaskTitleHandler = useCallback((taskId: string, title: string) => {
     changeTaskTitle(taskId, title, cardId)
-  },[changeTaskTitle, cardId])
+  }, [changeTaskTitle, cardId])
 
   const removeCardHandler = useCallback(() => {
     removeCard(cardId)
-  },[removeCard, cardId])
+  }, [removeCard, cardId])
 
   const changeCardTitleHandler = useCallback((newCardTitle: string) => {
     changeCardTitle(cardId, newCardTitle)
-  },[changeCardTitle, cardId])
+  }, [changeCardTitle, cardId])
 
   // логика фильтрации тасок
   let tasksForCard = tasks
-  if (cardFilter === 'DONE') tasksForCard = tasks.filter(t => t.isDone)
-  if (cardFilter === 'ACTIVE') tasksForCard = tasks.filter(t => !t.isDone)
+  if (cardFilter === 'DONE') tasksForCard = tasks.filter(task => task.checked)
+  if (cardFilter === 'ACTIVE') tasksForCard = tasks.filter(task => !task.checked)
 
   return (
     <div className={s.cardsWrapper}>
@@ -100,14 +103,14 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
         <Divider/>
 
         {tasksForCard.map(task => <Task
-                          key={task.id}
-                          id={task.id}
-                          title={task.title}
-                          isDone={task.isDone}
-                          changeTaskTitle={changeTaskTitleHandler}
-                          changeTaskStatus={changeTaskStatusHandler}
-                          removeTask={removeTaskHandler}
-                        />)}
+          key={task._id}
+          id={task._id}
+          title={task.title}
+          checked={task.checked}
+          changeTaskTitle={changeTaskTitleHandler}
+          changeTaskStatus={changeTaskStatusHandler}
+          removeTask={removeTaskHandler}
+        />)}
 
         <AddItem addItem={addTaskHandler} type={'task'}/>
 
