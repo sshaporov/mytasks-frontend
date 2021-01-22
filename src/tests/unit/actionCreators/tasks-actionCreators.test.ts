@@ -8,11 +8,13 @@ import {
 import {TaskType} from '../../../dal/tasks-api'
 
 it('ActionCreator addTask works correctly', () => {
-  const task: TaskType = {_id: 'task_id', card_id: 'card_id', title: 'test task title', checked: false}
-  const addTask = addTaskAC(task)
+  const newCardId = 'card_id'
+  const task: TaskType = {_id: 'task_id', card_id: newCardId, title: 'test task title', checked: false}
+  const addTask = addTaskAC(task, newCardId)
   expect(addTask).toEqual({
     type: ACTIONS_TASKS_TYPE.ADD_TASK,
-    task: {_id: 'task_id', card_id: 'card_id', title: 'test task title', checked: false}
+    task: {_id: 'task_id', card_id: 'card_id', title: 'test task title', checked: false},
+    cardId: newCardId
   })
 })
 

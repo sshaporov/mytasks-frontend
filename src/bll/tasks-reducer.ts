@@ -45,7 +45,7 @@ export const tasksReducer = (state: TasksType = initialState, action: TasksACTyp
     }
 
     case ACTIONS_TASKS_TYPE.ADD_TASK: {
-      return {...state, [action.task.card_id]: [...state[action.task.card_id], action.task]}
+      return {...state, [action.cardId]: [...state[action.task.card_id], action.task]}
     }
 
     case ACTIONS_TASKS_TYPE.CHANGE_TASK_STATUS: {
@@ -79,9 +79,10 @@ export const setTasksAC = (tasks: Array<TaskType>, cardId: string) => ({
   tasks,
   cardId,
 } as const)
-export const addTaskAC = (task: TaskType) => ({
+export const addTaskAC = (task: TaskType, cardId: string) => ({
   type: ACTIONS_TASKS_TYPE.ADD_TASK,
   task,
+  cardId,
 } as const)
 export const changeTaskStatusAC = (taskId: string, taskIsChecked: boolean, cardId: string) => ({
   type: ACTIONS_TASKS_TYPE.CHANGE_TASK_STATUS,
@@ -128,7 +129,7 @@ export const addTaskTC = (taskTitle: string, cardId: string): TasksThunkType => 
   return (dispatch) => {
     tasksAPI.createTask(taskTitle, cardId)
       .then(res => {
-        dispatch(addTaskAC(res.item))
+        dispatch(addTaskAC(res.item, cardId))
       })
       .catch(e => {
         console.log('error - addTaskTC ', e)
