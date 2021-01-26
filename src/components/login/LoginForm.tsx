@@ -1,55 +1,65 @@
-import {Form, Input, Button, Checkbox} from 'antd';
-
-const layout = {
-  labelCol: {span: 8},
-  wrapperCol: {span: 16},
-};
-const tailLayout = {
-  wrapperCol: {offset: 8, span: 16},
-};
+import React from 'react'
+import {Form, Input, Button} from 'antd'
+import {MailOutlined, LockOutlined} from '@ant-design/icons'
+import './loginForm.css'
+import {NavLink} from 'react-router-dom'
 
 export const LoginForm = () => {
   const onFinish = (values: any) => {
-    console.log('Success:', values);
-  };
+    console.log('Received values of form: ', values)
+  }
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    console.log('Failed:', errorInfo)
   };
 
   return (
     <Form
-      {...layout}
-      name="basic"
-      initialValues={{remember: true}}
+      name="login"
+      className="login-form"
+      initialValues={{remember: true,}}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
+
       <Form.Item
-        label="Username"
-        name="username"
-        rules={[{required: true, message: 'Please input your username!'}]}
+        name="email"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your Email!',
+          },
+          {
+            type: 'email',
+            message: 'Please input correct Email!',
+          },
+        ]}
       >
-        <Input/>
+        <Input prefix={<MailOutlined className="site-form-item-icon"/>} placeholder="Email"/>
       </Form.Item>
 
       <Form.Item
-        label="Password"
         name="password"
-        rules={[{required: true, message: 'Please input your password!'}]}
+        rules={[
+          {
+            required: true,
+            message: 'Please input your Password!',
+          },
+        ]}
       >
-        <Input.Password/>
+        <Input
+          prefix={<LockOutlined className="site-form-item-icon"/>}
+          type="password"
+          placeholder="Password"
+        />
       </Form.Item>
 
-      <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-        <Checkbox>Remember me</Checkbox>
-      </Form.Item>
-
-      <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-          Submit
+      <Form.Item>
+        <Button type="primary" htmlType="submit" className="login-form-button">
+          Log in
         </Button>
+        Or <NavLink to={'/registration'}>register now!</NavLink>
       </Form.Item>
     </Form>
-  )
-}
+  );
+};
