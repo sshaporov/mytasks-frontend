@@ -13,7 +13,8 @@ export const authAPI = {
 
 // types
 export type UserType = {
-  name: string | null
+  _id: string
+  name?: string
   email: string
 }
 export type LoginResponseType = {
