@@ -3,11 +3,14 @@ import thunkMiddleware from 'redux-thunk'
 import {createStore, combineReducers, compose, applyMiddleware} from 'redux'
 import { cardsReducer } from './cards-reducer'
 import { tasksReducer } from './tasks-reducer'
+import {registrationReducer} from './registration-reducer';
+import {authReducer} from './auth-reducer';
 
 const reducers = combineReducers({
   cards: cardsReducer,
   tasks: tasksReducer,
-
+  registration: registrationReducer,
+  auth: authReducer,
 })
 export type AppStateType = ReturnType<typeof reducers>
 

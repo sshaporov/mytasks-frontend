@@ -4,8 +4,13 @@ import {MailOutlined, LockOutlined} from '@ant-design/icons'
 import './loginForm.css'
 import {NavLink} from 'react-router-dom'
 
+export type LoginDataType = {
+  email: string
+  password: string
+}
+
 export const LoginForm = () => {
-  const onFinish = (values: any) => {
+  const onFinish = (values: LoginDataType) => {
     console.log('Received values of form: ', values)
   }
 
