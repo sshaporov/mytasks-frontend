@@ -2,7 +2,11 @@ import React from 'react'
 import {Form, Input, Button} from 'antd'
 import {MailOutlined, LockOutlined} from '@ant-design/icons'
 import './loginForm.css'
-import {NavLink} from 'react-router-dom'
+import {NavLink, Redirect} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import {DEV_VERSION} from '../../config'
+import {loginTC} from '../../bll/auth-reducer'
+import {AppStateType} from '../../bll/store';
 
 export type LoginDataType = {
   email: string
@@ -10,13 +14,23 @@ export type LoginDataType = {
 }
 
 export const LoginForm = () => {
+  DEV_VERSION && console.log('LoginForm')
+
+  const isLoggedIn = useSelector<AppStateType, boolean>(state => state.auth.isLoggedIn)
+
+  const dispatch = useDispatch()
+
   const onFinish = (values: LoginDataType) => {
-    console.log('Received values of form: ', values)
+    dispatch(loginTC(values))
   }
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
   };
+
+  if (isLoggedIn) {
+    return <Redirect to={'/'}/>
+  }
 
   return (
     <Form

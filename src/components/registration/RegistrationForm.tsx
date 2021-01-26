@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../../bll/store';
 import {registrationTC, setIsRegisterAC} from '../../bll/registration-reducer';
 import {NavLink} from 'react-router-dom';
+import {DEV_VERSION} from '../../config';
 
 const layout = {
   labelCol: {
@@ -28,12 +29,13 @@ export type RegistrationDataType = {
 }
 
 export const RegistrationForm = () => {
+  DEV_VERSION && console.log('RegistrationForm')
+
   const isRegister = useSelector<AppStateType, boolean>(state => state.registration.isRegister)
 
   const dispatch = useDispatch()
 
   const onFinish = useCallback((values: RegistrationDataType) => {
-    console.log('Received values of form: ', values)
     dispatch(registrationTC(values))
   }, [dispatch, isRegister])
 
