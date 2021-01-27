@@ -1,7 +1,8 @@
-import { Dispatch } from 'react'
-import { AppStateType } from './store'
-import { ThunkAction } from 'redux-thunk'
-import { cardsAPI, CardType } from '../dal/cards-api'
+import {Dispatch} from 'react'
+import {AppStateType} from './store'
+import {ThunkAction} from 'redux-thunk'
+import {cardsAPI, CardType} from '../dal/cards-api'
+import {ACTIONS_AUTH_TYPE, AuthACType} from './auth-reducer';
 
 export enum ACTIONS_CARDS_TYPE {
   ADD_CARD = 'Cards/ADD_CARD',
@@ -15,14 +16,14 @@ export type CardFilterValuesType = 'ALL' | 'ACTIVE' | 'DONE'
 export type CardStateType = CardType & { filter: CardFilterValuesType }
 const initialState: Array<CardStateType> = []
 
-export const cardsReducer = (state: Array<CardStateType> = initialState, action: CardsACType): Array<CardStateType> => {
-  switch (action.type){
+export const cardsReducer = (state: Array<CardStateType> = initialState, action: CardsACType | AuthACType): Array<CardStateType> => {
+  switch (action.type) {
 
     case ACTIONS_CARDS_TYPE.SET_CARDS:
       return action.cards.map(card => ({...card, filter: 'ALL'}))
 
     case ACTIONS_CARDS_TYPE.ADD_CARD:
-      return [...state, { ...action.card, filter: 'ALL' }]
+      return [...state, {...action.card, filter: 'ALL'}]
 
     case ACTIONS_CARDS_TYPE.CHANGE_CARD_TITLE:
       return state.map(card => card._id === action.cardId ? {...card, title: action.cardTitle} : card)
@@ -37,6 +38,9 @@ export const cardsReducer = (state: Array<CardStateType> = initialState, action:
       }
       return [...state]
     }
+
+    case ACTIONS_AUTH_TYPE.LOGOUT:
+      return []
 
     default:
       return state

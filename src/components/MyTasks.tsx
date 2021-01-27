@@ -73,7 +73,7 @@ export const MyTasks = () => {
   }
 
   return (
-    <div style={{backgroundColor: "#e7dbe7"}}>
+    <div>
       {cards.map(card => {
         return <CardTasks
                   key={card._id}
@@ -90,7 +90,7 @@ export const MyTasks = () => {
                   changeFilter={changeFilter}
                 />})
       }
-      <Card style={{width: 300, margin: 20, borderRadius: 7, boxShadow: '0px 0px 5px 1px rgba(208, 216, 243, 0.5)'}}>
+      <Card style={{width: 300, margin: 20, borderRadius: 7}}>
         <AddItem addItem={addCard} type={'card'}/>
       </Card>
     </div>

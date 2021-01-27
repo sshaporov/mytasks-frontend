@@ -1,11 +1,11 @@
 import React, {useCallback} from 'react'
 import {Form, Input, Button,} from 'antd'
 import './registrationForm.css'
-import {useDispatch, useSelector} from 'react-redux';
-import {AppStateType} from '../../bll/store';
-import {registrationTC, setIsRegisterAC} from '../../bll/registration-reducer';
-import {NavLink} from 'react-router-dom';
-import {DEV_VERSION} from '../../config';
+import {useDispatch, useSelector} from 'react-redux'
+import {AppStateType} from '../../bll/store'
+import {registrationTC} from '../../bll/registration-reducer'
+import {NavLink} from 'react-router-dom'
+import {DEV_VERSION} from '../../config'
 
 const layout = {
   labelCol: {
@@ -37,7 +37,7 @@ export const RegistrationForm = () => {
 
   const onFinish = useCallback((values: RegistrationDataType) => {
     dispatch(registrationTC(values))
-  }, [dispatch, isRegister])
+  }, [dispatch])
 
   if (isRegister) {
     return (
@@ -51,20 +51,20 @@ export const RegistrationForm = () => {
 
     <Form
       {...layout}
-      name="register"
+      name='register'
       className='registration-form'
       onFinish={onFinish}
     >
       <Form.Item
-        name="name"
-        label="Name"
+        name='name'
+        label='Name'
       >
         <Input/>
       </Form.Item>
 
       <Form.Item
-        name="email"
-        label="Email"
+        name='email'
+        label='Email'
         rules={[
           {
             type: 'email',
@@ -80,8 +80,8 @@ export const RegistrationForm = () => {
       </Form.Item>
 
       <Form.Item
-        name="password"
-        label="Password"
+        name='password'
+        label='Password'
         rules={[
           {
             required: true,
@@ -94,12 +94,12 @@ export const RegistrationForm = () => {
         ]}
         hasFeedback
       >
-        <Input.Password/>
+        <Input.Password autoComplete='on'/>
       </Form.Item>
 
       <Form.Item
-        name="confirm"
-        label="Confirm Password"
+        name='confirm'
+        label='Confirm Password'
         dependencies={['password']}
         hasFeedback
         rules={[
@@ -124,11 +124,11 @@ export const RegistrationForm = () => {
           }),
         ]}
       >
-        <Input.Password/>
+        <Input.Password autoComplete='on'/>
       </Form.Item>
 
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
+        <Button type='primary' htmlType='submit'>
           Register
         </Button>
       </Form.Item>

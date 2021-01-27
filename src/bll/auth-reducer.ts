@@ -1,4 +1,4 @@
-import { Dispatch } from 'redux'
+import {Dispatch} from 'redux'
 import {ThunkAction} from 'redux-thunk'
 import {AppStateType} from './store'
 import {authAPI} from '../dal/auth-api'
@@ -64,14 +64,13 @@ export const authMeTC = (): AuthThunkType => {
   return (dispatch) => {
     authAPI.authMe()
       .then(res => {
-        dispatch(setIsLoggedInAC(true))
         dispatch(setUserAC(res.user))
+        dispatch(setIsLoggedInAC(true))
         localStorage.setItem('token', res.token)
       })
       .catch(err => {
-        console.log('error - loginTC ', err)
-       // dispatch(setIsLoggedInAC(false))
-       // localStorage.removeItem('token')
+        dispatch(setIsLoggedInAC(false))
+        localStorage.removeItem('token')
       })
   }
 }

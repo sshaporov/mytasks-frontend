@@ -6,7 +6,7 @@ import {NavLink, Redirect} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {DEV_VERSION} from '../../config'
 import {loginTC} from '../../bll/auth-reducer'
-import {AppStateType} from '../../bll/store';
+import {AppStateType} from '../../bll/store'
 
 export type LoginDataType = {
   email: string
@@ -17,16 +17,11 @@ export const LoginForm = () => {
   DEV_VERSION && console.log('LoginForm')
 
   const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
-
   const dispatch = useDispatch()
 
   const onFinish = (values: LoginDataType) => {
     dispatch(loginTC(values))
   }
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo)
-  };
 
   if (isAuth) {
     return <Redirect to={'/'}/>
@@ -34,15 +29,14 @@ export const LoginForm = () => {
 
   return (
     <Form
-      name="login"
-      className="login-form"
+      name='login'
+      className='login-form'
       initialValues={{remember: true,}}
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
     >
 
       <Form.Item
-        name="email"
+        name='email'
         rules={[
           {
             required: true,
@@ -54,11 +48,11 @@ export const LoginForm = () => {
           },
         ]}
       >
-        <Input prefix={<MailOutlined className="site-form-item-icon"/>} placeholder="Email"/>
+        <Input prefix={<MailOutlined className='site-form-item-icon'/>} placeholder='Email'/>
       </Form.Item>
 
       <Form.Item
-        name="password"
+        name='password'
         rules={[
           {
             required: true,
@@ -67,17 +61,18 @@ export const LoginForm = () => {
         ]}
       >
         <Input
-          prefix={<LockOutlined className="site-form-item-icon"/>}
-          type="password"
-          placeholder="Password"
+          prefix={<LockOutlined className='site-form-item-icon'/>}
+          type='password'
+          placeholder='Password'
+          autoComplete='on'
         />
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
+        <Button type='primary' htmlType='submit' className='login-form-button'>
           Log in
         </Button>
-        Or <NavLink to={'/registration'}>register now!</NavLink>
+        Or <NavLink to='/registration'>register now!</NavLink>
       </Form.Item>
     </Form>
   );

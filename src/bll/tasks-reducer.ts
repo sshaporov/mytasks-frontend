@@ -3,6 +3,7 @@ import {tasksAPI, TaskType} from '../dal/tasks-api'
 import {ThunkAction} from 'redux-thunk'
 import {AppStateType} from './store'
 import {Dispatch} from 'react'
+import {ACTIONS_AUTH_TYPE, AuthACType} from './auth-reducer';
 
 export enum ACTIONS_TASKS_TYPE {
   CHANGE_TASK_STATUS = 'Tasks/CHANGE_TASK_STATUS',
@@ -18,7 +19,7 @@ export type TasksType = {
 const initialState: TasksType = {}
 
 export const tasksReducer = (state: TasksType = initialState, action: TasksACType
-  | AddCardACType | SetCardsACType | RemoveCardACType
+  | AddCardACType | SetCardsACType | RemoveCardACType | AuthACType
 ) => {
   switch (action.type) {
 
@@ -67,6 +68,9 @@ export const tasksReducer = (state: TasksType = initialState, action: TasksACTyp
     case ACTIONS_TASKS_TYPE.REMOVE_TASK: {
       return {...state, [action.cardId]: state[action.cardId].filter(task => task._id !== action.taskId)}
     }
+
+    case ACTIONS_AUTH_TYPE.LOGOUT:
+      return {}
 
     default:
       return state

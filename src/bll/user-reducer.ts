@@ -1,5 +1,5 @@
 import {UserType} from '../dal/auth-api'
-import {ACTIONS_AUTH_TYPE, AuthACType} from './auth-reducer';
+import {ACTIONS_AUTH_TYPE, AuthACType} from './auth-reducer'
 
 export enum ACTIONS_USER_TYPE {
   SET_USER = 'User/SET_USER',

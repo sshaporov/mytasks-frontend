@@ -8,7 +8,6 @@ import {useDispatch, useSelector} from 'react-redux'
 import {AppStateType} from './bll/store'
 import {authMeTC, logoutAC} from './bll/auth-reducer'
 
-
 const {Header, Content} = Layout
 
 export const App = () => {
@@ -28,7 +27,7 @@ export const App = () => {
       <Layout>
 
         <Header>
-          <NavLink to={'/login'}>Log in</NavLink>
+          {!isAuth && <NavLink to={'/login'}>Log in</NavLink>}
           {isAuth && <Button onClick={logout}>Log out</Button>}
         </Header>
 

@@ -45,7 +45,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
 
   useEffect(() => {
     dispatch(getTasksTC(cardId))
-  },[dispatch])
+  },[dispatch, cardId])
 
   // мемоизированная функция для подсчета процента выполненых тасок
   const countTaskProgress = useMemo(() => {
