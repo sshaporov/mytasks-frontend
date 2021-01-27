@@ -28,7 +28,7 @@ export const MyTasks = () => {
 
   const cards = useSelector<AppStateType, Array<CardStateType>>(state => state.cards)
   const tasks = useSelector<AppStateType, TasksType>(state => state.tasks)
-  const isLoggedIn = useSelector<AppStateType, boolean>(state => state.auth.isLoggedIn)
+  const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
 
   const dispatch = useDispatch()
 
@@ -68,7 +68,7 @@ export const MyTasks = () => {
     dispatch(changeCardFilterAC(filter, cardId))
   },[dispatch])
 
-  if(!isLoggedIn) {
+  if(!isAuth) {
     return <Redirect to={'/login'}/>
   }
 

@@ -16,7 +16,7 @@ export type LoginDataType = {
 export const LoginForm = () => {
   DEV_VERSION && console.log('LoginForm')
 
-  const isLoggedIn = useSelector<AppStateType, boolean>(state => state.auth.isLoggedIn)
+  const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
 
   const dispatch = useDispatch()
 
@@ -28,7 +28,7 @@ export const LoginForm = () => {
     console.log('Failed:', errorInfo)
   };
 
-  if (isLoggedIn) {
+  if (isAuth) {
     return <Redirect to={'/'}/>
   }
 

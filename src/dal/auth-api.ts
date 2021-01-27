@@ -9,6 +9,11 @@ export const authAPI = {
   registration(data: RegistrationDataType) {
     return instance.post<RegistrationResponseType>(`/auth/registration`, data).then(res => res.data)
   },
+  authMe() {
+    return instance.get<LoginResponseType>(`/auth/authme`,
+      {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
+      .then(res => res.data)
+  },
 }
 
 // types

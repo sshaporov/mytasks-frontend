@@ -3,24 +3,29 @@ import {ThunkAction} from 'redux-thunk'
 import {AppStateType} from './store'
 import {authAPI} from '../dal/auth-api'
 import {LoginDataType} from '../components/login/LoginForm'
-import {setUserAC, UserACType} from './user-reducer';
+import {setUserAC, UserACType} from './user-reducer'
 
 export enum ACTIONS_AUTH_TYPE {
   SET_IS_LOGGED_IN = 'Auth/SET_IS_LOGGED_IN',
+  LOGOUT = 'Auth/LOGOUT',
 }
 
 export type AuthStateType = {
-  isLoggedIn: boolean
+  isAuth: boolean
 }
 const initialState: AuthStateType = {
-  isLoggedIn: false
+  isAuth: false
 }
 
 export const authReducer = (state: AuthStateType = initialState, action: AuthACType): AuthStateType => {
   switch (action.type) {
 
     case ACTIONS_AUTH_TYPE.SET_IS_LOGGED_IN:
-      return {...state, isLoggedIn: action.value}
+      return {...state, isAuth: action.value}
+
+    case ACTIONS_AUTH_TYPE.LOGOUT:
+      localStorage.removeItem('token')
+      return {...state, isAuth: false}
 
     default:
       return state
@@ -31,10 +36,14 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthACT
 export const setIsLoggedInAC = (value: boolean) =>
   ({type: ACTIONS_AUTH_TYPE.SET_IS_LOGGED_IN, value} as const)
 
+export const logoutAC = () =>
+  ({type: ACTIONS_AUTH_TYPE.LOGOUT} as const)
+
 // types
 export type SetIsLoggedInACType = ReturnType<typeof setIsLoggedInAC>
-export type AuthACType = SetIsLoggedInACType
-export type AuthThunkType = ThunkAction<void, AppStateType, Dispatch<AuthACType | UserACType>, AuthACType | UserACType>
+export type LogoutACType = ReturnType<typeof logoutAC>
+export type AuthACType = SetIsLoggedInACType | LogoutACType | UserACType
+export type AuthThunkType = ThunkAction<void, AppStateType, Dispatch<AuthACType>, AuthACType>
 
 // thunks
 export const loginTC = (data: LoginDataType): AuthThunkType => {
@@ -43,9 +52,26 @@ export const loginTC = (data: LoginDataType): AuthThunkType => {
       .then(res => {
         dispatch(setIsLoggedInAC(true))
         dispatch(setUserAC(res.user))
+        localStorage.setItem('token', res.token)
       })
       .catch(err => {
         console.log('error - loginTC ', err)
+      })
+  }
+}
+
+export const authMeTC = (): AuthThunkType => {
+  return (dispatch) => {
+    authAPI.authMe()
+      .then(res => {
+        dispatch(setIsLoggedInAC(true))
+        dispatch(setUserAC(res.user))
+        localStorage.setItem('token', res.token)
+      })
+      .catch(err => {
+        console.log('error - loginTC ', err)
+       // dispatch(setIsLoggedInAC(false))
+       // localStorage.removeItem('token')
       })
   }
 }
