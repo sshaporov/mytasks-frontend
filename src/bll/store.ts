@@ -6,6 +6,7 @@ import { tasksReducer } from './tasks-reducer'
 import {registrationReducer} from './registration-reducer'
 import {authReducer} from './auth-reducer'
 import {userReducer} from './user-reducer'
+import {requestReducer} from './request-reducer'
 
 const reducers = combineReducers({
   cards: cardsReducer,
@@ -13,6 +14,7 @@ const reducers = combineReducers({
   registration: registrationReducer,
   auth: authReducer,
   user: userReducer,
+  request: requestReducer,
 })
 export type AppStateType = ReturnType<typeof reducers>
 

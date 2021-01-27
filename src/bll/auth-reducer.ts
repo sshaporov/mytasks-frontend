@@ -81,7 +81,7 @@ export const authMeTC = (): AuthThunkType => {
       })
       .catch(err => {
         dispatch(setIsAuthAC(false))
-        dispatch(setIsInitializedAC(false))
+        dispatch(setIsInitializedAC(true))
         localStorage.removeItem('token')
         console.log('error - authMeTC ', err)
       })

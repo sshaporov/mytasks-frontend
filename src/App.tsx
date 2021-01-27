@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import {Route, Switch, Redirect, NavLink} from 'react-router-dom'
 import {MyTasks} from './components/MyTasks'
 import {LoginForm} from './components/login/LoginForm'
-import {Button, Layout} from 'antd'
+import {Button, Layout, Spin} from 'antd'
 import {RegistrationForm} from './components/registration/RegistrationForm'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppStateType} from './bll/store'
@@ -12,6 +12,7 @@ const {Header, Content} = Layout
 
 export const App = () => {
   const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
+  const isInitialized = useSelector<AppStateType, boolean>(state => state.auth.isInitialized)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -20,6 +21,14 @@ export const App = () => {
 
   const logout = () => {
     dispatch(logoutAC())
+  }
+
+  if (!isInitialized) {
+    return (
+      <div style={{position: 'fixed', top: '40%', textAlign: 'center', width: '100%'}}>
+        <Spin/>
+      </div>
+    )
   }
 
   return (

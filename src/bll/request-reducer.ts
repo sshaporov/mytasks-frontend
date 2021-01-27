@@ -1,12 +1,6 @@
-import {ThunkAction} from 'redux-thunk';
-import {AppStateType} from './store';
-import {Dispatch} from 'redux';
-import {AuthACType} from './auth-reducer';
-
 export enum ACTIONS_REQUEST_TYPE {
-  SET_IS_AUTH = 'Request/SET_IS_AUTH',
-  SET_IS_INITIALIZED = 'Request/SET_IS_INITIALIZED',
-  LOGOUT = 'Auth/LOGOUT',
+  SET_STATUS = 'Request/SET_STATUS',
+  SET_ERROR = 'Request/SET_ERROR',
 }
 export type RequestStatusType = 'init' | 'loading' | 'succeeded' | 'failed'
 export type RequestStateType = {
@@ -18,13 +12,13 @@ const initialState: RequestStateType = {
   error: null,
 }
 
-export const appReducer = (state: RequestStateType = initialState, action: RequestACType): RequestStateType => {
+export const requestReducer = (state: RequestStateType = initialState, action: RequestACType): RequestStateType => {
   switch (action.type) {
 
-    case 'APP/SET-STATUS':
+    case ACTIONS_REQUEST_TYPE.SET_STATUS:
       return {...state, status: action.status}
 
-    case 'APP/SET-ERROR':
+    case ACTIONS_REQUEST_TYPE.SET_ERROR:
       return {...state, error: action.error}
 
     default:
@@ -34,10 +28,10 @@ export const appReducer = (state: RequestStateType = initialState, action: Reque
 
 // actions
 export const setErrorAC = (error: string | null) =>
-  ({ type: 'APP/SET-ERROR', error } as const)
+  ({ type: ACTIONS_REQUEST_TYPE.SET_ERROR, error } as const)
 
 export const setStatusAC = (status:  RequestStatusType) =>
-  ({ type: 'APP/SET-STATUS', status } as const)
+  ({ type: ACTIONS_REQUEST_TYPE.SET_STATUS, status } as const)
 
 // types
 export type SetRequestErrorACType = ReturnType<typeof setErrorAC>
