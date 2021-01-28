@@ -9,12 +9,14 @@ import {AppStateType} from './bll/store'
 import {authMeTC, logoutAC} from './bll/auth-reducer'
 import {Page404} from './components/common/page404/Page404'
 import './App.css'
+import {RequestStatusType} from './bll/request-reducer';
 
 const {Header, Content} = Layout
 
 export const App = () => {
   const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
   const isInitialized = useSelector<AppStateType, boolean>(state => state.auth.isInitialized)
+  const requestStatus = useSelector<AppStateType, RequestStatusType>(state => state.request.status)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -44,6 +46,8 @@ export const App = () => {
               : <NavLink to={'/login'}>Log in</NavLink>
           }
         </Header>
+
+        { requestStatus === 'loading' &&  <div className='spin-align'><Spin/></div> }
 
         <Content>
           <Switch>
