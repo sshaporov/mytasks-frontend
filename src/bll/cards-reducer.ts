@@ -2,14 +2,15 @@ import {Dispatch} from 'react'
 import {AppStateType} from './store'
 import {ThunkAction} from 'redux-thunk'
 import {cardsAPI, CardType} from '../dal/cards-api'
-import {ACTIONS_AUTH_TYPE, AuthACType} from './auth-reducer';
+import {ACTIONS_AUTH_TYPE, AuthACType} from './auth-reducer'
+import {RequestACType, setErrorAC, setStatusAC} from './request-reducer'
 
 export enum ACTIONS_CARDS_TYPE {
   ADD_CARD = 'Cards/ADD_CARD',
   REMOVE_CARD = 'Cards/REMOVE_CARD',
-  CHANGE_CARD_TITLE = 'Card/CHANGE_CARD_TITLE',
-  CHANGE_CARD_FILTER = 'Card/CHANGE_CARD_FILTER',
-  SET_CARDS = 'Card/SET_CARDS',
+  CHANGE_CARD_TITLE = 'Cards/CHANGE_CARD_TITLE',
+  CHANGE_CARD_FILTER = 'Cards/CHANGE_CARD_FILTER',
+  SET_CARDS = 'Cards/SET_CARDS',
 }
 
 export type CardFilterValuesType = 'ALL' | 'ACTIVE' | 'DONE'
@@ -77,51 +78,64 @@ export type SetCardsACType = ReturnType<typeof setCardsAC>
 export type ChangeCardTitleACType = ReturnType<typeof changeCardTitleAC>
 export type RemoveCardACType = ReturnType<typeof removeCardAC>
 export type ChangeCardFilterACType = ReturnType<typeof changeCardFilterAC>
-export type CardsACType = AddCardACType | SetCardsACType | ChangeCardTitleACType | RemoveCardACType | ChangeCardFilterACType
+export type CardsACType = AddCardACType | SetCardsACType | ChangeCardTitleACType | RemoveCardACType | ChangeCardFilterACType | RequestACType
 export type CardsThunkType = ThunkAction<void, AppStateType, Dispatch<CardsACType>, CardsACType>
 
 // thunks
 export const getCardsTC = (): CardsThunkType => {
   return (dispatch) => {
+    dispatch(setStatusAC('loading'))
     cardsAPI.getCards()
       .then(res => {
         dispatch(setCardsAC(res))
+        dispatch(setStatusAC('succeeded'))
       })
-      .catch(e => {
-        console.log('error - getCardsTC ', e)
+      .catch(err => {
+        dispatch(setErrorAC(err.message ? err.message : 'Something went wrong'))
+        dispatch(setStatusAC('failed'))
       })
   }
 }
 export const addCardTC = (cardTitle: string): CardsThunkType => {
   return (dispatch) => {
+    dispatch(setStatusAC('loading'))
     cardsAPI.createCard(cardTitle)
       .then(res => {
         dispatch(addCardAC(res.item))
+        dispatch(setStatusAC('succeeded'))
       })
-      .catch(e => {
-        console.log('error - addCardsTC ', e)
+      .catch(err => {
+        dispatch(setErrorAC(err.message ? err.message : 'Something went wrong'))
+        dispatch(setStatusAC('failed'))
       })
   }
 }
 export const changeCardTitleTC = (cardId: string, newCardTitle: string): CardsThunkType => {
   return (dispatch) => {
+    dispatch(setStatusAC('loading'))
     cardsAPI.changeCardTitle(cardId, newCardTitle)
-      .then(res => {
+      .then(() => {
         dispatch(changeCardTitleAC(cardId, newCardTitle))
+        dispatch(setStatusAC('succeeded'))
       })
-      .catch(e => {
-        console.log('error - changeCardTitleTC ', e)
+      .catch(err => {
+        dispatch(setErrorAC(err.message ? err.message : 'Something went wrong'))
+        dispatch(setStatusAC('failed'))
       })
   }
 }
 export const removeCardTC = (cardId: string): CardsThunkType => {
   return (dispatch) => {
+    dispatch(setStatusAC('loading'))
     cardsAPI.removeCard(cardId)
-      .then(res => {
+      .then(() => {
         dispatch(removeCardAC(cardId))
+        dispatch(setStatusAC('succeeded'))
+
       })
-      .catch(e => {
-        console.log('error removeCardTC ', e)
+      .catch(err => {
+        dispatch(setErrorAC(err.message ? err.message : 'Something went wrong'))
+        dispatch(setStatusAC('failed'))
       })
   }
 }

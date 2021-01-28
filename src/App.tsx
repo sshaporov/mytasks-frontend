@@ -2,12 +2,13 @@ import React, {useEffect} from 'react'
 import {Route, Switch, Redirect, NavLink} from 'react-router-dom'
 import {MyTasks} from './components/MyTasks'
 import {LoginForm} from './components/login/LoginForm'
-import {Button, Layout, Result, Spin} from 'antd'
+import {Button, Layout, Spin} from 'antd'
 import {RegistrationForm} from './components/registration/RegistrationForm'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppStateType} from './bll/store'
 import {authMeTC, logoutAC} from './bll/auth-reducer'
-import {Page404} from './components/common/page404/Page404';
+import {Page404} from './components/common/page404/Page404'
+import './App.css'
 
 const {Header, Content} = Layout
 
@@ -26,7 +27,7 @@ export const App = () => {
 
   if (!isInitialized) {
     return (
-      <div style={{position: 'fixed', top: '40%', textAlign: 'center', width: '100%'}}>
+      <div className='spin-align'>
         <Spin/>
       </div>
     )
@@ -37,8 +38,11 @@ export const App = () => {
       <Layout>
 
         <Header>
-          {!isAuth && <NavLink to={'/login'}>Log in</NavLink>}
-          {isAuth && <Button onClick={logout}>Log out</Button>}
+          {
+            isAuth
+              ? <Button onClick={logout}>Log out</Button>
+              : <NavLink to={'/login'}>Log in</NavLink>
+          }
         </Header>
 
         <Content>
