@@ -1,6 +1,4 @@
-import {Dispatch} from 'redux'
-import {ThunkAction} from 'redux-thunk'
-import {AppStateType} from './store'
+import {AppReducersType, AppThunksType} from './store'
 import {authAPI} from '../dal/auth-api'
 import {LoginDataType} from '../components/login/LoginForm'
 import {setUserAC, UserACType} from './user-reducer'
@@ -20,7 +18,7 @@ const initialState: AuthStateType = {
   isInitialized: false
 }
 
-export const authReducer = (state: AuthStateType = initialState, action: AuthACType): AuthStateType => {
+export const authReducer = (state: AuthStateType = initialState, action: AppReducersType): AuthStateType => {
   switch (action.type) {
 
     case ACTIONS_AUTH_TYPE.SET_IS_AUTH:
@@ -53,10 +51,9 @@ export type SetIsLoggedInACType = ReturnType<typeof setIsAuthAC>
 export type SetIsInitializedACType = ReturnType<typeof setIsInitializedAC>
 export type LogoutACType = ReturnType<typeof logoutAC>
 export type AuthACType = SetIsLoggedInACType | LogoutACType | UserACType | SetIsInitializedACType
-export type AuthThunkType = ThunkAction<void, AppStateType, Dispatch<AuthACType>, AuthACType>
 
 // thunks
-export const loginTC = (data: LoginDataType): AuthThunkType => {
+export const loginTC = (data: LoginDataType): AppThunksType => {
   return (dispatch) => {
     authAPI.login(data)
       .then(res => {
@@ -70,7 +67,7 @@ export const loginTC = (data: LoginDataType): AuthThunkType => {
   }
 }
 
-export const authMeTC = (): AuthThunkType => {
+export const authMeTC = (): AppThunksType => {
   return (dispatch) => {
     authAPI.authMe()
       .then(res => {

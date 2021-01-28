@@ -1,9 +1,7 @@
-import {ACTIONS_CARDS_TYPE, AddCardACType, RemoveCardACType, SetCardsACType} from './cards-reducer'
+import {ACTIONS_CARDS_TYPE} from './cards-reducer'
 import {tasksAPI, TaskType} from '../dal/tasks-api'
-import {ThunkAction} from 'redux-thunk'
-import {AppStateType} from './store'
-import {Dispatch} from 'react'
-import {ACTIONS_AUTH_TYPE, AuthACType} from './auth-reducer';
+import {AppReducersType, AppThunksType} from './store'
+import {ACTIONS_AUTH_TYPE} from './auth-reducer'
 
 export enum ACTIONS_TASKS_TYPE {
   CHANGE_TASK_STATUS = 'Tasks/CHANGE_TASK_STATUS',
@@ -18,9 +16,7 @@ export type TasksType = {
 }
 const initialState: TasksType = {}
 
-export const tasksReducer = (state: TasksType = initialState, action: TasksACType
-  | AddCardACType | SetCardsACType | RemoveCardACType | AuthACType
-) => {
+export const tasksReducer = (state: TasksType = initialState, action: AppReducersType) => {
   switch (action.type) {
 
     case ACTIONS_CARDS_TYPE.SET_CARDS: {
@@ -114,10 +110,9 @@ export type ChangeTaskStatusACType = ReturnType<typeof changeTaskStatusAC>
 export type ChangeTaskTitleACType = ReturnType<typeof changeTaskTitleAC>
 export type RemoveTaskACType = ReturnType<typeof removeTaskAC>
 export type TasksACType = AddTaskACType | ChangeTaskTitleACType | ChangeTaskStatusACType | RemoveTaskACType | SetTasksACType
-export type TasksThunkType = ThunkAction<void, AppStateType, Dispatch<TasksACType> , TasksACType>
 
 // thunks
-export const getTasksTC = (cardId: string): TasksThunkType => {
+export const getTasksTC = (cardId: string): AppThunksType => {
   return (dispatch) => {
     tasksAPI.getTasks(cardId)
       .then(res => {
@@ -129,7 +124,7 @@ export const getTasksTC = (cardId: string): TasksThunkType => {
   }
 }
 
-export const addTaskTC = (taskTitle: string, cardId: string): TasksThunkType => {
+export const addTaskTC = (taskTitle: string, cardId: string): AppThunksType => {
   return (dispatch) => {
     tasksAPI.createTask(taskTitle, cardId)
       .then(res => {
@@ -142,7 +137,7 @@ export const addTaskTC = (taskTitle: string, cardId: string): TasksThunkType => 
 }
 
 
-export const changeTaskStatusTC = (taskId: string, taskIsChecked: boolean, cardId: string): TasksThunkType => {
+export const changeTaskStatusTC = (taskId: string, taskIsChecked: boolean, cardId: string): AppThunksType => {
   return (dispatch) => {
     tasksAPI.changeTaskStatus(taskId, taskIsChecked, cardId)
       .then(res => {
@@ -154,7 +149,7 @@ export const changeTaskStatusTC = (taskId: string, taskIsChecked: boolean, cardI
   }
 }
 
-export const changeTaskTitleTC = (taskId: string, taskTitle: string, cardId: string): TasksThunkType => {
+export const changeTaskTitleTC = (taskId: string, taskTitle: string, cardId: string): AppThunksType => {
   return (dispatch) => {
     tasksAPI.changeTaskTitle(taskId, taskTitle, cardId)
       .then(res => {
@@ -166,7 +161,7 @@ export const changeTaskTitleTC = (taskId: string, taskTitle: string, cardId: str
   }
 }
 
-export const removeTaskTC = (taskId: string, cardId: string): TasksThunkType => {
+export const removeTaskTC = (taskId: string, cardId: string): AppThunksType => {
   return (dispatch) => {
     tasksAPI.removeTask(taskId, cardId)
       .then(res => {

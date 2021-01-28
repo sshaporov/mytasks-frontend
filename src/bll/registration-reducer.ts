@@ -1,9 +1,6 @@
-import {Dispatch} from 'redux'
-import {ThunkAction} from 'redux-thunk'
-import {AppStateType} from './store'
+import {AppReducersType, AppThunksType} from './store'
 import {authAPI} from '../dal/auth-api'
 import {RegistrationDataType} from '../components/registration/RegistrationForm'
-import {AuthACType} from './auth-reducer';
 
 export enum ACTIONS_REGISTRATION_TYPE {
   SET_IS_REGISTER = 'Login/SET_IS_REGISTER',
@@ -16,7 +13,7 @@ const initialState: RegistrationStateType = {
   isRegister: false
 }
 
-export const registrationReducer = (state: RegistrationStateType = initialState, action: RegistrationACType | AuthACType): RegistrationStateType => {
+export const registrationReducer = (state: RegistrationStateType = initialState, action: AppReducersType): RegistrationStateType => {
   switch (action.type) {
 
     case ACTIONS_REGISTRATION_TYPE.SET_IS_REGISTER:
@@ -34,10 +31,9 @@ export const setIsRegisterAC = (value: boolean) =>
 // types
 export type SetIsRegisterACType = ReturnType<typeof setIsRegisterAC>
 export type RegistrationACType = SetIsRegisterACType
-export type RegistrationThunkType = ThunkAction<void, AppStateType, Dispatch<RegistrationACType>, RegistrationACType>
 
 // thunks
-export const registrationTC = (data: RegistrationDataType): RegistrationThunkType => {
+export const registrationTC = (data: RegistrationDataType): AppThunksType => {
   return (dispatch) => {
     authAPI.registration(data)
       .then(() => {

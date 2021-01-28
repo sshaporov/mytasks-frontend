@@ -1,3 +1,5 @@
+import {AppReducersType} from './store'
+
 export enum ACTIONS_REQUEST_TYPE {
   SET_STATUS = 'Request/SET_STATUS',
   SET_ERROR = 'Request/SET_ERROR',
@@ -12,7 +14,7 @@ const initialState: RequestStateType = {
   error: null,
 }
 
-export const requestReducer = (state: RequestStateType = initialState, action: RequestACType): RequestStateType => {
+export const requestReducer = (state: RequestStateType = initialState, action: AppReducersType): RequestStateType => {
   switch (action.type) {
 
     case ACTIONS_REQUEST_TYPE.SET_STATUS:

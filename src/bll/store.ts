@@ -1,12 +1,13 @@
 import {DEV_VERSION} from '../config'
-import thunkMiddleware from 'redux-thunk'
+import thunkMiddleware, {ThunkAction} from 'redux-thunk'
 import {createStore, combineReducers, compose, applyMiddleware} from 'redux'
-import { cardsReducer } from './cards-reducer'
-import { tasksReducer } from './tasks-reducer'
-import {registrationReducer} from './registration-reducer'
-import {authReducer} from './auth-reducer'
-import {userReducer} from './user-reducer'
-import {requestReducer} from './request-reducer'
+import {CardsACType, cardsReducer} from './cards-reducer'
+import {TasksACType, tasksReducer} from './tasks-reducer'
+import {RegistrationACType, registrationReducer} from './registration-reducer'
+import {AuthACType, authReducer} from './auth-reducer'
+import {UserACType, userReducer} from './user-reducer'
+import {RequestACType, requestReducer} from './request-reducer'
+import {Dispatch} from 'react'
 
 const reducers = combineReducers({
   cards: cardsReducer,
@@ -17,6 +18,8 @@ const reducers = combineReducers({
   request: requestReducer,
 })
 export type AppStateType = ReturnType<typeof reducers>
+export type AppReducersType = UserACType | TasksACType | RequestACType | RegistrationACType | CardsACType | AuthACType
+export type AppThunksType = ThunkAction<void, AppStateType, Dispatch<AppReducersType> , AppReducersType>
 
 //@ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

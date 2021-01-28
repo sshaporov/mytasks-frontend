@@ -1,5 +1,6 @@
 import {UserType} from '../dal/auth-api'
-import {ACTIONS_AUTH_TYPE, AuthACType} from './auth-reducer'
+import {ACTIONS_AUTH_TYPE} from './auth-reducer'
+import {AppReducersType} from './store'
 
 export enum ACTIONS_USER_TYPE {
   SET_USER = 'User/SET_USER',
@@ -12,7 +13,7 @@ export type UserStateType = {
 }
 const initialState: UserStateType = {}
 
-export const userReducer = (state: UserStateType = initialState, action: UserACType | AuthACType): UserStateType => {
+export const userReducer = (state: UserStateType = initialState, action: AppReducersType): UserStateType => {
   switch (action.type) {
 
     case ACTIONS_USER_TYPE.SET_USER:

@@ -1,9 +1,7 @@
-import {Dispatch} from 'react'
-import {AppStateType} from './store'
-import {ThunkAction} from 'redux-thunk'
+import {AppReducersType, AppThunksType} from './store'
 import {cardsAPI, CardType} from '../dal/cards-api'
-import {ACTIONS_AUTH_TYPE, AuthACType} from './auth-reducer'
-import {RequestACType, setErrorAC, setStatusAC} from './request-reducer'
+import {ACTIONS_AUTH_TYPE} from './auth-reducer'
+import {setErrorAC, setStatusAC} from './request-reducer'
 
 export enum ACTIONS_CARDS_TYPE {
   ADD_CARD = 'Cards/ADD_CARD',
@@ -17,7 +15,7 @@ export type CardFilterValuesType = 'ALL' | 'ACTIVE' | 'DONE'
 export type CardStateType = CardType & { filter: CardFilterValuesType }
 const initialState: Array<CardStateType> = []
 
-export const cardsReducer = (state: Array<CardStateType> = initialState, action: CardsACType | AuthACType): Array<CardStateType> => {
+export const cardsReducer = (state: Array<CardStateType> = initialState, action: AppReducersType): Array<CardStateType> => {
   switch (action.type) {
 
     case ACTIONS_CARDS_TYPE.SET_CARDS:
@@ -78,11 +76,10 @@ export type SetCardsACType = ReturnType<typeof setCardsAC>
 export type ChangeCardTitleACType = ReturnType<typeof changeCardTitleAC>
 export type RemoveCardACType = ReturnType<typeof removeCardAC>
 export type ChangeCardFilterACType = ReturnType<typeof changeCardFilterAC>
-export type CardsACType = AddCardACType | SetCardsACType | ChangeCardTitleACType | RemoveCardACType | ChangeCardFilterACType | RequestACType
-export type CardsThunkType = ThunkAction<void, AppStateType, Dispatch<CardsACType>, CardsACType>
+export type CardsACType = AddCardACType | SetCardsACType | ChangeCardTitleACType | RemoveCardACType | ChangeCardFilterACType
 
 // thunks
-export const getCardsTC = (): CardsThunkType => {
+export const getCardsTC = (): AppThunksType => {
   return (dispatch) => {
     dispatch(setStatusAC('loading'))
     cardsAPI.getCards()
@@ -96,7 +93,7 @@ export const getCardsTC = (): CardsThunkType => {
       })
   }
 }
-export const addCardTC = (cardTitle: string): CardsThunkType => {
+export const addCardTC = (cardTitle: string): AppThunksType => {
   return (dispatch) => {
     dispatch(setStatusAC('loading'))
     cardsAPI.createCard(cardTitle)
@@ -110,7 +107,7 @@ export const addCardTC = (cardTitle: string): CardsThunkType => {
       })
   }
 }
-export const changeCardTitleTC = (cardId: string, newCardTitle: string): CardsThunkType => {
+export const changeCardTitleTC = (cardId: string, newCardTitle: string): AppThunksType => {
   return (dispatch) => {
     dispatch(setStatusAC('loading'))
     cardsAPI.changeCardTitle(cardId, newCardTitle)
@@ -124,7 +121,7 @@ export const changeCardTitleTC = (cardId: string, newCardTitle: string): CardsTh
       })
   }
 }
-export const removeCardTC = (cardId: string): CardsThunkType => {
+export const removeCardTC = (cardId: string): AppThunksType => {
   return (dispatch) => {
     dispatch(setStatusAC('loading'))
     cardsAPI.removeCard(cardId)
