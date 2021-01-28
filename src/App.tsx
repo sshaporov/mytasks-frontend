@@ -2,11 +2,12 @@ import React, {useEffect} from 'react'
 import {Route, Switch, Redirect, NavLink} from 'react-router-dom'
 import {MyTasks} from './components/MyTasks'
 import {LoginForm} from './components/login/LoginForm'
-import {Button, Layout, Spin} from 'antd'
+import {Button, Layout, Result, Spin} from 'antd'
 import {RegistrationForm} from './components/registration/RegistrationForm'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppStateType} from './bll/store'
 import {authMeTC, logoutAC} from './bll/auth-reducer'
+import {Page404} from './components/common/page404/Page404';
 
 const {Header, Content} = Layout
 
@@ -45,7 +46,7 @@ export const App = () => {
             <Route exact path={'/'} render={() => <MyTasks/>}/>
             <Route path={'/login'} render={() => <LoginForm/>}/>
             <Route path={'/registration'} render={() => <RegistrationForm/>}/>
-            <Route path={'/404'} render={() => <h1 style={{textAlign: 'center'}}>404: PAGE NOT FOUND</h1>}/>
+            <Route path={'/404'} render={() => <Page404/>}/>
             <Redirect from={'*'} to={'/404'}/>
           </Switch>
         </Content>
