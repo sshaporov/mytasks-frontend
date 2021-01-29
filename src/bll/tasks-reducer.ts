@@ -2,6 +2,7 @@ import {ACTIONS_CARDS_TYPE} from './cards-reducer'
 import {tasksAPI, TaskType} from '../dal/tasks-api'
 import {AppReducersType, AppThunksType} from './store'
 import {ACTIONS_AUTH_TYPE} from './auth-reducer'
+import {setErrorAC, setStatusAC} from './request-reducer';
 
 export enum ACTIONS_TASKS_TYPE {
   CHANGE_TASK_STATUS = 'Tasks/CHANGE_TASK_STATUS',
@@ -114,24 +115,30 @@ export type TasksACType = AddTaskACType | ChangeTaskTitleACType | ChangeTaskStat
 // thunks
 export const getTasksTC = (cardId: string): AppThunksType => {
   return (dispatch) => {
+    dispatch(setStatusAC('loading'))
     tasksAPI.getTasks(cardId)
       .then(res => {
         dispatch(setTasksAC(res, cardId))
+        dispatch(setStatusAC('succeeded'))
       })
-      .catch(e => {
-        console.log('error getTasksTC ', e)
+      .catch(err => {
+        dispatch(setErrorAC(err.message ? err.message : 'Something went wrong'))
+        dispatch(setStatusAC('failed'))
       })
   }
 }
 
 export const addTaskTC = (taskTitle: string, cardId: string): AppThunksType => {
   return (dispatch) => {
+    dispatch(setStatusAC('loading'))
     tasksAPI.createTask(taskTitle, cardId)
       .then(res => {
         dispatch(addTaskAC(res.item, cardId))
+        dispatch(setStatusAC('succeeded'))
       })
-      .catch(e => {
-        console.log('error - addTaskTC ', e)
+      .catch(err => {
+        dispatch(setErrorAC(err.message ? err.message : 'Something went wrong'))
+        dispatch(setStatusAC('failed'))
       })
   }
 }
@@ -139,33 +146,41 @@ export const addTaskTC = (taskTitle: string, cardId: string): AppThunksType => {
 
 export const changeTaskStatusTC = (taskId: string, taskIsChecked: boolean, cardId: string): AppThunksType => {
   return (dispatch) => {
+    dispatch(setStatusAC('loading'))
     tasksAPI.changeTaskStatus(taskId, taskIsChecked, cardId)
       .then(res => {
         dispatch(changeTaskStatusAC(taskId, taskIsChecked, cardId))
+        dispatch(setStatusAC('succeeded'))
       })
-      .catch(e => {
-        console.log('error changeTaskStatusTC ', e)
+      .catch(err => {
+        dispatch(setErrorAC(err.message ? err.message : 'Something went wrong'))
+        dispatch(setStatusAC('failed'))
       })
   }
 }
 
 export const changeTaskTitleTC = (taskId: string, taskTitle: string, cardId: string): AppThunksType => {
   return (dispatch) => {
+    dispatch(setStatusAC('loading'))
     tasksAPI.changeTaskTitle(taskId, taskTitle, cardId)
       .then(res => {
         dispatch(changeTaskTitleAC(taskId, taskTitle, cardId))
+        dispatch(setStatusAC('succeeded'))
       })
-      .catch(e => {
-        console.log('error changeTaskTitleTC ', e)
+      .catch(err => {
+        dispatch(setErrorAC(err.message ? err.message : 'Something went wrong'))
+        dispatch(setStatusAC('failed'))
       })
   }
 }
 
 export const removeTaskTC = (taskId: string, cardId: string): AppThunksType => {
   return (dispatch) => {
+    dispatch(setStatusAC('loading'))
     tasksAPI.removeTask(taskId, cardId)
       .then(res => {
         dispatch(removeTaskAC(taskId, cardId))
+        dispatch(setStatusAC('succeeded'))
       })
       .catch(e => {
         console.log('error removeTaskTC ', e)
