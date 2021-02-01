@@ -1,9 +1,12 @@
 import {instance} from './instance'
 
 export const cardsAPI = {
-  getCards() {
+  getCards(searchCardTitle: string | undefined) {
     return instance.get<GetCardsResponseType>(`/cards`,
-      {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
+      {
+        headers: {Authorization: `Bearer ${localStorage.getItem('token')}`},
+        params: {search: searchCardTitle},
+      })
       .then(res => res.data)
   },
   createCard(cardTitle: string) {

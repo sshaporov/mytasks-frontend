@@ -80,9 +80,10 @@ export type CardsACType = AddCardACType | SetCardsACType | ChangeCardTitleACType
 
 // thunks
 export const getCardsTC = (): AppThunksType => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const searchCardTitle = getState().search.searchCardTitle
     dispatch(setStatusAC('loading'))
-    cardsAPI.getCards()
+    cardsAPI.getCards(searchCardTitle)
       .then(res => {
         dispatch(setCardsAC(res))
         dispatch(setStatusAC('succeeded'))

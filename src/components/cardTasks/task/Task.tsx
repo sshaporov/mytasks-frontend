@@ -13,7 +13,7 @@ export type TaskPropsType = {
   changeTaskStatus: (taskId: string, taskStatus: boolean) => void
   removeTask: (taskId: string) => void
 }
-export const Task: React.FC<TaskPropsType> = React.memo((
+export const Task: React.FC<TaskPropsType> = (
   {
     id,
     title,
@@ -77,4 +77,4 @@ export const Task: React.FC<TaskPropsType> = React.memo((
 
     </div>
   )
-})
+}

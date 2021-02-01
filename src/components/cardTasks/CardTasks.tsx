@@ -25,7 +25,7 @@ export type CardTasksPropsType = {
   addTask: (taskTitle: string, cardId: string) => void
   changeFilter: (value: CardFilterValuesType, cardId: string) => void
 }
-export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
+export const CardTasks: React.FC<CardTasksPropsType> = (
   {
     cardId,
     cardTitle,
@@ -42,6 +42,9 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
 ) => {
   DEV_VERSION && console.log('CardTasks ', cardTitle)
   const dispatch = useDispatch()
+
+
+  // подумать как здесь обойти !!!!!!!!!!!!!!!!!!!!!! возможно делать запрос из санки а не из Юая
 
   useEffect(() => {
     dispatch(getTasksTC(cardId))
@@ -122,4 +125,4 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
       </Card>
     </div>
   )
-})
+}

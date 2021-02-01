@@ -8,6 +8,7 @@ import {AuthACType, authReducer} from './auth-reducer'
 import {UserACType, userReducer} from './user-reducer'
 import {RequestACType, requestReducer} from './request-reducer'
 import {Dispatch} from 'react'
+import {SearchACType, searchReducer} from './search-reducer'
 
 const reducers = combineReducers({
   cards: cardsReducer,
@@ -16,9 +17,10 @@ const reducers = combineReducers({
   auth: authReducer,
   user: userReducer,
   request: requestReducer,
+  search: searchReducer,
 })
 export type AppStateType = ReturnType<typeof reducers>
-export type AppReducersType = UserACType | TasksACType | RequestACType | RegistrationACType | CardsACType | AuthACType
+export type AppReducersType = UserACType | TasksACType | RequestACType | RegistrationACType | CardsACType | AuthACType | SearchACType
 export type AppThunksType = ThunkAction<void, AppStateType, Dispatch<AppReducersType> , AppReducersType>
 
 //@ts-ignore

@@ -1,0 +1,12 @@
+.wrapper-headerContent {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.search-headerContent {
+  max-width: 40%;
+  margin-right: 40px;
+}
+.ant-dropdown-link {
+  margin-left: 5px;
+}
