@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from 'react'
 import {Route, Switch, Redirect, NavLink} from 'react-router-dom'
 import {MyTasks} from './components/MyTasks'
 import {LoginForm} from './components/login/LoginForm'
-import {Button, Layout, Spin} from 'antd'
+import {Layout, Spin} from 'antd'
 import {RegistrationForm} from './components/registration/RegistrationForm'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppStateType} from './bll/store'
@@ -11,10 +11,14 @@ import {Page404} from './components/common/page404/Page404'
 import './App.css'
 import {RequestStatusType} from './bll/request-reducer'
 import { HeaderContent } from './components/headerContent/HeaderContent'
+import {Settings} from './components/settings/Settings'
+import {DEV_VERSION} from './config';
 
 const {Header, Content} = Layout
 
 export const App = () => {
+  DEV_VERSION && console.log('App')
+
   const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
   const isInitialized = useSelector<AppStateType, boolean>(state => state.auth.isInitialized)
   const requestStatus = useSelector<AppStateType, RequestStatusType>(state => state.request.status)
@@ -44,8 +48,7 @@ export const App = () => {
         <Header>
           {
             isAuth
-              ? <HeaderContent logout={logout}/>
-              // <Button onClick={logout}>Log out</Button>
+              ? <HeaderContent logout={logout} />
               : <NavLink to={'/login'}>Log in</NavLink>
           }
         </Header>
@@ -57,6 +60,7 @@ export const App = () => {
             <Route exact path={'/'} render={() => <MyTasks/>}/>
             <Route path={'/login'} render={() => <LoginForm/>}/>
             <Route path={'/registration'} render={() => <RegistrationForm/>}/>
+            <Route path={'/settings'} render={() => <Settings/>}/>
             <Route path={'/404'} render={() => <Page404/>}/>
             <Redirect from={'*'} to={'/404'}/>
           </Switch>

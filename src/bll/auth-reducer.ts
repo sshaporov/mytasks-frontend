@@ -57,9 +57,9 @@ export const loginTC = (data: LoginDataType): AppThunksType => {
   return (dispatch) => {
     authAPI.login(data)
       .then(res => {
+        localStorage.setItem('token', res.token)
         dispatch(setIsAuthAC(true))
         dispatch(setUserAC(res.user))
-        localStorage.setItem('token', res.token)
       })
       .catch(err => {
         console.log('error - loginTC ', err)
@@ -71,10 +71,10 @@ export const authMeTC = (): AppThunksType => {
   return (dispatch) => {
     authAPI.authMe()
       .then(res => {
+        localStorage.setItem('token', res.token)
         dispatch(setUserAC(res.user))
         dispatch(setIsAuthAC(true))
         dispatch(setIsInitializedAC(true))
-        localStorage.setItem('token', res.token)
       })
       .catch(err => {
         dispatch(setIsAuthAC(false))

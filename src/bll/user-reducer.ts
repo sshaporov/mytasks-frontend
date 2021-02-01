@@ -7,11 +7,15 @@ export enum ACTIONS_USER_TYPE {
 }
 
 export type UserStateType = {
-  _id?: string
-  name?: string
-  email?: string
+  _id: string | null
+  name: string | null
+  email: string
 }
-const initialState: UserStateType = {}
+const initialState: UserStateType = {
+  _id: null,
+  name: null,
+  email: ''
+}
 
 export const userReducer = (state: UserStateType = initialState, action: AppReducersType): UserStateType => {
   switch (action.type) {
@@ -20,7 +24,7 @@ export const userReducer = (state: UserStateType = initialState, action: AppRedu
       return {...state, ...action.payload}
 
     case ACTIONS_AUTH_TYPE.LOGOUT:
-      return {}
+      return {...state, _id: null, email: '', name: null}
 
     default:
       return state
