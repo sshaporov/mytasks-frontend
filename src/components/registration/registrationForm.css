@@ -1,3 +1,21 @@
-.registration-form {
-    max-width: 500px;
+.wrapper-registrationForm {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: auto;
+}
+.content-registrationForm {
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -150px 0 0 -350px;
+}
+.title-registrationForm {
+    font-size: 20px;
+    margin-bottom: 5px;
+    margin-left: 165px;
 }
