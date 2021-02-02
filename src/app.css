@@ -1,0 +1,22 @@
+.wrapperHeader-app {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.spin-align {
+    position: fixed;
+    top: 40%;
+    text-align: center;
+    width: 100%;
+}
+.wrapperLogoBlock-app {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+.imgLogo-app {
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+}

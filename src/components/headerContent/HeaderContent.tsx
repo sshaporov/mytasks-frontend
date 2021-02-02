@@ -2,7 +2,6 @@ import React, {ChangeEvent, useCallback, useState} from 'react'
 import {DEV_VERSION} from '../../config'
 import {Dropdown, Menu, Input, Avatar} from 'antd'
 import {LogoutOutlined, ProfileOutlined, UserOutlined, SettingOutlined} from '@ant-design/icons'
-import {DownOutlined} from '@ant-design/icons'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppStateType} from '../../bll/store'
 import {NavLink} from 'react-router-dom'
@@ -56,7 +55,7 @@ export const HeaderContent: React.FC<HeaderContentType> = React.memo((
   )
 
   return (
-    <div className={'wrapper-headerContent'}>
+    <>
       <Search
         placeholder="input card title"
         onSearch={onSearch}
@@ -65,20 +64,21 @@ export const HeaderContent: React.FC<HeaderContentType> = React.memo((
         className={'search-headerContent'}
         onChange={onChangeSearchInput}
       />
-      <Dropdown overlay={menu} trigger={['click']}>
-        <div>
+      <Dropdown overlay={menu} trigger={['click']} >
+        <div className={'dropdownContent-wrapper'}>
           <Avatar icon={<UserOutlined/>}/>
-          <a className="ant-dropdown-link" href='!#'>
-            {
-              !userName
-                ? userEmail
-                : userName
-            }
-            <DownOutlined/>
-          </a>
+          <div>
+            <a className='dropdown-link' href='!#'>
+              {
+                !userName
+                  ? userEmail
+                  : userName
+              }
+            </a>
+          </div>
         </div>
       </Dropdown>
-    </div>
+    </>
 
   )
 })

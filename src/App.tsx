@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react'
-import {Route, Switch, Redirect, NavLink} from 'react-router-dom'
+import {Route, Switch, Redirect} from 'react-router-dom'
 import {MyTasks} from './components/MyTasks'
 import {LoginForm} from './components/login/LoginForm'
 import {Layout, Spin} from 'antd'
@@ -8,11 +8,12 @@ import {useDispatch, useSelector} from 'react-redux'
 import {AppStateType} from './bll/store'
 import {authMeTC, logoutAC} from './bll/auth-reducer'
 import {Page404} from './components/common/page404/Page404'
-import './App.css'
+import './app.css'
 import {RequestStatusType} from './bll/request-reducer'
-import { HeaderContent } from './components/headerContent/HeaderContent'
+import {HeaderContent} from './components/headerContent/HeaderContent'
 import {Settings} from './components/settings/Settings'
-import {DEV_VERSION} from './config';
+import {DEV_VERSION} from './config'
+import taskLogo from './img/tasks.png'
 
 const {Header, Content} = Layout
 
@@ -44,17 +45,14 @@ export const App = () => {
   return (
     <div>
       <Layout>
-
-        <Header>
-          {
-            isAuth
-              ? <HeaderContent logout={logout} />
-              : <NavLink to={'/login'}>Log in</NavLink>
-          }
+        <Header className='wrapperHeader-app'>
+          <div className='wrapperLogoBlock-app'>
+            <img src={taskLogo} className={'imgLogo-app'}/>
+            <div>MyTasks</div>
+          </div>
+          {isAuth && <HeaderContent logout={logout}/>}
         </Header>
-
         {requestStatus === 'loading' && <div className='spin-align'><Spin/></div>}
-
         <Content>
           <Switch>
             <Route exact path={'/'} render={() => <MyTasks/>}/>
@@ -70,3 +68,4 @@ export const App = () => {
     </div>
   )
 }
+
