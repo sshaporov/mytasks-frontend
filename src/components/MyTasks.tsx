@@ -77,9 +77,7 @@ export const MyTasks = () => {
       {cards.map(card => {
         return <CardTasks
                   key={card._id}
-                  cardId={card._id}
-                  cardTitle={card.title}
-                  cardFilter={card.filter}
+                  card={card}
                   removeCard={removeCard}
                   changeCardTitle={changeCardTitle}
                   tasks={tasks[card._id]}

@@ -8,14 +8,12 @@ import {AddItem} from '../common/addItem/AddItem'
 import {FilterTasks} from './filterTasks/FilterTasks'
 import s from './CardTasks.module.css'
 import {getTasksTC} from '../../bll/tasks-reducer'
-import {CardFilterValuesType} from '../../bll/cards-reducer'
+import {CardFilterValuesType, CardStateType} from '../../bll/cards-reducer'
 import {useDispatch} from 'react-redux'
 import {TaskType} from '../../dal/tasks-api'
 
 export type CardTasksPropsType = {
-  cardId: string
-  cardTitle: string
-  cardFilter: string
+  card: CardStateType
   removeCard: (cardId: string) => void
   changeCardTitle: (cardId: string, title: string) => void
   tasks: Array<TaskType>
@@ -27,9 +25,7 @@ export type CardTasksPropsType = {
 }
 export const CardTasks: React.FC<CardTasksPropsType> = (
   {
-    cardId,
-    cardTitle,
-    cardFilter,
+    card,
     removeCard,
     changeCardTitle,
     tasks,
@@ -40,15 +36,12 @@ export const CardTasks: React.FC<CardTasksPropsType> = (
     changeFilter,
   }
 ) => {
-  DEV_VERSION && console.log('CardTasks ', cardTitle)
+  DEV_VERSION && console.log('CardTasks ', card.title)
   const dispatch = useDispatch()
 
-
-  // подумать как здесь обойти !!!!!!!!!!!!!!!!!!!!!! возможно делать запрос из санки а не из Юая
-
   useEffect(() => {
-    dispatch(getTasksTC(cardId))
-  },[dispatch, cardId])
+    dispatch(getTasksTC(card._id))
+  },[dispatch, card])
 
   // мемоизированная функция для подсчета процента выполненых тасок
   const countTaskProgress = useMemo(() => {
@@ -58,45 +51,45 @@ export const CardTasks: React.FC<CardTasksPropsType> = (
 
   // подбираем cardId в текущей компоненте и передаем вверх колбэк
   const changeFilterHandler = useCallback((filterValue: CardFilterValuesType) => {
-    changeFilter(filterValue, cardId)
-  }, [changeFilter, cardId])
+    changeFilter(filterValue, card._id)
+  }, [changeFilter, card])
 
   const removeTaskHandler = useCallback((taskId: string) => {
-    removeTask(taskId, cardId)
-  }, [removeTask, cardId])
+    removeTask(taskId, card._id)
+  }, [removeTask, card])
 
 
   const changeTaskStatusHandler = useCallback((taskId: string, taskIsChecked: boolean) => {
-    changeTaskStatus(taskId, taskIsChecked, cardId)
-  }, [changeTaskStatus, cardId])
+    changeTaskStatus(taskId, taskIsChecked, card._id)
+  }, [changeTaskStatus, card])
 
 
   const addTaskHandler = useCallback((taskTitle: string) => {
-    addTask(taskTitle, cardId)
-  }, [addTask, cardId])
+    addTask(taskTitle, card._id)
+  }, [addTask, card])
 
   const changeTaskTitleHandler = useCallback((taskId: string, title: string) => {
-    changeTaskTitle(taskId, title, cardId)
-  }, [changeTaskTitle, cardId])
+    changeTaskTitle(taskId, title, card._id)
+  }, [changeTaskTitle, card])
 
   const removeCardHandler = useCallback(() => {
-    removeCard(cardId)
-  }, [removeCard, cardId])
+    removeCard(card._id)
+  }, [removeCard, card])
 
   const changeCardTitleHandler = useCallback((newCardTitle: string) => {
-    changeCardTitle(cardId, newCardTitle)
-  }, [changeCardTitle, cardId])
+    changeCardTitle(card._id, newCardTitle)
+  }, [changeCardTitle, card])
 
   // логика фильтрации тасок
   let tasksForCard = tasks
-  if (cardFilter === 'DONE') tasksForCard = tasks.filter(task => task.checked)
-  if (cardFilter === 'ACTIVE') tasksForCard = tasks.filter(task => !task.checked)
+  if (card.filter === 'DONE') tasksForCard = tasks.filter(task => task.checked)
+  if (card.filter === 'ACTIVE') tasksForCard = tasks.filter(task => !task.checked)
 
   return (
     <div className={s.cardsWrapper}>
       <Card style={{width: 300, margin: 20, borderRadius: 7, boxShadow: '0px 0px 5px 1px rgba(208, 216, 243, 0.5)'}}>
         <CardHeader
-          cardTitle={cardTitle}
+          cardTitle={card.title}
           taskCount={tasks.length}
           removeCard={removeCardHandler}
           changeCardTitle={changeCardTitleHandler}
