@@ -28,52 +28,57 @@ export const LoginForm = () => {
   }
 
   return (
-    <Form
-      name='login'
-      className='login-form'
-      initialValues={{remember: true,}}
-      onFinish={onFinish}
-    >
+    <div className='wrapper-loginForm'>
+      <div className='content-loginForm'>
+        <Form
+          name='login'
+          initialValues={{remember: true,}}
+          onFinish={onFinish}
+        >
+          <div className='title-loginForm'>
+            Log in
+          </div>
+          <Form.Item
+            name='email'
+            rules={[
+              {
+                required: true,
+                message: 'Please input your Email!',
+              },
+              {
+                type: 'email',
+                message: 'Please input correct Email!',
+              },
+            ]}
+          >
+            <Input prefix={<MailOutlined className='site-form-item-icon'/>} placeholder='Email'/>
+          </Form.Item>
 
-      <Form.Item
-        name='email'
-        rules={[
-          {
-            required: true,
-            message: 'Please input your Email!',
-          },
-          {
-            type: 'email',
-            message: 'Please input correct Email!',
-          },
-        ]}
-      >
-        <Input prefix={<MailOutlined className='site-form-item-icon'/>} placeholder='Email'/>
-      </Form.Item>
+          <Form.Item
+            name='password'
+            rules={[
+              {
+                required: true,
+                message: 'Please input your Password!',
+              },
+            ]}
+          >
+            <Input
+              prefix={<LockOutlined className='site-form-item-icon'/>}
+              type='password'
+              placeholder='Password'
+              autoComplete='on'
+            />
+          </Form.Item>
 
-      <Form.Item
-        name='password'
-        rules={[
-          {
-            required: true,
-            message: 'Please input your Password!',
-          },
-        ]}
-      >
-        <Input
-          prefix={<LockOutlined className='site-form-item-icon'/>}
-          type='password'
-          placeholder='Password'
-          autoComplete='on'
-        />
-      </Form.Item>
-
-      <Form.Item>
-        <Button type='primary' htmlType='submit' className='login-form-button'>
-          Log in
-        </Button>
-        Or <NavLink to='/registration'>register now!</NavLink>
-      </Form.Item>
-    </Form>
-  );
-};
+          <Form.Item>
+            <Button type='primary' htmlType='submit' className='login-form-button'>
+              Log in
+            </Button>
+            Or <NavLink to='/registration'>register now!</NavLink>
+          </Form.Item>
+        </Form>
+      </div>
+    </div>
+  )
+}

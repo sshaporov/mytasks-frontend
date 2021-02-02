@@ -23,7 +23,7 @@ export type CardTasksPropsType = {
   addTask: (taskTitle: string, cardId: string) => void
   changeFilter: (value: CardFilterValuesType, cardId: string) => void
 }
-export const CardTasks: React.FC<CardTasksPropsType> = (
+export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   {
     card,
     removeCard,
@@ -118,4 +118,4 @@ export const CardTasks: React.FC<CardTasksPropsType> = (
       </Card>
     </div>
   )
-}
+})
