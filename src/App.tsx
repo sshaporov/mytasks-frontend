@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react'
+import React, {CSSProperties, useCallback, useEffect} from 'react'
 import {Route, Switch, Redirect, NavLink} from 'react-router-dom'
 import {MyTasks} from './components/MyTasks'
 import {LoginForm} from './components/login/LoginForm'
@@ -17,8 +17,17 @@ import taskLogo from './img/tasks.png'
 
 const {Header, Content} = Layout
 
-export const App = () => {
+export const App = React.memo(() => {
   DEV_VERSION && console.log('App')
+
+  // additional css styles for Spin ant-design component
+  const spinStyles: CSSProperties = {
+    position: 'fixed',
+    top: '50%',
+    textAlign: 'center',
+    width: '100%',
+    zIndex: 1,
+  }
 
   const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
   const isInitialized = useSelector<AppStateType, boolean>(state => state.auth.isInitialized)
@@ -30,29 +39,26 @@ export const App = () => {
     dispatch(authMeTC())
   }, [dispatch])
 
+  // without backend logic (only front side)
   const logout = useCallback(() => {
     dispatch(logoutAC())
   }, [dispatch])
 
   if (!isInitialized) {
-    return (
-      <div className='spin-align'>
-        <Spin/>
-      </div>
-    )
+    return <Spin style={spinStyles}/>
   }
 
   return (
     <div>
       <Layout>
         <Header className='wrapper-header'>
-          <NavLink className='wrapperLogoBlock-app' to='/'>
-            <img src={taskLogo} className='imgLogo-app'/>
+          <NavLink className='logo-block' to='/'>
+            <img src={taskLogo} className='img-logo'/>
             <div>MyTasks</div>
           </NavLink>
           {isAuth && <HeaderContent logout={logout}/>}
         </Header>
-        {requestStatus === 'loading' && <div className='spin-align'><Spin/></div>}
+        {requestStatus === 'loading' && <Spin style={spinStyles}/>}
         <Content>
           <Switch>
             <Route exact path='/' render={() => <MyTasks/>}/>
@@ -67,5 +73,5 @@ export const App = () => {
       </Layout>
     </div>
   )
-}
+})
 

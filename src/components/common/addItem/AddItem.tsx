@@ -38,23 +38,19 @@ export const AddItem: React.FC<AddTaskPropsType> = React.memo((
 
   return (
     <div>
-
       {isAdding
-
         ? <div onBlur={onBlurAddingTaskItem}>
-          {type === 'task'
-            ? <Checkbox disabled style={{marginLeft: 10, marginRight: 10}}/>
-            : null}
-          <input
-            // s.customInput - не используется, для сброса дефолтных стилей см AddTask.module.css тег класс input
-            className={type === 'task' ? s.taskInput : s.cardInput}
-            placeholder={type === 'task' ? 'Enter new task' : 'Enter new card'}
-            onChange={onChangeTaskTitle}
-            value={itemTitle}
-            autoFocus
-          />
-        </div>
-
+            {type === 'task'
+              ? <Checkbox disabled style={{marginLeft: 10, marginRight: 10}}/>
+              : null}
+            <input
+              className={type === 'task' ? s.taskInput : s.cardInput}
+              placeholder={type === 'task' ? 'Enter new task' : 'Enter new card'}
+              onChange={onChangeTaskTitle}
+              value={itemTitle}
+              autoFocus
+            />
+          </div>
         : <Button
             type="text"
             icon={<PlusCircleOutlined/>}
@@ -62,7 +58,6 @@ export const AddItem: React.FC<AddTaskPropsType> = React.memo((
             onClick={onClickAddBtn}
           >Add {type}</Button>
       }
-
     </div>
   )
 })

@@ -1,7 +1,7 @@
 import {Button, Result} from 'antd';
 import React from 'react';
 
-export const Page404 = () => {
+export const Page404 = React.memo(() => {
   return (
     <Result
       status="404"
@@ -11,4 +11,4 @@ export const Page404 = () => {
       style={{height: '100vh'}}
     />
   )
-}
+})

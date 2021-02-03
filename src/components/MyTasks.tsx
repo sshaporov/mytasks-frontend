@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react'
+import React, {CSSProperties, useCallback, useEffect} from 'react'
 import {DEV_VERSION} from '../config'
 import {CardTasks} from './cardTasks/CardTasks'
 import {Card} from 'antd'
@@ -24,8 +24,19 @@ import {AppStateType} from '../bll/store'
 import {Redirect} from 'react-router-dom'
 import './myTasks.css'
 
-export const MyTasks = () => {
+export const MyTasks = React.memo(() => {
   DEV_VERSION && console.log('MyTasks')
+
+  const addCardBlockStyles: CSSProperties = {
+    width: 300,
+    height: 80,
+    margin: 20,
+    borderRadius: 5,
+    border: 'dashed',
+    borderColor: 'lightgray',
+    opacity: 0.5,
+    borderWidth: 2
+  }
 
   const cards = useSelector<AppStateType, Array<CardStateType>>(state => state.cards)
   const tasks = useSelector<AppStateType, TasksType>(state => state.tasks)
@@ -70,30 +81,28 @@ export const MyTasks = () => {
   },[dispatch])
 
   if(!isAuth) {
-    return <Redirect to={'/login'}/>
+    return <Redirect to='/login'/>
   }
 
   return (
-    <div className={'cardsTasks-wrapper'}>
+    <div className='wrapper-myTasks'>
       {cards.map(card => {
         return <CardTasks
-                key={card._id}
-                card={card}
-                removeCard={removeCard}
-                changeCardTitle={changeCardTitle}
-                tasks={tasks[card._id]}
-                changeTaskTitle={changeTaskTitle}
-                changeTaskStatus={changeTaskStatus}
-                removeTask={removeTask}
-                addTask={addTask}
-                changeFilter={changeFilter}
-              />
+                 key={card._id}
+                 card={card}
+                 removeCard={removeCard}
+                 changeCardTitle={changeCardTitle}
+                 tasks={tasks[card._id]}
+                 changeTaskTitle={changeTaskTitle}
+                 changeTaskStatus={changeTaskStatus}
+                 removeTask={removeTask}
+                 addTask={addTask}
+                 changeFilter={changeFilter}
+               />
       })}
-      <Card
-        style={{width: 300, height: 80, margin: 20, borderRadius: 5, border: 'dashed', borderColor: 'lightgray', opacity: 0.5, borderWidth: 2}}
-      >
+      <Card style={addCardBlockStyles}>
         <AddItem addItem={addCard} type='card'/>
       </Card>
     </div>
-        )
-      }
+  )
+})

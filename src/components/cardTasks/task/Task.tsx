@@ -1,5 +1,5 @@
 import {Button, Checkbox, Dropdown, Menu} from 'antd'
-import React, {useCallback, useState} from 'react'
+import React, {CSSProperties, useCallback, useState} from 'react'
 import {DEV_VERSION} from '../../../config'
 import {EditableItem} from '../../common/editableItem/EditableItem'
 import {DeleteOutlined, EditOutlined, EllipsisOutlined, CheckOutlined} from '@ant-design/icons'
@@ -24,6 +24,11 @@ export const Task: React.FC<TaskPropsType> = (
   }
 ) => {
   DEV_VERSION && console.log('Task ', title)
+
+  const checkboxAlignStyles: CSSProperties = {
+    marginLeft: 10,
+    marginRight: 10
+  }
 
   const [editMode, setEditMode] = useState<boolean>(false)
 
@@ -62,7 +67,7 @@ export const Task: React.FC<TaskPropsType> = (
     // обрачиваем в div чтобы на флексах выровнять чекбокс, спан и меню
     <div className={s.cardWrapper}>
       <div>
-        <Checkbox checked={isChecked} onChange={changeTaskStatusHandler} style={{marginLeft: 10, marginRight: 10}}/>
+        <Checkbox checked={isChecked} onChange={changeTaskStatusHandler} style={checkboxAlignStyles}/>
         <EditableItem
           value={title}
           type={'task'}
