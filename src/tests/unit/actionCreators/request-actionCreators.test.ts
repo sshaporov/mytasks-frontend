@@ -1,16 +1,16 @@
 import {ACTIONS_REQUEST_TYPE, setErrorAC, setStatusAC} from '../../../bll/request-reducer'
 
 it('ActionCreator setError works correctly', () => {
-  const setIsAuthACObj = setErrorAC('test Error text')
-  expect(setIsAuthACObj).toEqual({
+  const setErrorACObj = setErrorAC('test Error text')
+  expect(setErrorACObj).toEqual({
     type: ACTIONS_REQUEST_TYPE.SET_ERROR,
     error: 'test Error text',
   })
 })
 
 it('ActionCreator setStatus works correctly', () => {
-  const setIsAuthACObj = setStatusAC('loading')
-  expect(setIsAuthACObj).toEqual({
+  const setStatusACObj = setStatusAC('loading')
+  expect(setStatusACObj).toEqual({
     type: ACTIONS_REQUEST_TYPE.SET_STATUS,
     status: 'loading',
   })
