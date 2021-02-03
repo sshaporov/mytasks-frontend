@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react'
-import {Route, Switch, Redirect} from 'react-router-dom'
+import {Route, Switch, Redirect, NavLink} from 'react-router-dom'
 import {MyTasks} from './components/MyTasks'
 import {LoginForm} from './components/login/LoginForm'
 import {Layout, Spin} from 'antd'
@@ -46,10 +46,10 @@ export const App = () => {
     <div>
       <Layout>
         <Header className='wrapperHeader-app'>
-          <div className='wrapperLogoBlock-app'>
+          <NavLink className='wrapperLogoBlock-app' to={'/'}>
             <img src={taskLogo} className={'imgLogo-app'}/>
             <div>MyTasks</div>
-          </div>
+          </NavLink>
           {isAuth && <HeaderContent logout={logout}/>}
         </Header>
         {requestStatus === 'loading' && <div className='spin-align'><Spin/></div>}
