@@ -1,11 +1,18 @@
-.dropdown-link {
-  padding-left: 5px;
+.wrapper-headerContent {
+  display: flex;
+  align-items: center;
 }
-.dropdownContent-wrapper{
-  width: 100%;
+.search-headerContent{
+  margin-right: 50px;
+}
+.wrapper-dropdown{
+  width: 50%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+.dropdown-link {
+  padding-left: 5px;
 }
 .ant-avatar:hover {
   cursor: pointer;

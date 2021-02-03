@@ -1,6 +1,6 @@
 .wrapperHeader-app {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
 }
 .spin-align {
@@ -10,9 +10,10 @@
     width: 100%;
 }
 .wrapperLogoBlock-app {
-    width: 50%;
+    /*width: 30%;*/
     display: flex;
     align-items: center;
+    justify-content: space-between;
     color: white;
 }
 .imgLogo-app {

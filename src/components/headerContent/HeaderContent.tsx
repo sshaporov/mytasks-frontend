@@ -55,7 +55,7 @@ export const HeaderContent: React.FC<HeaderContentType> = React.memo((
   )
 
   return (
-    <>
+    <div className='wrapper-headerContent'>
       <Search
         placeholder="input card title"
         onSearch={onSearch}
@@ -65,7 +65,7 @@ export const HeaderContent: React.FC<HeaderContentType> = React.memo((
         onChange={onChangeSearchInput}
       />
       <Dropdown overlay={menu} trigger={['click']} >
-        <div className={'dropdownContent-wrapper'}>
+        <div className={'wrapper-dropdown'}>
           <Avatar icon={<UserOutlined/>}/>
           <div>
             <a className='dropdown-link' href='!#'>
@@ -78,7 +78,7 @@ export const HeaderContent: React.FC<HeaderContentType> = React.memo((
           </div>
         </div>
       </Dropdown>
-    </>
+    </div>
 
   )
 })
