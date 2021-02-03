@@ -87,7 +87,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
 
   return (
     <div className={s.cardsWrapper}>
-      <Card style={{width: 300, margin: 20, borderRadius: 7, boxShadow: '0px 0px 5px 1px rgba(208, 216, 243, 0.5)'}}>
+      <Card style={{width: 300, margin: 20, borderRadius: 7, boxShadow: '0px 0px 10px 3px rgba(208, 216, 243, 0.4)'}}>
         <CardHeader
           cardTitle={card.title}
           taskCount={tasks.length}

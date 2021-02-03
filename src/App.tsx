@@ -46,8 +46,8 @@ export const App = () => {
     <div>
       <Layout>
         <Header className='wrapperHeader-app'>
-          <NavLink className='wrapperLogoBlock-app' to={'/'}>
-            <img src={taskLogo} className={'imgLogo-app'}/>
+          <NavLink className='wrapperLogoBlock-app' to='/'>
+            <img src={taskLogo} className='imgLogo-app'/>
             <div>MyTasks</div>
           </NavLink>
           {isAuth && <HeaderContent logout={logout}/>}
@@ -55,12 +55,12 @@ export const App = () => {
         {requestStatus === 'loading' && <div className='spin-align'><Spin/></div>}
         <Content>
           <Switch>
-            <Route exact path={'/'} render={() => <MyTasks/>}/>
-            <Route path={'/login'} render={() => <LoginForm/>}/>
-            <Route path={'/registration'} render={() => <RegistrationForm/>}/>
-            <Route path={'/settings'} render={() => <Settings/>}/>
-            <Route path={'/404'} render={() => <Page404/>}/>
-            <Redirect from={'*'} to={'/404'}/>
+            <Route exact path='/' render={() => <MyTasks/>}/>
+            <Route path='/login' render={() => <LoginForm/>}/>
+            <Route path='/registration' render={() => <RegistrationForm/>}/>
+            <Route path='/settings' render={() => <Settings/>}/>
+            <Route path='/404' render={() => <Page404/>}/>
+            <Redirect from='*' to='/404'/>
           </Switch>
         </Content>
 

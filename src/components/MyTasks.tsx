@@ -22,6 +22,7 @@ import {
 } from '../bll/tasks-reducer'
 import {AppStateType} from '../bll/store'
 import {Redirect} from 'react-router-dom'
+import './myTasks.css'
 
 export const MyTasks = () => {
   DEV_VERSION && console.log('MyTasks')
@@ -73,24 +74,24 @@ export const MyTasks = () => {
   }
 
   return (
-    <div>
+    <div className={'cardsTasks-wrapper'}>
       {cards.map(card => {
         return <CardTasks
-                  key={card._id}
-                  card={card}
-                  removeCard={removeCard}
-                  changeCardTitle={changeCardTitle}
-                  tasks={tasks[card._id]}
-                  changeTaskTitle={changeTaskTitle}
-                  changeTaskStatus={changeTaskStatus}
-                  removeTask={removeTask}
-                  addTask={addTask}
-                  changeFilter={changeFilter}
-                />})
-      }
+                key={card._id}
+                card={card}
+                removeCard={removeCard}
+                changeCardTitle={changeCardTitle}
+                tasks={tasks[card._id]}
+                changeTaskTitle={changeTaskTitle}
+                changeTaskStatus={changeTaskStatus}
+                removeTask={removeTask}
+                addTask={addTask}
+                changeFilter={changeFilter}
+              />
+      })}
       <Card style={{width: 300, margin: 20, borderRadius: 7}}>
         <AddItem addItem={addCard} type={'card'}/>
       </Card>
     </div>
-  )
-}
+        )
+      }
