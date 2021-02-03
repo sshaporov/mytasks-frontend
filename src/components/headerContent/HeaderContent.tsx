@@ -41,7 +41,7 @@ export const HeaderContent: React.FC<HeaderContentType> = React.memo((
     }}>
       <Menu.Item key="1" icon={<ProfileOutlined/>} onClick={() => {
       }}>
-        Profile
+        <NavLink to={'/profile'}>Profile</NavLink>
       </Menu.Item>
       <Menu.Item key="2" icon={<SettingOutlined/>} onClick={() => {
       }}>
@@ -69,11 +69,12 @@ export const HeaderContent: React.FC<HeaderContentType> = React.memo((
           <Avatar icon={<UserOutlined/>}/>
           <div>
             <a className='dropdown-link' href='!#'>
-              {
-                !userName
-                  ? userEmail
-                  : userName
-              }
+              {/*{*/}
+              {/*  !userName*/}
+              {/*    ? userEmail*/}
+              {/*    : userName*/}
+              {/*}*/}
+              {userEmail}
             </a>
           </div>
         </div>

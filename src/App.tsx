@@ -14,10 +14,11 @@ import {HeaderContent} from './components/headerContent/HeaderContent'
 import {Settings} from './components/settings/Settings'
 import {DEV_VERSION} from './config'
 import taskLogo from './img/tasks.png'
+import {Profile} from './components/profile/Profile';
 
 const {Header, Content} = Layout
 
-export const App = React.memo(() => {
+export const App = () => {
   DEV_VERSION && console.log('App')
 
   // additional css styles for Spin ant-design component
@@ -64,6 +65,7 @@ export const App = React.memo(() => {
             <Route exact path='/' render={() => <MyTasks/>}/>
             <Route path='/login' render={() => <LoginForm/>}/>
             <Route path='/registration' render={() => <RegistrationForm/>}/>
+            <Route path='/profile' render={() => <Profile/>}/>
             <Route path='/settings' render={() => <Settings/>}/>
             <Route path='/404' render={() => <Page404/>}/>
             <Redirect from='*' to='/404'/>
@@ -73,5 +75,5 @@ export const App = React.memo(() => {
       </Layout>
     </div>
   )
-})
+}
 

@@ -30,13 +30,8 @@ export const cardsReducer = (state: Array<CardStateType> = initialState, action:
     case ACTIONS_CARDS_TYPE.REMOVE_CARD:
       return state.filter(card => card._id !== action.cardId)
 
-    case ACTIONS_CARDS_TYPE.CHANGE_CARD_FILTER: {
-      const card = state.find(card => card._id === action.cardId)
-      if (card) {
-        card.filter = action.filter
-      }
-      return [...state]
-    }
+    case ACTIONS_CARDS_TYPE.CHANGE_CARD_FILTER:
+      return state.map(card => card._id === action.cardId ? {...card, filter: action.filter} : card)
 
     case ACTIONS_AUTH_TYPE.LOGOUT:
       return []

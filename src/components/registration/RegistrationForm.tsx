@@ -28,7 +28,7 @@ export type RegistrationDataType = {
   password: string
 }
 
-export const RegistrationForm = () => {
+export const RegistrationForm = React.memo(() => {
   DEV_VERSION && console.log('RegistrationForm')
 
   const isRegister = useSelector<AppStateType, boolean>(state => state.registration.isRegister)
@@ -138,6 +138,5 @@ export const RegistrationForm = () => {
         </Form>
       </div>
     </div>
-
   )
-}
+})

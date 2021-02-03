@@ -13,7 +13,7 @@ export type LoginDataType = {
   password: string
 }
 
-export const LoginForm = () => {
+export const LoginForm = React.memo(() => {
   DEV_VERSION && console.log('LoginForm')
 
   const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
@@ -81,4 +81,4 @@ export const LoginForm = () => {
       </div>
     </div>
   )
-}
+})
