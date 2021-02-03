@@ -89,8 +89,10 @@ export const MyTasks = () => {
                 changeFilter={changeFilter}
               />
       })}
-      <Card style={{width: 300, margin: 20, borderRadius: 7}}>
-        <AddItem addItem={addCard} type={'card'}/>
+      <Card
+        style={{width: 300, height: 80, margin: 20, borderRadius: 5, border: 'dashed', borderColor: 'lightgray', opacity: 0.5, borderWidth: 2}}
+      >
+        <AddItem addItem={addCard} type='card'/>
       </Card>
     </div>
         )

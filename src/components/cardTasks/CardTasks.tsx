@@ -6,7 +6,6 @@ import {CardProgressBar} from './cardProgressBar/CardProgressBar'
 import {Card, Divider} from 'antd'
 import {AddItem} from '../common/addItem/AddItem'
 import {FilterTasks} from './filterTasks/FilterTasks'
-import s from './CardTasks.module.css'
 import {getTasksTC} from '../../bll/tasks-reducer'
 import {CardFilterValuesType, CardStateType} from '../../bll/cards-reducer'
 import {useDispatch} from 'react-redux'
@@ -86,8 +85,8 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
   if (card.filter === 'ACTIVE') tasksForCard = tasks.filter(task => !task.checked)
 
   return (
-    <div className={s.cardsWrapper}>
-      <Card style={{width: 300, margin: 20, borderRadius: 7, boxShadow: '0px 0px 10px 3px rgba(208, 216, 243, 0.4)'}}>
+    <div>
+      <Card style={{width: 300, margin: 20, borderRadius: 5, boxShadow: '0px 0px 10px 3px rgba(208, 216, 243, 0.4)'}}>
         <CardHeader
           cardTitle={card.title}
           taskCount={tasks.length}
@@ -95,9 +94,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
           changeCardTitle={changeCardTitleHandler}
         />
         <CardProgressBar progress={countTaskProgress}/>
-
         <Divider/>
-
         {tasksForCard.map(task => <Task
                                     key={task._id}
                                     id={task._id}
@@ -108,13 +105,9 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
                                     removeTask={removeTaskHandler}
                                   />
         )}
-
         <AddItem addItem={addTaskHandler} type={'task'}/>
-
         <Divider/>
-
         <FilterTasks changeFilter={changeFilterHandler}/>
-
       </Card>
     </div>
   )

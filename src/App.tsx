@@ -45,7 +45,7 @@ export const App = () => {
   return (
     <div>
       <Layout>
-        <Header className='wrapperHeader-app'>
+        <Header className='wrapper-header'>
           <NavLink className='wrapperLogoBlock-app' to='/'>
             <img src={taskLogo} className='imgLogo-app'/>
             <div>MyTasks</div>
