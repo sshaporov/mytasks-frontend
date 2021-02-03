@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {DEV_VERSION} from '../../config'
 import {loginTC} from '../../bll/auth-reducer'
 import {AppStateType} from '../../bll/store'
+import {setIsRegisterAC} from '../../bll/registration-reducer';
 
 export type LoginDataType = {
   email: string
@@ -21,6 +22,7 @@ export const LoginForm = React.memo(() => {
 
   const onFinish = (values: LoginDataType) => {
     dispatch(loginTC(values))
+    dispatch(setIsRegisterAC(false))
   }
 
   if (isAuth) {
