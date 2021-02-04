@@ -33,7 +33,7 @@ export const CardHeader: React.FC<CardHeaderPropsType> = React.memo((
 
   const onClickEditDropdown = useCallback(() => {
     setEditMode(true)
-  }, [editMode])
+  }, [])
 
   const menu = (
     <Menu>

@@ -1,7 +1,7 @@
 import {AppReducersType, AppThunksType} from './store'
 import {authAPI} from '../dal/auth-api'
 import {RegistrationDataType} from '../components/registration/RegistrationForm'
-import {setErrorAC, setStatusAC} from './request-reducer';
+import {setErrorAC} from './request-reducer'
 
 export enum ACTIONS_REGISTRATION_TYPE {
   SET_IS_REGISTER = 'Login/SET_IS_REGISTER',

@@ -2,7 +2,7 @@ import {AppReducersType, AppThunksType} from './store'
 import {authAPI} from '../dal/auth-api'
 import {LoginDataType} from '../components/login/LoginForm'
 import {setUserAC, UserACType} from './user-reducer'
-import {setErrorAC, setStatusAC} from './request-reducer';
+import {setErrorAC} from './request-reducer'
 
 export enum ACTIONS_AUTH_TYPE {
   SET_IS_AUTH = 'Auth/SET_IS_AUTH',

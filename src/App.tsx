@@ -57,7 +57,7 @@ export const App = React.memo(() => {
       <Layout>
         <Header className='wrapper-header'>
           <NavLink className='logo-block' to='/'>
-            <img src={taskLogo} className='img-logo'/>
+            <img src={taskLogo} className='img-logo' alt='logo'/>
             <div>MyTasks</div>
           </NavLink>
           {isAuth && <HeaderContent logout={logout}/>}
