@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Input, Tabs} from 'antd'
+import {Button, Input, message, Tabs} from 'antd'
 import {MailOutlined, UserOutlined, LockOutlined} from '@ant-design/icons'
 import './profile.css'
 import {DEV_VERSION} from '../../config'
@@ -40,6 +40,7 @@ export const Profile: React.FC = React.memo(() => {
               <Button
                 type='link'
                 className='edit-button'
+                onClick={ () => message.warn('Sorry, Edit flow is not implemented yet...')}
               >
                 Edit
               </Button>
