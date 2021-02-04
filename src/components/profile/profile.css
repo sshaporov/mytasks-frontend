@@ -26,3 +26,10 @@
 .edit-button {
   margin-left: 350px;
 }
+.security-text {
+  margin: 100px;
+  text-align: center;
+}
+.security-icon {
+  margin-right: 10px;
+}
