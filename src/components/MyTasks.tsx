@@ -45,7 +45,9 @@ export const MyTasks = React.memo(() => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getCardsTC())
+    if(isAuth) {
+      dispatch(getCardsTC())
+    }
   }, [dispatch])
 
   const addCard = useCallback((cardTitle: string) => {

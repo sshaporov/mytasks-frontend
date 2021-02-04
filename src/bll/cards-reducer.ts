@@ -84,7 +84,7 @@ export const getCardsTC = (): AppThunksType => {
         dispatch(setStatusAC('succeeded'))
       })
       .catch(err => {
-        dispatch(setErrorAC(err.message ? err.message : 'Something went wrong'))
+        dispatch(setErrorAC(err.response.data.message))
         dispatch(setStatusAC('failed'))
       })
   }

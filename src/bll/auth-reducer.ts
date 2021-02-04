@@ -2,7 +2,7 @@ import {AppReducersType, AppThunksType} from './store'
 import {authAPI} from '../dal/auth-api'
 import {LoginDataType} from '../components/login/LoginForm'
 import {setUserAC, UserACType} from './user-reducer'
-import {setErrorAC} from './request-reducer';
+import {setErrorAC, setStatusAC} from './request-reducer';
 
 export enum ACTIONS_AUTH_TYPE {
   SET_IS_AUTH = 'Auth/SET_IS_AUTH',
@@ -81,7 +81,7 @@ export const authMeTC = (): AppThunksType => {
         dispatch(setIsAuthAC(false))
         dispatch(setIsInitializedAC(true))
         localStorage.removeItem('token')
-        console.log('error - authMeTC ', err)
+        //console.log('error - authMeTC ', err)
       })
   }
 }

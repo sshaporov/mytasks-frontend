@@ -2,22 +2,22 @@ import React, {CSSProperties, useCallback, useEffect} from 'react'
 import {Route, Switch, Redirect, NavLink} from 'react-router-dom'
 import {MyTasks} from './components/MyTasks'
 import {LoginForm} from './components/login/LoginForm'
-import {Layout, Spin} from 'antd'
+import {Layout, Spin, message} from 'antd'
 import {RegistrationForm} from './components/registration/RegistrationForm'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppStateType} from './bll/store'
 import {authMeTC, logoutAC} from './bll/auth-reducer'
 import {Page404} from './components/common/page404/Page404'
 import './app.css'
-import {RequestStatusType} from './bll/request-reducer'
+import {RequestStatusType, setErrorAC} from './bll/request-reducer'
 import {HeaderContent} from './components/headerContent/HeaderContent'
 import {DEV_VERSION} from './config'
 import taskLogo from './img/tasks.png'
-import {Profile} from './components/profile/Profile';
+import {Profile} from './components/profile/Profile'
 
 const {Header, Content} = Layout
 
-export const App = () => {
+export const App = React.memo(() => {
   DEV_VERSION && console.log('App')
 
   // additional css styles for Spin ant-design component
@@ -32,6 +32,7 @@ export const App = () => {
   const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
   const isInitialized = useSelector<AppStateType, boolean>(state => state.auth.isInitialized)
   const requestStatus = useSelector<AppStateType, RequestStatusType>(state => state.request.status)
+  const error = useSelector<AppStateType, string | null>(state => state.request.error)
 
   const dispatch = useDispatch()
 
@@ -50,6 +51,9 @@ export const App = () => {
 
   return (
     <div>
+      {
+        !!error && message.error(error, undefined, () => dispatch(setErrorAC(null)))
+      }
       <Layout>
         <Header className='wrapper-header'>
           <NavLink className='logo-block' to='/'>
@@ -73,5 +77,5 @@ export const App = () => {
       </Layout>
     </div>
   )
-}
+})
 
