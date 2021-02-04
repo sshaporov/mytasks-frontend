@@ -6,10 +6,12 @@ import './filterTasks.css'
 
 export type FilterTasksPropsType = {
   changeFilter: (value: CardFilterValuesType) => void
+  filter: CardFilterValuesType
 }
 export const FilterTasks: React.FC<FilterTasksPropsType> = React.memo((
   {
     changeFilter,
+    filter
   }
 ) => {
   DEV_VERSION && console.log('Filter tasks')
@@ -23,9 +25,9 @@ export const FilterTasks: React.FC<FilterTasksPropsType> = React.memo((
 
   return (
     <div className='wrapper-filterBtn'>
-        <Button onClick={onAllBtnClickHandler} style={styles}>All</Button>
-        <Button onClick={onActiveBtnClickHandler} style={styles}>Active</Button>
-        <Button onClick={onDoneBtnClickHandler} style={styles}>Done</Button>
+        <Button onClick={onAllBtnClickHandler} style={filter === 'ALL' ? {flex: 1, backgroundColor: '#eff2f5'} : styles}>All</Button>
+        <Button onClick={onActiveBtnClickHandler} style={filter === 'ACTIVE' ? {flex: 1, backgroundColor: '#eff2f5'} : styles}>Active</Button>
+        <Button onClick={onDoneBtnClickHandler} style={filter === 'DONE' ? {flex: 1, backgroundColor: '#eff2f5'} : styles}>Done</Button>
     </div>
   )
 })

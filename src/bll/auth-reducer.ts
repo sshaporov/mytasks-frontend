@@ -2,6 +2,7 @@ import {AppReducersType, AppThunksType} from './store'
 import {authAPI} from '../dal/auth-api'
 import {LoginDataType} from '../components/login/LoginForm'
 import {setUserAC, UserACType} from './user-reducer'
+import {setErrorAC} from './request-reducer';
 
 export enum ACTIONS_AUTH_TYPE {
   SET_IS_AUTH = 'Auth/SET_IS_AUTH',
@@ -62,7 +63,7 @@ export const loginTC = (data: LoginDataType): AppThunksType => {
         dispatch(setUserAC(res.user))
       })
       .catch(err => {
-        console.log('error - loginTC ', err)
+        dispatch(setErrorAC(err.response.data.message))
       })
   }
 }

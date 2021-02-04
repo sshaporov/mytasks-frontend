@@ -11,7 +11,6 @@ import {Page404} from './components/common/page404/Page404'
 import './app.css'
 import {RequestStatusType} from './bll/request-reducer'
 import {HeaderContent} from './components/headerContent/HeaderContent'
-import {Settings} from './components/settings/Settings'
 import {DEV_VERSION} from './config'
 import taskLogo from './img/tasks.png'
 import {Profile} from './components/profile/Profile';
@@ -66,7 +65,6 @@ export const App = () => {
             <Route path='/login' render={() => <LoginForm/>}/>
             <Route path='/registration' render={() => <RegistrationForm/>}/>
             <Route path='/profile' render={() => <Profile/>}/>
-            <Route path='/settings' render={() => <Settings/>}/>
             <Route path='/404' render={() => <Page404/>}/>
             <Redirect from='*' to='/404'/>
           </Switch>

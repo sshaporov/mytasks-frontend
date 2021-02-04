@@ -113,7 +113,7 @@ export const CardTasks: React.FC<CardTasksPropsType> = React.memo((
         )}
         <AddItem addItem={addTaskHandler} type={'task'}/>
         <Divider/>
-        <FilterTasks changeFilter={changeFilterHandler}/>
+        <FilterTasks changeFilter={changeFilterHandler} filter={card.filter}/>
       </Card>
     </div>
   )
