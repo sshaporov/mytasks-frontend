@@ -22,7 +22,7 @@ export const HeaderContent: React.FC<HeaderContentType> = React.memo((
 ) => {
   DEV_VERSION && console.log('HeaderContent')
 
-  // const userName = useSelector<AppStateType, string | null>(state => state.user.name)
+  const userName = useSelector<AppStateType, string | null>(state => state.user.name)
   const userEmail = useSelector<AppStateType, string>(state => state.user.email)
   const [searchInput, setSearchInput] = useState<string | undefined>(undefined)
   const dispatch = useDispatch()
@@ -60,19 +60,18 @@ export const HeaderContent: React.FC<HeaderContentType> = React.memo((
         className={'search-headerContent'}
         onChange={onChangeSearchInput}
       />
-      <Dropdown overlay={menu} trigger={['click']} >
-        <div className={'wrapper-dropdown'}>
+      <Dropdown overlay={menu} trigger={['click']} className='wrapper-dropdown'>
+        <div className='wrapper-dropdown'>
           <Avatar icon={<UserOutlined/>}/>
-          <div>
-            <a className='dropdown-link' href='!#'>
-              {/*{*/}
-              {/*  !userName*/}
-              {/*    ? userEmail*/}
-              {/*    : userName*/}
-              {/*}*/}
-              {userEmail}
-            </a>
-          </div>
+          <a className='dropdown-link' href='!#'>
+            {
+              !userName
+                ? userEmail
+                : userName
+            }
+
+            {/*<div>{userEmail}</div>*/}
+          </a>
         </div>
       </Dropdown>
     </div>

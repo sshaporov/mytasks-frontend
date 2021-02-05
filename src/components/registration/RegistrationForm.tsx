@@ -41,9 +41,11 @@ export const RegistrationForm = React.memo(() => {
 
   if (isRegister) {
     return (
-        <div>
+      <div className='wrapper-registrationForm'>
+        <div className='content-registrationForm content-margin'>
           Register SUCCESS, now you can log in by the <NavLink to={'/login'}>Log in</NavLink>
         </div>
+      </div>
     )
   }
 
