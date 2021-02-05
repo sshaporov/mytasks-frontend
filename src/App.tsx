@@ -40,6 +40,12 @@ export const App = React.memo(() => {
     dispatch(authMeTC())
   }, [dispatch])
 
+  // display Error message if the text of error from server was changed
+  // need to use useEffect so there is no warning log renderer in console
+  useEffect(() => {
+    !!error && message.error(error, undefined, () => dispatch(setErrorAC(null))).then()
+  }, [error])
+
   // without backend logic (only front side)
   const logout = useCallback(() => {
     dispatch(logoutAC())
@@ -51,9 +57,6 @@ export const App = React.memo(() => {
 
   return (
     <div>
-      {
-        !!error && message.error(error, undefined, () => dispatch(setErrorAC(null)))
-      }
       <Layout>
         <Header className='wrapper-header'>
           <NavLink className='logo-block' to='/'>

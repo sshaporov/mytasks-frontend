@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react'
+import React, {ChangeEvent, useState, KeyboardEvent} from 'react'
 import {DEV_VERSION} from '../../../config'
 import {Button, Checkbox} from 'antd'
 import {PlusCircleOutlined} from '@ant-design/icons'
@@ -24,7 +24,7 @@ export const AddItem: React.FC<AddTaskPropsType> = React.memo((
     setItemTitle(e.currentTarget.value)
   }
 
-  const onBlurAddingTaskItem = () => {
+  const addTaskItem = () => {
     if(itemTitle !== '') {
       addItem(itemTitle)
       setItemTitle('')
@@ -36,10 +36,17 @@ export const AddItem: React.FC<AddTaskPropsType> = React.memo((
     setIsAdding(true)
   }
 
+  const onClickEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.charCode === 13) {
+      addTaskItem()
+    }
+  }
+
+
   return (
     <div>
       {isAdding
-        ? <div onBlur={onBlurAddingTaskItem}>
+        ? <div onBlur={addTaskItem}>
             {type === 'task'
               ? <Checkbox disabled style={{marginLeft: 10, marginRight: 10}}/>
               : null}
@@ -49,6 +56,7 @@ export const AddItem: React.FC<AddTaskPropsType> = React.memo((
               onChange={onChangeTaskTitle}
               value={itemTitle}
               autoFocus
+              onKeyPress={onClickEnter}
             />
           </div>
         : <Button

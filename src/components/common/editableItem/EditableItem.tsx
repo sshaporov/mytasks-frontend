@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react'
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react'
 import s from './EditableItem.module.css'
 import {DEV_VERSION} from '../../../config'
 
@@ -27,9 +27,15 @@ export const EditableItem: React.FC<EditableSpanPropsType> = React.memo((
     setEditMode(true)
   }
 
-  const onBlurInput = () => {
+  const updateItem = () => {
     changeValue(title)
     setEditMode(false)
+  }
+
+  const onClickEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.charCode === 13) {
+      updateItem()
+    }
   }
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -40,9 +46,10 @@ export const EditableItem: React.FC<EditableSpanPropsType> = React.memo((
     ? <input
         value={title}
         onChange={onChangeHandler}
-        onBlur={onBlurInput}
+        onBlur={updateItem}
         autoFocus={true}
         className={type === 'task' ? s.taskInput : s.cardInput}
+        onKeyPress={onClickEnter}
     />
-    : <span onDoubleClick={onDoubleClickSpan} className={type === 'card' ? s.cardText : undefined}>{value}</span>
+    : <span onDoubleClick={onDoubleClickSpan} className={type === 'card' ? s.cardText : undefined}>{title}</span>
 })
