@@ -7,7 +7,7 @@ This is a [React application](https://lit-river-93303.herokuapp.com), a todo lis
 
 ## UI (user interface)
 
-UI level is based on React library using functional components and hooks:
+UI level is based on [React](https://reactjs.org) library using functional components and hooks:
 - useDispatch
 - useState
 - useSelector
@@ -16,7 +16,7 @@ UI level is based on React library using functional components and hooks:
 
 ## BLL (business logic layer)
 
-Redax library was chosen as the state management of aplication and for the implementation of the business level
+[Redux](https://redux.js.org/) library was chosen as the state management of aplication and for the implementation of the business level
 - reducers
 - actions
 - action creators
@@ -25,7 +25,7 @@ Redax library was chosen as the state management of aplication and for the imple
 
 ## DAL (data access layer)
 
-Axios library was chosen to implement data access. The standard set of CRUD operations is implemented for data, the following library methods were used to communicate with the server: get, post, put, delete
+[Axios](https://www.npmjs.com/package/axios) library was chosen to implement data access. The standard set of CRUD operations is implemented for data, the following library methods were used to communicate with the server: get, post, put, delete
 
 ## Plans
 - Code refactoring
