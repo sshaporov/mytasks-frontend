@@ -1,23 +1,29 @@
-# Getting Started with Create React App
+# MyTasks app description
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+This is a [React application](https://lit-river-93303.herokuapp.com), a todo list, which is a dashboard on which cards with tasks are located. The user has access to a standard set of KRAD operations, as well as changing the status of the task "active <-> done" and filtering them.
 
-In the project directory, you can run:
+## UI
 
-### `npm start`
+UI level level is based on React library using functional components and hooks:
+- useDispatch
+- useState
+- useSelector
+- useCallback
+- useMemo...
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## BLL
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Redax library was chosen as the state management of aplication and for the implementation of the business level
+- reducers
+- actions
+- action creators
+- thunks
+- thunk creators
 
-### `npm test`
+## DAL
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Express 
 
 ### `npm run build`
 
