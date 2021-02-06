@@ -44,7 +44,7 @@ export const App = React.memo(() => {
   // need to use useEffect so there is no warning log renderer in console
   useEffect(() => {
     !!error && message.error(error, undefined, () => dispatch(setErrorAC(null))).then()
-  }, [error])
+  }, [error, dispatch])
 
   // without backend logic (only front side)
   const logout = useCallback(() => {
