@@ -68,11 +68,13 @@ export const App = React.memo(() => {
         {requestStatus === 'loading' && <Spin style={spinStyles}/>}
         <Content>
           <Switch>
-            <Route exact path='/' render={() => <MyTasks/>}/>
+            <Route exact path={'/'} render={() => <Redirect to={'/cards'}/>}/>
+            <Route path='/cards' render={() => <MyTasks/>}/>
             <Route path='/login' render={() => <LoginForm/>}/>
             <Route path='/registration' render={() => <RegistrationForm/>}/>
             <Route path='/profile' render={() => <Profile/>}/>
             <Route path='/404' render={() => <Page404/>}/>
+
             <Redirect from='*' to='/404'/>
           </Switch>
         </Content>
