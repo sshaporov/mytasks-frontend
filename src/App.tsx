@@ -73,9 +73,9 @@ export const App = React.memo(() => {
             <Route path='/login' render={() => <LoginForm/>}/>
             <Route path='/registration' render={() => <RegistrationForm/>}/>
             <Route path='/profile' render={() => <Profile/>}/>
-            <Route path='/404' render={() => <Page404/>}/>
-
-            <Redirect from='*' to='/404'/>
+            {/*<Route path='/404' render={() => <Page404/>}/>*/}
+            <Route render={() => <Page404/>}/>
+            {/*<Redirect from='*' to='/404'/>*/}
           </Switch>
         </Content>
 
