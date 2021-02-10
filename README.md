@@ -1,7 +1,7 @@
 # MyTasks app description
 
 
-This is a [React application](https://lit-river-93303.herokuapp.com) (TypeScript template), a todo list, which is a dashboard on which cards with tasks are located. The user has access to a standard set of CRUD operations, as well as changing the status of the task "active <-> done" and filtering them.
+This is a [React application](https://sshaporov.github.io/mytasks-frontend/) (TypeScript template), a todo list, which is a dashboard on which cards with tasks are located. The user has access to a standard set of CRUD operations, as well as changing the status of the task "active <-> done" and filtering them.
 
 <img width="1440" alt="Screenshot 2021-02-06 at 20 53 14" src="https://user-images.githubusercontent.com/35060830/107125950-db29f600-68bd-11eb-89c8-3b9d57f7dec0.png">
 
