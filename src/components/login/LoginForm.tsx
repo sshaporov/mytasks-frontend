@@ -40,6 +40,7 @@ export const LoginForm = React.memo(() => {
           <div className='title-loginForm'>
             Log in
           </div>
+          <div>You can use the following creds for demo: test@test.com / TestPassword</div>
           <Form.Item
             name='email'
             rules={[
