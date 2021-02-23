@@ -1,18 +1,11 @@
 import {instance} from './instance'
+import {UserType} from './auth-api'
 
 export const userAPI = {
-  user(data: UserType) {
-    return instance.post<UserResponseType>(`/user`, data).then(res => res.data)
+  changeUser(name: string, email: string) {
+    return instance.put<UserType>(`/user`, {name, email},
+      {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
+      .then(res => res.data)
   },
-}
-
-// types
-export type UserType = {
-  _id: string
-  name?: string
-  email: string
-}
-export type UserResponseType = {
-  message: string
 }
 

@@ -1,6 +1,8 @@
 import {UserType} from '../dal/auth-api'
 import {ACTIONS_AUTH_TYPE} from './auth-reducer'
-import {AppReducersType} from './store'
+import {AppReducersType, AppThunksType} from './store'
+import {setErrorAC, setStatusAC} from './request-reducer'
+import {userAPI} from '../dal/user-api'
 
 export enum ACTIONS_USER_TYPE {
   SET_USER = 'User/SET_USER',
@@ -40,5 +42,18 @@ export type SetUserACType = ReturnType<typeof setUserAC>
 export type UserACType = SetUserACType
 
 // thunks
-
+export const changeUserDataTC = (name: string, email: string): AppThunksType => {
+  return (dispatch) => {
+    dispatch(setStatusAC('loading'))
+    userAPI.changeUser(name, email)
+      .then(data => {
+        dispatch(setUserAC(data))
+        dispatch(setStatusAC('succeeded'))
+      })
+      .catch(err => {
+        dispatch(setErrorAC(err.message ? err.message : 'Something went wrong'))
+        dispatch(setStatusAC('failed'))
+      })
+  }
+}
 
