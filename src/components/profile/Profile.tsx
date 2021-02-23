@@ -3,9 +3,10 @@ import {Button, Input, message, Tabs} from 'antd'
 import {MailOutlined, UserOutlined, LockOutlined} from '@ant-design/icons'
 import './profile.css'
 import {DEV_VERSION} from '../../config'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {AppStateType} from '../../bll/store'
 import {NavLink, Redirect} from 'react-router-dom'
+import {changeUserDataTC} from '../../bll/user-reducer';
 
 const { TabPane } = Tabs
 
@@ -15,6 +16,8 @@ export const Profile: React.FC = React.memo(() => {
   const userName = useSelector<AppStateType, string | null>(state => state.user.name)
   const email = useSelector<AppStateType, string>(state => state.user.email)
   const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
+
+  const dispatch = useDispatch()
 
   const [name, setName] = useState<string | null>(userName)
   const [userEmail, setUserEmail] = useState<string>(email)
@@ -26,10 +29,8 @@ export const Profile: React.FC = React.memo(() => {
     setUserEmail(e.currentTarget.value)
   }
   const changeUserData = () => {
-    console.log(name)
-    console.log(userEmail)
+    dispatch(changeUserDataTC(name !== null ? name : '', userEmail))
   }
-
 
   if(!isAuth) {
     return <Redirect to='/login'/>
