@@ -6,8 +6,8 @@ export const instance = axios.create({
   // baseURL: 'https://localhost:3010',
 
   // local URL nodeJS server
-  // baseURL: 'http://localhost:3010',
+  baseURL: 'http://localhost:3010',
 
   // Heroku URL nodeJS server
-  baseURL: 'https://fierce-falls-39397.herokuapp.com'
+  // baseURL: 'https://fierce-falls-39397.herokuapp.com'
 })

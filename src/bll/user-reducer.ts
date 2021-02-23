@@ -39,3 +39,6 @@ export const setUserAC = (user: UserType) =>
 export type SetUserACType = ReturnType<typeof setUserAC>
 export type UserACType = SetUserACType
 
+// thunks
+
+

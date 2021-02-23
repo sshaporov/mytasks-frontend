@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ChangeEvent, useState} from 'react'
 import {Button, Input, message, Tabs} from 'antd'
 import {MailOutlined, UserOutlined, LockOutlined} from '@ant-design/icons'
 import './profile.css'
@@ -6,7 +6,6 @@ import {DEV_VERSION} from '../../config'
 import {useSelector} from 'react-redux'
 import {AppStateType} from '../../bll/store'
 import {NavLink, Redirect} from 'react-router-dom'
-
 
 const { TabPane } = Tabs
 
@@ -16,6 +15,21 @@ export const Profile: React.FC = React.memo(() => {
   const userName = useSelector<AppStateType, string | null>(state => state.user.name)
   const email = useSelector<AppStateType, string>(state => state.user.email)
   const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
+
+  const [name, setName] = useState<string | null>(userName)
+  const [userEmail, setUserEmail] = useState<string>(email)
+
+  const changeName = (e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.currentTarget.value)
+  }
+  const changeEmail = (e: ChangeEvent<HTMLInputElement>) => {
+    setUserEmail(e.currentTarget.value)
+  }
+  const changeUserData = () => {
+    console.log(name)
+    console.log(userEmail)
+  }
+
 
   if(!isAuth) {
     return <Redirect to='/login'/>
@@ -30,17 +44,28 @@ export const Profile: React.FC = React.memo(() => {
               <div className='wrapper-item'>
                 <UserOutlined />
                 <div className='user-item'>Name:</div>
-                <Input disabled value={userName !== null ? userName : ''} />
+
+                <Input
+                  value={name !== null ? name : ''}
+                  onChange={changeName}
+                />
+
               </div>
               <div className='wrapper-item'>
                 <MailOutlined/>
                 <div className='user-item'>Email:</div>
-                <Input disabled value={email} />
+
+                <Input
+                  value={userEmail}
+                  onChange={changeEmail}
+                />
+
               </div>
               <Button
                 type='link'
                 className='edit-button'
-                onClick={ () => message.warn('Sorry, Edit flow is not implemented yet...')}
+                // onClick={ () => message.warn('Sorry, Edit flow is not implemented yet...')}
+                onClick={changeUserData}
               >
                 Edit
               </Button>
