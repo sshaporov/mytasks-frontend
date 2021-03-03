@@ -51,7 +51,8 @@ export const changeUserDataTC = (name: string, email: string): AppThunksType => 
         dispatch(setStatusAC('succeeded'))
       })
       .catch(err => {
-        dispatch(setErrorAC(err.message ? err.message : 'Something went wrong'))
+        console.log(err)
+        dispatch(setErrorAC(err.response.data.message))
         dispatch(setStatusAC('failed'))
       })
   }
